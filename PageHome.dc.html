@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,500;8..60,600;8..60,700&family=Source+Sans+3:wght@400;500;600;700&display=swap">
+<style>
+body{margin:0;background:#F6F5F1}
+*{box-sizing:border-box}
+a{color:oklch(0.42 0.12 255);text-decoration:none}
+a:hover{color:oklch(0.32 0.12 255);text-decoration:underline}
+@keyframes mmdspin{to{transform:rotate(360deg)}}
+</style>
+</helmet>
+
+<div style="font-family:'Source Sans 3',system-ui,sans-serif;color:oklch(0.24 0.04 262);background:#F6F5F1;min-height:100vh;font-size:17px;line-height:1.6;overflow-x:hidden">
+
+<section data-screen-label="Hero" style="background:oklch(0.28 0.08 262);color:#fff;position:relative">
+  <div style="max-width:1200px;margin:0 auto;padding:72px 28px 96px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,440px),1fr));gap:56px;align-items:center">
+    <div>
+      <div style="display:inline-flex;gap:8px;align-items:center;font-size:13px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:oklch(0.85 0.14 85);margin-bottom:22px"><span style="width:8px;height:8px;border-radius:50%;background:oklch(0.85 0.14 85)"></span>Az Artisjus, az EJI, a FILMJUS, a HUNGART és a MAHASZ tájékoztató portálja</div>
+      <h1 style="font-family:'Source Serif 4',serif;font-weight:700;font-size:clamp(40px,5.2vw,64px);line-height:1.05;letter-spacing:-0.015em;margin:0 0 24px;text-wrap:balance">A szabad magáncélú másolás lehetőségéért fizetendő <span style="color:oklch(0.85 0.14 85)">díj</span></h1>
+      <p style="font-size:19px;line-height:1.6;color:oklch(0.88 0.03 262);margin:0 0 34px;max-width:580px;text-wrap:pretty">Egy természetes személy magáncélra a hangfelvételekről, filmekről és más művekről a szerzői jogosult engedélye nélkül másolatot készíthet, ha az jövedelemszerzés vagy jövedelemfokozás célját közvetve sem szolgálja.</p>
+      <div style="display:flex;gap:12px;flex-wrap:wrap">
+        <a onClick="{{ go }}" href="/a-maganmasolasi-dijrol" style="padding:15px 24px;border-radius:999px;background:oklch(0.85 0.14 85);color:oklch(0.24 0.06 262);font-weight:700;text-decoration:none;transition:transform 150ms" style-hover="background:oklch(0.9 0.12 85);color:oklch(0.24 0.06 262);text-decoration:none;transform:translateY(-1px)">Mi a magánmásolási díj?</a>
+        <a onClick="{{ go }}" href="/a-maganmasolasi-dijrol/mit-masolhatok-szabadon" style="padding:15px 24px;border-radius:999px;border:1.5px solid oklch(0.6 0.06 262);color:#fff;font-weight:600;text-decoration:none" style-hover="border-color:#fff;color:#fff;text-decoration:none">Mit másolhatok szabadon?</a>
+      </div>
+    </div>
+
+    <div style="position:relative;width:min(100%,500px);aspect-ratio:1.28/1;justify-self:center">
+      <div style="position:absolute;top:7%;right:0;width:72%;aspect-ratio:1">
+        {{ record }}
+        <div style="position:absolute;inset:0;border-radius:50%;background:conic-gradient(from 20deg,transparent 0 8%,rgba(255,255,255,.13) 13%,transparent 20% 55%,rgba(255,255,255,.09) 62%,transparent 70%);pointer-events:none"></div>
+      </div>
+      <div style="position:absolute;left:0;top:0;width:72%;aspect-ratio:1;background:oklch(0.85 0.14 85);color:oklch(0.24 0.06 262);border-radius:6px;box-shadow:0 30px 60px rgba(0,0,0,.35);padding:8% 8%;display:flex;flex-direction:column;justify-content:space-between">
+        <div>
+          <div style="font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase">Hanghordozók esetében</div>
+          <div style="font-family:'Source Serif 4',serif;font-size:clamp(20px,2.4vw,28px);font-weight:700;line-height:1.1;margin-top:6px">Így oszlik meg a díj</div>
+        </div>
+        <div style="display:grid;gap:10px">
+          <sc-for list="{{ split }}" as="p" hint-placeholder-count="3">
+            <div>
+              <div style="display:flex;justify-content:space-between;font-size:13px;font-weight:600;margin-bottom:4px"><span>{{ p.who }}</span><span>{{ p.pct }}</span></div>
+              <div style="height:10px;border-radius:999px;background:rgba(40,40,80,.14);overflow:hidden"><div style="height:100%;border-radius:999px;width:{{ p.w }};background:{{ p.c }}"></div></div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section data-screen-label="Ellenőrzés" style="max-width:1200px;margin:-44px auto 0;padding:0 28px;position:relative;z-index:2">
+  <div style="background:#fff;border-radius:14px;box-shadow:0 18px 40px rgba(30,35,70,.12);padding:28px 32px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:20px;align-items:center">
+    <div>
+      <h2 style="font-family:'Source Serif 4',serif;font-size:26px;font-weight:700;margin:0 0 6px">Megfizették a díjat?</h2>
+      <p style="font-size:15px;color:oklch(0.42 0.03 262);margin:0">A díj megfizetését hologramos matrica, mobiltelefonoknál a regisztrált IMEI-szám, egyes PC-knél a regisztrált SN-azonosító igazolja.</p>
+    </div>
+    <a onClick="{{ go }}" href="/visszaterites/ellenorzok#imei" style="display:flex;align-items:center;gap:16px;padding:18px 20px;border-radius:12px;background:oklch(0.95 0.02 262);color:oklch(0.24 0.04 262);text-decoration:none;transition:transform 200ms" style-hover="transform:translateY(-2px);color:oklch(0.24 0.04 262);text-decoration:none">
+      <span style="width:44px;height:44px;border-radius:50%;background:oklch(0.28 0.08 262);color:#fff;display:grid;place-items:center;flex:none"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="2" width="10" height="20" rx="2"></rect><path d="M11 18h2"></path></svg></span>
+      <span style="flex:1"><span style="display:block;font-weight:700">IMEI-szám ellenőrzése</span><span style="font-size:14px;color:oklch(0.42 0.03 262)">Mobiltelefonok, tabletek</span></span><span style="font-weight:700">→</span></a>
+    <a onClick="{{ go }}" href="/visszaterites/ellenorzok#pcsn" style="display:flex;align-items:center;gap:16px;padding:18px 20px;border-radius:12px;background:oklch(0.95 0.02 262);color:oklch(0.24 0.04 262);text-decoration:none;transition:transform 200ms" style-hover="transform:translateY(-2px);color:oklch(0.24 0.04 262);text-decoration:none">
+      <span style="width:44px;height:44px;border-radius:50%;background:oklch(0.28 0.08 262);color:#fff;display:grid;place-items:center;flex:none"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="2"></rect><path d="M8 20h8M12 16v4"></path></svg></span>
+      <span style="flex:1"><span style="display:block;font-weight:700">PCSN-szám ellenőrzése</span><span style="font-size:14px;color:oklch(0.42 0.03 262)">Személyi számítógépek</span></span><span style="font-weight:700">→</span></a>
+  </div>
+</section>
+
+<section data-screen-label="Belépési pontok" style="max-width:1200px;margin:0 auto;padding:88px 28px 80px">
+  <h2 style="font-family:'Source Serif 4',serif;font-size:clamp(28px,3.2vw,40px);font-weight:700;margin:0 0 28px">Kinek szól?</h2>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:20px">
+    <sc-for list="{{ entries }}" as="e" hint-placeholder-count="3">
+      <div style="background:{{ e.soft }};border-radius:14px;padding:30px;display:flex;flex-direction:column;gap:14px;transition:transform 250ms" style-hover="transform:translateY(-3px)">
+        <span style="width:52px;height:52px;border-radius:50%;background:{{ e.c }};color:#fff;display:grid;place-items:center;font-family:'Source Serif 4',serif;font-weight:700;font-size:22px">{{ e.n }}</span>
+        <h3 style="font-family:'Source Serif 4',serif;font-size:26px;font-weight:700;margin:4px 0 0">{{ e.title }}</h3>
+        <p style="font-size:16px;color:oklch(0.36 0.03 262);margin:0;text-wrap:pretty">{{ e.text }}</p>
+        <ul style="list-style:none;margin:auto 0 0;padding:0;border-top:1px solid rgba(30,35,70,.12)">
+          <sc-for list="{{ e.links }}" as="l" hint-placeholder-count="3">
+            <li style="border-bottom:1px solid rgba(30,35,70,.12)"><a onClick="{{ go }}" href="{{ l.href }}" style="display:flex;justify-content:space-between;gap:12px;padding:12px 0;font-weight:600;font-size:16px;color:oklch(0.24 0.04 262)">{{ l.label }}<span>→</span></a></li>
+          </sc-for>
+        </ul>
+      </div>
+    </sc-for>
+  </div>
+</section>
+
+<section id="dij" data-screen-label="A díjról" style="background:#fff">
+  <div style="max-width:1200px;margin:0 auto;padding:88px 28px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:56px">
+    <div>
+      <div style="font-size:13px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:oklch(0.28 0.08 262);margin-bottom:12px">A magánmásolási díjról</div>
+      <h2 style="font-family:'Source Serif 4',serif;font-size:clamp(28px,3.2vw,40px);font-weight:700;line-height:1.15;margin:0 0 20px">Mi a magánmásolási díj?</h2>
+      <p style="margin:0 0 16px;color:oklch(0.36 0.03 262)">A magáncélú másolatkészítés nem díjmentes. A szerzői jog magánmásolási díjigényt biztosít a szerzői jogosultaknak – a másolatkészítési szabadság ellentételezéseként.</p>
+      <p style="margin:0 0 28px;color:oklch(0.36 0.03 262)">A díjat nem a másolatot készítő természetes személy fizeti közvetlenül, hanem a másolatkészítésre alkalmas üres hordozókat forgalmazó vállalkozás, amely a díjat a hordozókat vásároló fogyasztókra áthárítja.</p>
+      <div style="display:flex;gap:20px;flex-wrap:wrap;font-weight:600">
+        <a onClick="{{ go }}" href="/a-maganmasolasi-dijrol">Bővebben a díjról →</a>
+        <a href="https://www.artisjus.hu/felhasznaloknak/maganmasolasi-dij/tarifa-10/">Aktuális díjszabás ↗</a>
+      </div>
+    </div>
+    <div style="display:grid;gap:12px;align-content:start">
+      <div style="font-weight:700;margin-bottom:4px">Szabadon készíthető magáncélra másolat például:</div>
+      <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px">
+        <sc-for list="{{ free }}" as="f" hint-placeholder-count="4">
+          <div style="padding:18px;border-radius:12px;background:{{ f.soft }};display:flex;flex-direction:column;gap:10px">
+            <span style="width:36px;height:36px;border-radius:50%;background:{{ f.c }};color:#fff;display:grid;place-items:center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"></path></svg></span>
+            <span style="font-weight:600;line-height:1.35">{{ f.t }}</span>
+          </div>
+        </sc-for>
+      </div>
+      <div style="display:flex;gap:14px;align-items:flex-start;padding:16px 18px;border:1.5px solid oklch(0.9 0.01 262);border-radius:12px;font-size:15px;color:oklch(0.36 0.03 262)">
+        <span style="width:28px;height:28px;border-radius:50%;background:oklch(0.28 0.08 262);color:#fff;display:grid;place-items:center;flex:none"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"></path></svg></span>
+        <span>Nem készíthető szabad másolat szoftverről, adatbázisról, kottáról, és olyan műről sem, amelyet jogellenesen töltöttek fel az internetre. <a onClick="{{ go }}" href="/a-maganmasolasi-dijrol/mit-masolhatok-szabadon" style="font-weight:600">Mit másolhatok szabadon? →</a></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="sorsa" data-screen-label="Díjak sorsa" style="max-width:1200px;margin:0 auto;padding:88px 28px">
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:56px;align-items:start">
+    <div>
+      <div style="font-size:13px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:oklch(0.42 0.12 255);margin-bottom:12px">A befizetett díjak sorsa</div>
+      <h2 style="font-family:'Source Serif 4',serif;font-size:clamp(28px,3.2vw,40px);font-weight:700;line-height:1.15;margin:0 0 20px">Jogosulti csoportok és kulturális célok</h2>
+      <p style="margin:0 0 24px;color:oklch(0.36 0.03 262)">A díjakat egyablakos ügyintézés keretében az Artisjus szedi be, de a díjak megállapításában mind az öt szervezet részt vesz, azok felosztását és kifizetését pedig mind az öt szervezet önállóan végzi.</p>
+      <div style="position:relative;overflow:hidden;display:flex;gap:20px;align-items:center;padding:28px;background:oklch(0.28 0.08 262);color:#fff;border-radius:14px;margin-bottom:24px">
+        <span style="position:absolute;right:-70px;top:-70px;width:200px;height:200px;border-radius:50%;background:repeating-radial-gradient(circle,rgba(255,255,255,.07) 0 2px,transparent 2px 5px)"></span>
+        <span style="font-family:'Source Serif 4',serif;font-size:64px;font-weight:700;line-height:1;position:relative;color:oklch(0.85 0.14 85)">25%</span>
+        <span style="font-size:16px;line-height:1.5;font-weight:600;position:relative">A díjak jogszabályban meghatározott része a Nemzeti Kulturális Alaphoz kerül. Ebből működik a Hangfoglaló Program.</span>
+      </div>
+      <div style="display:flex;gap:20px;flex-wrap:wrap;font-weight:600">
+        <a onClick="{{ go }}" href="/befizetett-dijak-sorsa/jogosulti-csoportok">Jogosulti csoportok →</a>
+        <a onClick="{{ go }}" href="/befizetett-dijak-sorsa/kulturalis-celok">Kulturális célok →</a>
+      </div>
+    </div>
+    <div style="background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 1px 2px rgba(30,35,70,.06)">
+      <sc-for list="{{ orgs }}" as="o" hint-placeholder-count="5">
+        <a onClick="{{ go }}" href="{{ o.url }}" style="display:grid;grid-template-columns:14px 110px 1fr auto;gap:16px;align-items:center;padding:20px 22px;border-bottom:1px solid oklch(0.93 0.01 262);color:oklch(0.24 0.04 262);text-decoration:none;transition:background 200ms" style-hover="background:oklch(0.97 0.012 262);text-decoration:none">
+          <span style="width:14px;height:14px;border-radius:50%;background:{{ o.c }}"></span>
+          <span style="font-weight:700;letter-spacing:.02em">{{ o.name }}</span>
+          <span style="font-size:15px;color:oklch(0.42 0.03 262)">{{ o.who }}</span>
+          <span style="color:oklch(0.42 0.12 255)">↗</span>
+        </a>
+      </sc-for>
+    </div>
+  </div>
+</section>
+
+<section id="visszaterites" data-screen-label="Visszatérítés" style="background:oklch(0.95 0.02 262)">
+  <div style="max-width:1200px;margin:0 auto;padding:88px 28px">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:56px;margin-bottom:56px">
+      <div>
+        <div style="font-size:13px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:oklch(0.42 0.12 255);margin-bottom:12px">Visszatérítés</div>
+        <h2 style="font-family:'Source Serif 4',serif;font-size:clamp(28px,3.2vw,40px);font-weight:700;line-height:1.15;margin:0 0 20px">Kivételes visszatérítés professzionális alkotóknak</h2>
+        <p style="margin:0 0 16px;color:oklch(0.32 0.03 262)">2017. évtől a díjszabásban biztosított kivétel, ha a hordozót olyan professzionális alkotó tevékenységet folytató természetes személy használja, aki megfelelő módon igazolja, hogy</p>
+        <ul style="margin:0;padding-left:22px;color:oklch(0.32 0.03 262)">
+          <li style="margin-bottom:8px">arra kizárólag saját, professzionális, szerzői jog által védett tartalmait másolja és</li>
+          <li>a hordozót a szabad felhasználás körébe tartozó másolatkészítésre nem használta és nem is fogja használni.</li>
+        </ul>
+      </div>
+      <div style="display:grid;gap:12px;align-content:start">
+        <a onClick="{{ go }}" href="/visszaterites/tajekoztato" style="display:flex;align-items:center;gap:14px;padding:18px 22px;border-radius:12px;background:oklch(0.28 0.08 262);color:#fff;font-weight:700;text-decoration:none" style-hover="background:oklch(0.22 0.08 262);color:#fff;text-decoration:none">
+          <span style="width:38px;height:38px;border-radius:50%;background:oklch(0.85 0.14 85);color:oklch(0.24 0.06 262);display:grid;place-items:center;flex:none"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"></path></svg></span>
+          Tájékoztató és hivatalos PDF</a>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px">
+          <a onClick="{{ go }}" href="/visszaterites/ugyintezes" style="padding:14px 16px;background:#fff;border-radius:10px;font-weight:600;text-align:center;color:oklch(0.24 0.04 262)">Ügyintézés lépései</a>
+          <a onClick="{{ go }}" href="/visszaterites/ellenorzok" style="padding:14px 16px;background:#fff;border-radius:10px;font-weight:600;text-align:center;color:oklch(0.24 0.04 262)">PCSN- és IMEI-ellenőrző</a>
+          <a onClick="{{ go }}" href="/visszaterites/gyik" style="padding:14px 16px;background:#fff;border-radius:10px;font-weight:600;text-align:center;color:oklch(0.24 0.04 262)">Gyakori kérdések</a>
+          <a onClick="{{ go }}" href="/ugyfelportal" style="padding:14px 16px;background:#fff;border-radius:10px;font-weight:600;text-align:center;color:oklch(0.24 0.04 262)">Ügyfélportál</a>
+        </div>
+        <a onClick="{{ go }}" href="/visszaterites" style="font-weight:700;margin-top:6px">A visszatérítésről →</a>
+      </div>
+    </div>
+    <h3 style="font-family:'Source Serif 4',serif;font-size:24px;font-weight:700;margin:0 0 24px">Az ügyintézés lépései</h3>
+    <ol style="list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,150px),1fr));gap:16px">
+      <sc-for list="{{ steps }}" as="s" hint-placeholder-count="5">
+        <li style="background:#fff;border-radius:12px;padding:22px 20px;border-top:5px solid {{ s.c }}">
+          <div style="font-family:'Source Serif 4',serif;font-size:34px;font-weight:700;line-height:1;color:{{ s.c }};margin-bottom:12px">{{ s.n }}</div>
+          <div style="font-weight:700;line-height:1.3;margin-bottom:6px">{{ s.t }}</div>
+          <div style="font-size:15px;line-height:1.5;color:oklch(0.42 0.03 262)">{{ s.d }}</div>
+        </li>
+      </sc-for>
+    </ol>
+  </div>
+</section>
+
+<section id="gyik" data-screen-label="GYIK" style="max-width:1200px;margin:0 auto;padding:88px 28px">
+  <div style="display:flex;justify-content:space-between;align-items:end;gap:24px;flex-wrap:wrap;margin-bottom:28px">
+    <h2 style="font-family:'Source Serif 4',serif;font-size:clamp(28px,3.2vw,40px);font-weight:700;margin:0">Gyakori kérdések</h2>
+    <div style="display:flex;gap:6px;padding:5px;background:#fff;border-radius:999px;box-shadow:0 1px 2px rgba(30,35,70,.08)">
+      <button onClick="{{ setSeller }}" style="border:0;cursor:pointer;padding:10px 18px;border-radius:999px;font:inherit;font-size:15px;font-weight:600;background:{{ sellerBg }};color:{{ sellerFg }};transition:all 200ms">Kereskedőknek (11)</button>
+      <button onClick="{{ setRefund }}" style="border:0;cursor:pointer;padding:10px 18px;border-radius:999px;font:inherit;font-size:15px;font-weight:600;background:{{ refundBg }};color:{{ refundFg }};transition:all 200ms">Visszatérítés (16)</button>
+    </div>
+  </div>
+  <div style="background:#fff;border-radius:14px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));overflow:hidden">
+    <sc-for list="{{ faq }}" as="q" hint-placeholder-count="6">
+      <a onClick="{{ go }}" href="{{ faqHref }}" style="display:flex;align-items:center;gap:16px;padding:18px 22px;border-bottom:1px solid oklch(0.93 0.01 262);color:oklch(0.24 0.04 262);font-weight:600;transition:background 200ms" style-hover="background:oklch(0.97 0.012 262);color:oklch(0.24 0.04 262);text-decoration:none">
+        <span style="width:30px;height:30px;border-radius:50%;background:{{ faqSoft }};color:{{ faqC }};display:grid;place-items:center;font-family:'Source Serif 4',serif;font-weight:700;flex:none">?</span>
+        <span style="flex:1">{{ q }}</span><span style="color:oklch(0.42 0.12 255)">→</span></a>
+    </sc-for>
+  </div>
+  <a onClick="{{ go }}" href="{{ faqHref }}" style="display:inline-block;margin-top:20px;font-weight:600">Összes kérdés →</a>
+</section>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;spinRecord&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;nav&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;(path: string) =&gt; void&quot;}}">
+class Component extends DCLogic {
+  state = { faq: 'seller' };
+  renderVals() {
+    const e = React.createElement;
+    const s = this.state.faq === 'seller';
+    const spin = this.props.spinRecord ?? true;
+    const N = 'oklch(0.28 0.08 262)', M = 'oklch(0.85 0.14 85)', SB = 'oklch(0.95 0.02 262)';
+    const C = { navy: N, coral: N, mustard: M, teal: N, blue: N, label: M };
+    const soft = { coral: SB, mustard: SB, teal: SB, blue: SB };
+    const record = e('div', { style: { position: 'absolute', inset: 0, borderRadius: '50%', background: 'repeating-radial-gradient(circle at center,#12151e 0 2px,#252b3b 2px 3.2px)', boxShadow: '0 30px 60px rgba(0,0,0,.4)', animation: spin ? 'mmdspin 7s linear infinite' : 'none' } },
+      e('div', { style: { position: 'absolute', inset: '31%', borderRadius: '50%', background: C.label, display: 'grid', placeItems: 'center', boxShadow: '0 0 0 6px #12151e' } },
+        e('svg', { viewBox: '0 0 100 100', style: { position: 'absolute', inset: 0, width: '100%', height: '100%' } },
+          e('defs', null, e('path', { id: 'mmdLbl', d: 'M50,50 m-35,0 a35,35 0 1,1 70,0 a35,35 0 1,1 -70,0' })),
+          e('text', { style: { fontSize: '7.4px', fontWeight: 700, letterSpacing: '.9px', fill: N, fontFamily: 'Source Sans 3, sans-serif' } },
+            e('textPath', { href: '#mmdLbl' }, 'ARTISJUS · EJI · FILMJUS · HUNGART · MAHASZ ·'))),
+        e('div', { style: { width: '12%', height: '12%', borderRadius: '50%', background: '#F6F5F1', boxShadow: '0 0 0 3px ' + N } })));
+    const go = (ev) => { const u = ev.currentTarget.getAttribute('href'); if (u && u.startsWith('/')) { ev.preventDefault(); this.props.nav && this.props.nav(u); } };
+    return {
+      go, record,
+      split: [
+        { who: 'zeneszerzők és írók', pct: '45%', w: '45%', c: N },
+        { who: 'előadóművészek', pct: '30%', w: '30%', c: N },
+        { who: 'hangfelvétel-kiadók', pct: '25%', w: '25%', c: N }
+      ],
+      sellerBg: s ? C.navy : 'transparent', sellerFg: s ? '#fff' : 'oklch(0.3 0.04 262)',
+      refundBg: s ? 'transparent' : C.teal, refundFg: s ? 'oklch(0.3 0.04 262)' : '#fff',
+      faqSoft: s ? soft.coral : soft.teal, faqC: N,
+      faqHref: s ? '/a-maganmasolasi-dijrol/gyik-kereskedoknek' : '/visszaterites/gyik',
+      setSeller: () => this.setState({ faq: 'seller' }),
+      setRefund: () => this.setState({ faq: 'refund' }),
+      faq: s ? [
+        'Mi a kereskedő felelőssége?',
+        'Milyen esetben nem kell a kereskedőnek ilyen díjat fizetnie?',
+        'Létezik díjkedvezmény? Ki veheti igénybe?',
+        'A pénztárgépek memóriája után is kell ilyen díjat fizetni?',
+        'Ki köteles a jogdíj megfizetésére?',
+        'Van ilyen díj külföldön is? Beszerezhető külföldről a hordozó?'
+      ] : [
+        'Ki jogosult a magánmásolási díj visszatérítésének igénylésére?',
+        'Egyéni vállalkozó is jogosult a visszatérítésre?',
+        'Mi számít professzionális alkotótevékenységből származó műnek?',
+        'Jogosult-e az igénylő a visszatérítésre, ha a hordozó üres?',
+        'Visszamenőlegesen is jogosult az igénylő a visszatérítésre?',
+        'Milyen dokumentumokat kell kötelezően csatolni a visszaigényléshez?'
+      ],
+      entries: [
+        { n: '1', c: C.coral, soft: soft.coral, title: 'Fizetőknek', text: 'Gyártóknak, importőröknek és kereskedőknek: ki köteles a díj megfizetésére, mikor nem kell fizetni, és hogyan vehető igénybe kedvezmény.', links: [
+          { label: 'Díjszabás (Artisjus)', href: 'https://www.artisjus.hu/felhasznaloknak/maganmasolasi-dij/tarifa-10/' },
+          { label: 'Gyakori kérdések kereskedőknek', href: '/a-maganmasolasi-dijrol/gyik-kereskedoknek' },
+          { label: 'Díjfizetés ellenőrzése', href: '/visszaterites/ellenorzok' } ] },
+        { n: '2', c: C.teal, soft: soft.teal, title: 'Visszatérítés', text: 'Professzionális alkotóknak, akik a hordozón kizárólag saját, szerzői jog által védett tartalmat tárolnak.', links: [
+          { label: 'Tájékoztató és feltételek', href: '/visszaterites/tajekoztato' },
+          { label: 'Ügyintézés', href: '/visszaterites/ugyintezes' },
+          { label: 'Gyakori kérdések', href: '/visszaterites/gyik' } ] },
+        { n: '3', c: N, soft: soft.mustard, title: 'Kapcsolat', text: 'Visszatérítési ügyfélszolgálat telefonon, e-mailben vagy személyesen, időpontfoglalás után.', links: [
+          { label: 'Ügyfélszolgálat', href: '/kapcsolat' },
+          { label: 'A portál üzemeltetői', href: '/kapcsolat#uzemeltetok' },
+          { label: 'Ügyfélportál', href: '/ugyfelportal' } ] }
+      ],
+      free: [
+        { t: 'zeneművek hangfelvételeiről', c: C.coral, soft: soft.coral },
+        { t: 'irodalmi művekről, hangoskönyvekről', c: C.teal, soft: soft.teal },
+        { t: 'filmekről, televízióműsorokban elhangzó művekről', c: C.blue, soft: soft.blue },
+        { t: 'vizuális alkotásokról, fényképészeti művekről', c: N, soft: soft.mustard }
+      ],
+      orgs: [
+        { name: 'ARTISJUS', who: 'zeneszerzők, szövegírók, írók', url: 'https://www.artisjus.hu/', c: C.coral },
+        { name: 'EJI', who: 'előadóművészek', url: 'https://www.eji.hu/', c: C.navy },
+        { name: 'FILMJUS', who: 'filmes szerzők és előállítók', url: 'https://www.filmjus.hu/', c: C.blue },
+        { name: 'HUNGART', who: 'vizuális alkotók', url: 'https://www.hungart.org/', c: N },
+        { name: 'MAHASZ', who: 'hangfelvétel-kiadók', url: 'https://www.mahasz.hu/', c: C.teal }
+      ],
+      steps: [
+        { n: '1', c: C.coral, t: 'Tájékoztató letöltése', d: 'Olvasd el a visszatérítés feltételeit.' },
+        { n: '2', c: N, t: 'Fiók létrehozása', d: 'Regisztrálj, majd jelentkezz be.' },
+        { n: '3', c: C.teal, t: 'Előzetes bejelentés', d: 'Töltsd ki hiánytalanul az űrlapot.' },
+        { n: '4', c: C.blue, t: 'Írásos megerősítés', d: 'Számla vagy nyugta és a hologramos címke csatolásával.' },
+        { n: '5', c: C.navy, t: 'Beküldés', d: 'Postán vagy az ügyfélszolgálaton.' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

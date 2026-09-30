@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,500;8..60,600;8..60,700&family=Source+Sans+3:wght@400;500;600;700&display=swap">
+<style>
+body{margin:0;background:#F6F5F1}
+*{box-sizing:border-box}
+a{color:oklch(0.42 0.12 255);text-decoration:none}
+a:hover{color:oklch(0.32 0.12 255);text-decoration:underline}
+@keyframes mmdspin{to{transform:rotate(360deg)}}
+@keyframes mmdin{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+</style>
+</helmet>
+
+<div style="font-family:'Source Sans 3',system-ui,sans-serif;color:oklch(0.24 0.04 262);background:#F6F5F1;min-height:100vh;font-size:17px;line-height:1.6;overflow-x:hidden">
+
+<a href="#main" style="position:absolute;left:-9999px;top:8px;background:oklch(0.85 0.14 85);color:oklch(0.24 0.06 262);padding:8px 14px;border-radius:6px;z-index:100" style-focus="left:8px">Ugrás a tartalomra</a>
+
+<header data-screen-label="Fejléc" style="background:oklch(0.28 0.08 262);color:#fff;position:sticky;top:0;z-index:40;box-shadow:0 1px 0 rgba(255,255,255,.06)">
+  <div style="max-width:1200px;margin:0 auto;padding:16px 28px;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap">
+    <a href="/" onClick="{{ go }}" style="display:flex;align-items:center;gap:12px;color:#fff;text-decoration:none">
+      <span style="width:34px;height:34px;border-radius:50%;background:repeating-radial-gradient(circle,#11141d 0 1.5px,#262c3d 1.5px 3px);display:grid;place-items:center;box-shadow:0 0 0 2px oklch(0.85 0.14 85)"><span style="width:12px;height:12px;border-radius:50%;background:oklch(0.85 0.14 85)"></span></span>
+      <span style="font-family:'Source Serif 4',serif;font-weight:700;font-size:22px">Magánmásolási díj</span>
+    </a>
+    <div style="display:flex;align-items:center;gap:24px;flex-wrap:wrap">
+      <nav aria-label="Fő navigáció" style="display:flex;gap:18px;flex-wrap:wrap;font-size:15px;font-weight:500;white-space:nowrap">
+        <sc-for list="{{ navItems }}" as="n" hint-placeholder-count="4">
+          <a href="{{ n.href }}" onClick="{{ go }}" style="color:{{ n.color }};padding:6px 0;border-bottom:2px solid {{ n.line }}" style-hover="color:oklch(0.85 0.14 85);text-decoration:none">{{ n.label }}</a>
+        </sc-for>
+      </nav>
+      <a href="/ugyfelportal" onClick="{{ go }}" style="padding:9px 18px;border-radius:999px;background:oklch(0.85 0.14 85);color:oklch(0.24 0.06 262);font-weight:700;font-size:15px;display:inline-flex;gap:8px;align-items:center" style-hover="background:oklch(0.9 0.12 85);color:oklch(0.24 0.06 262);text-decoration:none">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="4"></circle><path d="M4 21c0-4 4-6 8-6s8 2 8 6"></path></svg>{{ portalLabel }}</a>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+  <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+    <dc-import name="PageHome" nav="{{ nav }}" hint-size="100%,2400px"></dc-import>
+  </sc-if>
+  <sc-if value="{{ isDij }}" hint-placeholder-val="{{ false }}">
+    <dc-import name="PageDij" page="{{ route }}" nav="{{ nav }}" hint-size="100%,1600px"></dc-import>
+  </sc-if>
+  <sc-if value="{{ isSorsa }}" hint-placeholder-val="{{ false }}">
+    <dc-import name="PageSorsa" page="{{ route }}" nav="{{ nav }}" hint-size="100%,1600px"></dc-import>
+  </sc-if>
+  <sc-if value="{{ isVissza }}" hint-placeholder-val="{{ false }}">
+    <dc-import name="PageVissza" page="{{ route }}" nav="{{ nav }}" logged-in="{{ loggedIn }}" hint-size="100%,1600px"></dc-import>
+  </sc-if>
+  <sc-if value="{{ isPortal }}" hint-placeholder-val="{{ false }}">
+    <dc-import name="PagePortal" page="{{ route }}" nav="{{ nav }}" logged-in="{{ loggedIn }}" set-logged-in="{{ setLoggedIn }}" hint-size="100%,1000px"></dc-import>
+  </sc-if>
+  <sc-if value="{{ isInfo }}" hint-placeholder-val="{{ false }}">
+    <dc-import name="PageInfo" page="{{ route }}" nav="{{ nav }}" open-cookie="{{ openCookie }}" hint-size="100%,1200px"></dc-import>
+  </sc-if>
+</main>
+
+<footer data-screen-label="Lábléc" style="background:oklch(0.22 0.07 262);color:oklch(0.84 0.03 262);font-size:15px;line-height:1.65;position:relative;overflow:hidden">
+  <span style="position:absolute;right:-140px;top:-140px;width:380px;height:380px;border-radius:50%;background:repeating-radial-gradient(circle,rgba(255,255,255,.05) 0 2px,transparent 2px 6px)"></span>
+  <div style="max-width:1200px;margin:0 auto;padding:64px 28px 40px;position:relative">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));gap:36px;padding-bottom:40px;border-bottom:1px solid oklch(0.34 0.05 262)">
+      <div>
+        <div style="font-weight:700;color:oklch(0.85 0.14 85);margin-bottom:10px">Ügyfélszolgálat</div>
+        Artisjus Magyar Szerzői Jogvédő Iroda Egyesület<br>1016 Budapest, Mészáros u. 15-17.<br>
+        Tel: <a href="tel:+3614882790" style="color:#fff">+36 1 488 2790</a><br>
+        E-mail: <a href="mailto:mmd@artisjus.com" style="color:#fff">mmd@artisjus.com</a>
+      </div>
+      <div>
+        <div style="font-weight:700;color:oklch(0.85 0.14 85);margin-bottom:10px">Telefonos ügyfélfogadás</div>
+        Hétfő: 14-16<br>Kedd: 14-16<br>Csütörtök: 9-11<br>Személyes ügyintézés időpontfoglalás után lehetséges.
+      </div>
+      <sc-for list="{{ footCols }}" as="c" hint-placeholder-count="2">
+        <div>
+          <div style="font-weight:700;color:oklch(0.85 0.14 85);margin-bottom:10px">{{ c.title }}</div>
+          <div style="display:grid;gap:4px">
+            <sc-for list="{{ c.links }}" as="l" hint-placeholder-count="4">
+              <a href="{{ l.href }}" onClick="{{ go }}" style="color:#fff">{{ l.label }}</a>
+            </sc-for>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+    <p style="margin:28px 0 20px;max-width:900px;font-size:14px">Ezt a tájékoztató honlapot a GVH <a href="https://www.gvh.hu/dontesek/versenyhivatali_dontesek/dontesek_2014/vj_15_2014_166.html" style="color:#fff;text-decoration:underline">VJ-15/2014/166. sz. végzésében</a> meghatározott módon közösen hozta létre és üzemelteti az Artisjus, az EJI, a Filmjus, a Hungart és a MAHASZ. A GVH-döntés rendelkező része <a href="https://maganmasolasidij.hu/media/7/download?inline" style="color:#fff;text-decoration:underline">letölthető (PDF)</a>.</p>
+    <div style="display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;font-size:14px">
+      <span>2017-2026 ARTISJUS Magyar Szerzői Jogvédő Iroda Egyesület · Információs e-mail: <a href="mailto:info@artisjus.com" style="color:#fff">info@artisjus.com</a><br>A kivitelezés és programozási feladatok a Próbakő Kommunikációval együttműködésben valósultak meg.</span>
+      <div style="display:flex;gap:20px;flex-wrap:wrap">
+        <a href="/adatvedelmi-tajekoztato" onClick="{{ go }}" style="color:#fff">Adatvédelmi tájékoztató</a>
+        <a href="/suti-tajekoztato" onClick="{{ go }}" style="color:#fff">Süti-tájékoztató</a>
+        <button onClick="{{ openCookie }}" style="background:none;border:0;padding:0;color:#fff;font:inherit;cursor:pointer;text-decoration:underline">Süti-beállítások</button>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<sc-if value="{{ showCookie }}" hint-placeholder-val="{{ false }}">
+  <div role="dialog" aria-label="Süti-beállítások" style="position:fixed;left:20px;right:20px;bottom:20px;z-index:60;max-width:760px;margin:0 auto;background:#fff;border-radius:14px;box-shadow:0 20px 50px rgba(20,25,60,.25);padding:24px 26px;animation:mmdin 300ms cubic-bezier(.22,.61,.36,1)">
+    <div style="display:flex;gap:16px;align-items:flex-start">
+      <span style="width:40px;height:40px;border-radius:50%;background:oklch(0.95 0.02 262);display:grid;place-items:center;flex:none;color:oklch(0.28 0.08 262)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"></circle><circle cx="9" cy="10" r="1"></circle><circle cx="15" cy="9" r="1"></circle><circle cx="14" cy="15" r="1"></circle></svg></span>
+      <div style="flex:1">
+        <div style="font-family:'Source Serif 4',serif;font-weight:700;font-size:20px;margin-bottom:4px">Sütiket használunk</div>
+        <p style="margin:0 0 14px;font-size:15px;color:oklch(0.4 0.03 262)">A működéshez szükséges munkamenet-sütik mellett a Google Analytics segítségével látogatottsági statisztikát készítünk. <a href="/suti-tajekoztato" onClick="{{ go }}">Süti-tájékoztató</a></p>
+        <sc-if value="{{ cookieDetail }}" hint-placeholder-val="{{ false }}">
+          <div style="display:grid;gap:8px;margin-bottom:16px">
+            <label style="display:flex;gap:12px;align-items:center;padding:12px 14px;border-radius:10px;background:oklch(0.97 0.012 262);font-size:15px"><input type="checkbox" checked disabled style="width:18px;height:18px;accent-color:oklch(0.28 0.08 262)"><span style="flex:1"><b>Szükséges</b> – Drupal munkamenet, süti-hozzájárulás</span><span style="font-size:13px;color:oklch(0.5 0.03 262)">Mindig aktív</span></label>
+            <label style="display:flex;gap:12px;align-items:center;padding:12px 14px;border-radius:10px;background:oklch(0.97 0.012 262);font-size:15px;cursor:pointer"><input type="checkbox" checked="{{ analytics }}" onChange="{{ toggleAnalytics }}" style="width:18px;height:18px;accent-color:oklch(0.28 0.08 262)"><span style="flex:1"><b>Statisztikai</b> – Google Analytics</span></label>
+          </div>
+        </sc-if>
+        <div style="display:flex;gap:10px;flex-wrap:wrap">
+          <button onClick="{{ acceptAll }}" style="border:0;cursor:pointer;padding:11px 20px;border-radius:999px;background:oklch(0.28 0.08 262);color:#fff;font:inherit;font-weight:700;font-size:15px">Összes elfogadása</button>
+          <button onClick="{{ acceptNeeded }}" style="cursor:pointer;padding:10px 20px;border-radius:999px;border:1.5px solid oklch(0.28 0.08 262);background:#fff;color:oklch(0.28 0.08 262);font:inherit;font-weight:700;font-size:15px">Csak a szükségesek</button>
+          <sc-if value="{{ cookieDetail }}" hint-placeholder-val="{{ false }}">
+            <button onClick="{{ saveCookie }}" style="cursor:pointer;padding:10px 20px;border-radius:999px;border:0;background:oklch(0.85 0.14 85);color:oklch(0.24 0.06 262);font:inherit;font-weight:700;font-size:15px">Kiválasztottak mentése</button>
+          </sc-if>
+          <sc-if value="{{ cookieNoDetail }}" hint-placeholder-val="{{ true }}">
+            <button onClick="{{ showDetail }}" style="cursor:pointer;padding:10px 6px;border:0;background:none;color:oklch(0.42 0.12 255);font:inherit;font-weight:600;font-size:15px">Beállítások</button>
+          </sc-if>
+        </div>
+      </div>
+    </div>
+  </div>
+</sc-if>
+
+<sc-if value="{{ hasToast }}" hint-placeholder-val="{{ false }}">
+  <div role="status" style="position:fixed;right:20px;bottom:20px;z-index:70;display:flex;gap:12px;align-items:center;padding:14px 18px;border-radius:12px;background:oklch(0.28 0.08 262);color:#fff;box-shadow:0 14px 34px rgba(20,25,60,.3);animation:mmdin 250ms cubic-bezier(.22,.61,.36,1)">
+    <span style="width:26px;height:26px;border-radius:50%;background:oklch(0.72 0.12 150);display:grid;place-items:center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"></path></svg></span>
+    <span style="font-weight:600">{{ toast }}</span>
+  </div>
+</sc-if>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = {
+    route: (typeof localStorage !== 'undefined' && localStorage.getItem('mmd-route')) || '/',
+    cookie: (typeof localStorage !== 'undefined' && localStorage.getItem('mmd-cookie')) || null,
+    cookieOpen: false, cookieDetail: false, analytics: true, toast: null,
+    loggedIn: (typeof localStorage !== 'undefined' && localStorage.getItem('mmd-login') === '1')
+  };
+  nav = (p) => {
+    const [path, hash] = p.split('#');
+    const route = path || '/';
+    this.setState({ route });
+    try { localStorage.setItem('mmd-route', route); } catch (e) {}
+    window.scrollTo(0, 0);
+    if (hash) setTimeout(() => { const el = document.getElementById(hash); if (el) window.scrollTo(0, el.getBoundingClientRect().top + window.scrollY - 90); }, 120);
+  };
+  showToast(msg) { this.setState({ toast: msg }); clearTimeout(this._t); this._t = setTimeout(() => this.setState({ toast: null }), 2800); }
+  saveConsent(v, msg) { try { localStorage.setItem('mmd-cookie', v); } catch (e) {} this.setState({ cookie: v, cookieOpen: false, cookieDetail: false }); this.showToast(msg); }
+  renderVals() {
+    const r = this.state.route;
+    const sec = (p) => r === p || r.startsWith(p + '/');
+    const isDij = sec('/a-maganmasolasi-dijrol'), isSorsa = sec('/befizetett-dijak-sorsa'), isVissza = sec('/visszaterites'), isPortal = sec('/ugyfelportal');
+    const isHome = r === '/';
+    const isInfo = !isHome && !isDij && !isSorsa && !isVissza && !isPortal;
+    const act = (on) => ({ color: on ? 'oklch(0.85 0.14 85)' : '#fff', line: on ? 'oklch(0.85 0.14 85)' : 'transparent' });
+    const mk = (label, href, on) => ({ label, href, ...act(on) });
+    const showCookie = !this.state.cookie || this.state.cookieOpen;
+    return {
+      route: r, nav: this.nav, isHome, isDij, isSorsa, isVissza, isPortal, isInfo,
+      go: (ev) => { const u = ev.currentTarget.getAttribute('href'); if (u && u.startsWith('/')) { ev.preventDefault(); this.nav(u); } },
+      navItems: [
+        mk('A magánmásolási díjról', '/a-maganmasolasi-dijrol', isDij),
+        mk('A befizetett díjak sorsa', '/befizetett-dijak-sorsa', isSorsa),
+        mk('Visszatérítés', '/visszaterites', isVissza),
+        mk('Kapcsolat', '/kapcsolat', r === '/kapcsolat')
+      ],
+      portalLabel: this.state.loggedIn ? 'Fiókom' : 'Ügyfélportál',
+      loggedIn: this.state.loggedIn,
+      setLoggedIn: (v) => { try { localStorage.setItem('mmd-login', v ? '1' : '0'); } catch (e) {} this.setState({ loggedIn: v }); },
+      footCols: [
+        { title: 'Tájékoztatás', links: [
+          { label: 'A magánmásolási díjról', href: '/a-maganmasolasi-dijrol' },
+          { label: 'Mit másolhatok szabadon?', href: '/a-maganmasolasi-dijrol/mit-masolhatok-szabadon' },
+          { label: 'Gyakori kérdések kereskedőknek', href: '/a-maganmasolasi-dijrol/gyik-kereskedoknek' },
+          { label: 'Jogosulti csoportok', href: '/befizetett-dijak-sorsa/jogosulti-csoportok' },
+          { label: 'Kulturális célok', href: '/befizetett-dijak-sorsa/kulturalis-celok' } ] },
+        { title: 'Visszatérítés', links: [
+          { label: 'Tájékoztató', href: '/visszaterites/tajekoztato' },
+          { label: 'Ügyintézés', href: '/visszaterites/ugyintezes' },
+          { label: 'PCSN- és IMEI-ellenőrző', href: '/visszaterites/ellenorzok' },
+          { label: 'Gyakori kérdések', href: '/visszaterites/gyik' },
+          { label: 'Ügyfélportál', href: '/ugyfelportal' } ] }
+      ],
+      showCookie, cookieDetail: this.state.cookieDetail, cookieNoDetail: !this.state.cookieDetail,
+      analytics: this.state.analytics,
+      toggleAnalytics: () => this.setState(s => ({ analytics: !s.analytics })),
+      showDetail: () => this.setState({ cookieDetail: true }),
+      openCookie: () => this.setState({ cookieOpen: true, cookieDetail: true }),
+      acceptAll: () => this.saveConsent('all', 'Minden süti engedélyezve'),
+      acceptNeeded: () => this.saveConsent('needed', 'Csak a szükséges sütik aktívak'),
+      saveCookie: () => this.saveConsent(this.state.analytics ? 'all' : 'needed', 'Süti-beállítások mentve'),
+      hasToast: !!this.state.toast, toast: this.state.toast
+    };
+  }
+}
+</script>
+</body>
+</html>

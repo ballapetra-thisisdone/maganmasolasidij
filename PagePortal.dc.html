@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,500;8..60,600;8..60,700&family=Source+Sans+3:wght@400;500;600;700&display=swap">
+<style>
+body{margin:0;background:#F6F5F1;font-family:'Source Sans 3',system-ui,sans-serif;color:oklch(0.24 0.04 262);font-size:17px;line-height:1.6}
+*{box-sizing:border-box}
+a{color:oklch(0.42 0.12 255);text-decoration:none}
+a:hover{color:oklch(0.32 0.12 255);text-decoration:underline}
+@keyframes mmdspin{to{transform:rotate(360deg)}}
+@keyframes mmdin{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+</style>
+</helmet>
+<section data-screen-label="Ügyfélportál – fejléc" style="background:oklch(0.28 0.08 262);color:#fff;position:relative;overflow:hidden">
+  <span style="position:absolute;right:-120px;top:-120px;width:340px;height:340px;border-radius:50%;background:repeating-radial-gradient(circle,rgba(255,255,255,.06) 0 2px,transparent 2px 6px)"></span>
+  <div style="max-width:1200px;margin:0 auto;padding:40px 28px 48px;position:relative">
+    <nav aria-label="Morzsamenü" style="display:flex;gap:8px;flex-wrap:wrap;font-size:14px;color:oklch(0.8 0.03 262);margin-bottom:24px">
+      <a href="/" onClick="{{ go }}" style="color:oklch(0.8 0.03 262)">Főoldal</a><span>/</span><span style="color:#fff">Ügyfélportál</span>
+    </nav>
+    <h1 style="font-family:'Source Serif 4',serif;font-weight:700;font-size:clamp(32px,4vw,46px);line-height:1.1;margin:0 0 10px">{{ title }}</h1>
+    <p style="font-size:18px;color:oklch(0.88 0.03 262);margin:0;max-width:680px">{{ lead }}</p>
+  </div>
+</section>
+
+<sc-if value="{{ isAuth }}" hint-placeholder-val="{{ true }}">
+<div style="max-width:1200px;margin:0 auto;padding:48px 28px 96px;display:flex;flex-wrap:wrap;gap:40px;align-items:flex-start">
+  <div style="flex:1 1 420px;max-width:560px;background:#fff;border-radius:16px;box-shadow:0 1px 2px rgba(30,35,70,.06);overflow:hidden">
+    <div style="display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid oklch(0.93 0.01 262)">
+      <a href="/ugyfelportal" onClick="{{ go }}" style="padding:16px;text-align:center;font-weight:700;color:{{ tabLoginFg }};border-bottom:3px solid {{ tabLoginLine }}" style-hover="text-decoration:none">Bejelentkezés</a>
+      <a href="/ugyfelportal/regisztracio" onClick="{{ go }}" style="padding:16px;text-align:center;font-weight:700;color:{{ tabRegFg }};border-bottom:3px solid {{ tabRegLine }}" style-hover="text-decoration:none">Új fiók létrehozása</a>
+    </div>
+    <div style="padding:32px">
+      <sc-if value="{{ alertShow }}" hint-placeholder-val="{{ false }}">
+        <div role="{{ alertRole }}" style="display:flex;gap:14px;padding:16px 18px;border-radius:12px;background:{{ alertBg }};margin-bottom:22px;animation:mmdin 250ms">
+          <span style="width:28px;height:28px;border-radius:50%;background:{{ alertDot }};color:#fff;display:grid;place-items:center;flex:none;font-weight:700">{{ alertIcon }}</span>
+          <div><div style="font-weight:700;color:{{ alertTitleC }}">{{ alertTitle }}</div><div style="font-size:15px;color:oklch(0.36 0.03 262)">{{ alertText }}</div></div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ doneShow }}" hint-placeholder-val="{{ false }}">
+        <div role="status" style="text-align:center;padding:12px 0 4px;animation:mmdin 300ms">
+          <div style="width:64px;height:64px;border-radius:50%;background:{{ doneBg }};display:grid;place-items:center;margin:0 auto 16px"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="{{ doneStroke }}" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="{{ donePath }}"></path></svg></div>
+          <h2 style="font-family:'Source Serif 4',serif;font-weight:700;font-size:26px;margin:0 0 8px">{{ doneTitle }}</h2>
+          <p style="margin:0 0 22px;color:oklch(0.4 0.03 262)">{{ doneText }}</p>
+          <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+            <a href="{{ doneHref }}" onClick="{{ go }}" style="padding:12px 22px;border-radius:999px;background:oklch(0.28 0.08 262);color:#fff;font-weight:700" style-hover="color:#fff;text-decoration:none">{{ doneBtn }}</a>
+            <sc-if value="{{ canResend }}" hint-placeholder-val="{{ false }}"><button onClick="{{ resend }}" style="cursor:pointer;padding:11px 20px;border-radius:999px;border:1.5px solid oklch(0.28 0.08 262);background:#fff;color:oklch(0.28 0.08 262);font:inherit;font-weight:700">{{ resendLabel }}</button></sc-if>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ formShow }}" hint-placeholder-val="{{ true }}">
+        <form onSubmit="{{ submit }}" novalidate style="display:grid;gap:16px">
+          <sc-if value="{{ formIntro }}" hint-placeholder-val="{{ false }}"><p style="margin:0;color:oklch(0.4 0.03 262)">{{ formIntro }}</p></sc-if>
+          <sc-for list="{{ fields }}" as="f" hint-placeholder-count="2">
+            <label style="display:grid;gap:6px">
+              <span style="font-weight:600;font-size:15px">{{ f.label }}</span>
+              <input type="{{ f.type }}" value="{{ f.value }}" onChange="{{ f.onChange }}" placeholder="{{ f.ph }}" autocomplete="{{ f.ac }}" aria-invalid="{{ f.invalid }}" style="padding:13px 14px;border-radius:10px;border:1.5px solid {{ f.border }};background:{{ f.bg }};font:inherit;font-size:16px;outline:none;min-width:0" style-focus="border-color:oklch(0.28 0.08 262);box-shadow:0 0 0 3px oklch(0.9 0.04 262)">
+              <sc-if value="{{ f.hasHint }}"><span style="font-size:14px;color:oklch(0.5 0.03 262)">{{ f.hint }}</span></sc-if>
+              <sc-if value="{{ f.invalid }}"><span style="font-size:14px;font-weight:600;color:oklch(0.5 0.19 27)">{{ f.error }}</span></sc-if>
+            </label>
+          </sc-for>
+          <sc-if value="{{ showStrength }}" hint-placeholder-val="{{ false }}">
+            <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:-6px"><sc-for list="{{ strength }}" as="b" hint-placeholder-count="4"><span style="height:6px;border-radius:999px;background:{{ b }}"></span></sc-for></div>
+          </sc-if>
+          <sc-if value="{{ showPrivacy }}" hint-placeholder-val="{{ false }}">
+            <label style="display:flex;gap:12px;align-items:flex-start;padding:12px 14px;border-radius:10px;background:{{ privBg }};font-size:15px;cursor:pointer">
+              <input type="checkbox" checked="{{ priv }}" onChange="{{ togglePriv }}" style="width:20px;height:20px;margin:1px 0 0;accent-color:oklch(0.28 0.08 262);flex:none">
+              <span>Az <a href="/adatvedelmi-tajekoztato" onClick="{{ go }}">adatvédelmi tájékoztatót</a> megismertem és elfogadom.<sc-if value="{{ privErr }}"><span style="display:block;margin-top:4px;font-weight:600;color:oklch(0.5 0.19 27)">A regisztrációhoz el kell fogadnod.</span></sc-if></span>
+            </label>
+          </sc-if>
+          <button type="submit" disabled="{{ busy }}" style="cursor:pointer;padding:14px 22px;border-radius:999px;border:0;background:oklch(0.28 0.08 262);color:#fff;font:inherit;font-weight:700;display:flex;gap:10px;align-items:center;justify-content:center;margin-top:4px;opacity:{{ btnOpacity }}">
+            <sc-if value="{{ busy }}" hint-placeholder-val="{{ false }}"><span style="width:16px;height:16px;border-radius:50%;border:2.5px solid rgba(255,255,255,.35);border-top-color:#fff;animation:mmdspin 700ms linear infinite"></span></sc-if>{{ btnLabel }}</button>
+          <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:15px">
+            <sc-for list="{{ links }}" as="l" hint-placeholder-count="2"><a href="{{ l.href }}" onClick="{{ go }}" style="font-weight:600">{{ l.label }}</a></sc-for>
+          </div>
+        </form>
+      </sc-if>
+    </div>
+  </div>
+
+  <aside style="flex:1 1 280px;max-width:440px;display:grid;gap:14px">
+    <div style="padding:24px;border-radius:14px;background:oklch(0.95 0.02 262)">
+      <div style="font-family:'Source Serif 4',serif;font-weight:700;font-size:21px;margin-bottom:10px">Mire jó az ügyfélportál?</div>
+      <div style="display:grid;gap:8px;font-size:16px">
+        <div style="display:flex;gap:10px"><span style="width:7px;height:7px;border-radius:50%;background:oklch(0.28 0.08 262);flex:none;margin-top:10px"></span>Előzetes bejelentés a díj visszatérítéséhez</div>
+        <div style="display:flex;gap:10px"><span style="width:7px;height:7px;border-radius:50%;background:oklch(0.28 0.08 262);flex:none;margin-top:10px"></span>Beküldött igénylések állapotának követése</div>
+        <div style="display:flex;gap:10px"><span style="width:7px;height:7px;border-radius:50%;background:oklch(0.28 0.08 262);flex:none;margin-top:10px"></span>Hiánypótlási értesítések</div>
+      </div>
+    </div>
+    <div style="padding:24px;border-radius:14px;background:oklch(0.96 0.045 85)">
+      <div style="font-weight:700;margin-bottom:4px">Segítség kell a belépéshez?</div>
+      <div style="font-size:15px;color:oklch(0.4 0.03 262)">+36 1 488 2790 · mmd@artisjus.com<br>Hétfő, kedd 14-16, csütörtök 9-11</div>
+    </div>
+  </aside>
+</div>
+</sc-if>
+
+<sc-if value="{{ isDash }}" hint-placeholder-val="{{ false }}">
+<div style="max-width:1200px;margin:0 auto;padding:48px 28px 96px">
+  <div style="display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:24px">
+    <h2 style="font-family:'Source Serif 4',serif;font-weight:700;font-size:28px;margin:0">Igényléseim</h2>
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
+      <a href="/visszaterites/ugyintezes" onClick="{{ go }}" style="padding:12px 20px;border-radius:999px;background:oklch(0.85 0.14 85);color:oklch(0.24 0.06 262);font-weight:700" style-hover="text-decoration:none;background:oklch(0.9 0.12 85);color:oklch(0.24 0.06 262)">+ Új előzetes bejelentés</a>
+      <button onClick="{{ logout }}" style="cursor:pointer;padding:11px 18px;border-radius:999px;border:1.5px solid oklch(0.28 0.08 262);background:#fff;color:oklch(0.28 0.08 262);font:inherit;font-weight:700">Kijelentkezés</button>
+    </div>
+  </div>
+  <sc-if value="{{ hasClaims }}" hint-placeholder-val="{{ true }}">
+    <div style="display:grid;gap:12px">
+      <sc-for list="{{ claims }}" as="c" hint-placeholder-count="4">
+        <div style="background:#fff;border-radius:14px;padding:20px 22px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,180px),1fr));gap:14px;align-items:center;box-shadow:0 1px 2px rgba(30,35,70,.06)">
+          <div><div style="font-family:ui-monospace,monospace;font-weight:700">{{ c.id }}</div><div style="font-size:14px;color:oklch(0.5 0.03 262)">Beküldve: {{ c.date }}</div></div>
+          <div style="font-weight:600">{{ c.media }}</div>
+          <div><span style="display:inline-flex;gap:8px;align-items:center;padding:6px 12px;border-radius:999px;font-size:14px;font-weight:700;background:{{ c.bg }};color:{{ c.fg }}"><span style="width:8px;height:8px;border-radius:50%;background:{{ c.dot }}"></span>{{ c.status }}</span></div>
+          <div style="font-size:15px;color:oklch(0.4 0.03 262)">{{ c.note }}</div>
+        </div>
+      </sc-for>
+    </div>
+  </sc-if>
+  <sc-if value="{{ noClaims }}" hint-placeholder-val="{{ false }}">
+    <div role="status" style="text-align:center;padding:56px 24px;background:#fff;border-radius:16px">
+      <div style="width:72px;height:72px;border-radius:50%;margin:0 auto 16px;background:repeating-radial-gradient(circle,#11141d 0 1.5px,#262c3d 1.5px 3px);display:grid;place-items:center"><span style="width:22px;height:22px;border-radius:50%;background:oklch(0.85 0.14 85)"></span></div>
+      <div style="font-family:'Source Serif 4',serif;font-weight:700;font-size:24px;margin-bottom:6px">Még nincs igénylésed</div>
+      <p style="margin:0 0 18px;color:oklch(0.42 0.03 262)">Az első lépés az előzetes bejelentési űrlap kitöltése.</p>
+      <a href="/visszaterites/ugyintezes" onClick="{{ go }}" style="padding:12px 22px;border-radius:999px;background:oklch(0.28 0.08 262);color:#fff;font-weight:700;display:inline-block" style-hover="color:#fff;text-decoration:none">Előzetes bejelentés indítása</a>
+    </div>
+  </sc-if>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:14px;margin-top:32px">
+    <div style="padding:24px;border-radius:14px;background:#fff">
+      <div style="font-weight:700;margin-bottom:8px">Fiókadatok</div>
+      <div style="font-size:15px;color:oklch(0.4 0.03 262);line-height:1.8">Kovács Anna<br>anna.kovacs@example.hu</div>
+      <a href="/ugyfelportal/jelszo" onClick="{{ go }}" style="font-weight:600;font-size:15px">Jelszó módosítása</a>
+    </div>
+    <div style="padding:24px;border-radius:14px;background:oklch(0.96 0.045 85)">
+      <div style="font-weight:700;margin-bottom:8px">Ne felejtsd el</div>
+      <div style="font-size:15px;color:oklch(0.36 0.03 262)">Az előzetes bejelentés után írásban is meg kell erősítened az igényt, csatolva a számlát vagy nyugtát és a hologramos címkét.</div>
+    </div>
+  </div>
+</div>
+</sc-if>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;page&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;/ugyfelportal&quot;,&quot;/ugyfelportal/regisztracio&quot;,&quot;/ugyfelportal/jelszo&quot;,&quot;/ugyfelportal/uj-jelszo&quot;,&quot;/ugyfelportal/fiok&quot;],&quot;default&quot;:&quot;/ugyfelportal&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;loggedIn&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;},&quot;demoEmpty&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;},&quot;nav&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;(path: string) =&gt; void&quot;},&quot;setLoggedIn&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;(v: boolean) =&gt; void&quot;}}">
+class Component extends DCLogic {
+  state = { v: {}, errors: {}, status: 'idle', fails: 0, priv: false, privErr: false, resent: false };
+  componentDidUpdate(pp) { if (pp.page !== this.props.page) this.setState({ v: {}, errors: {}, status: 'idle', privErr: false, resent: false }); }
+  renderVals() {
+    const base = '/ugyfelportal';
+    let page = this.props.page || base;
+    const loggedIn = !!this.props.loggedIn;
+    const go = (ev) => { const u = ev.currentTarget.getAttribute('href'); if (u && u.startsWith('/')) { ev.preventDefault(); this.props.nav && this.props.nav(u); } };
+    if (page === base && loggedIn) page = base + '/fiok';
+    if (page === base + '/fiok' && !loggedIn) page = base;
+    const s = this.state, st = s.status;
+    const RED = 'oklch(0.55 0.2 27)';
+    const emailOk = (x) => /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(x || '');
+    const setV = (k) => (e) => { const val = e.target.value; this.setState(p => ({ v: { ...p.v, [k]: val }, errors: { ...p.errors, [k]: undefined } })); };
+    const F = (key, label, type, o = {}) => { const err = s.errors[key]; return { key, label, type, value: s.v[key] || '', onChange: setV(key), ph: o.ph || '', ac: o.ac || 'off', hint: o.hint || '', hasHint: !!o.hint && !err, invalid: !!err, error: err || '', border: err ? RED : 'oklch(0.86 0.015 262)', bg: err ? 'oklch(0.985 0.01 27)' : '#fff' }; };
+    const later = (fn) => { this.setState({ status: 'busy' }); setTimeout(fn, 1000); };
+    const views = {
+      [base]: {
+        title: 'Ügyfélportál', lead: 'Jelentkezz be a visszatérítési igényed benyújtásához és követéséhez.',
+        fields: [F('email', 'E-mail-cím', 'email', { ph: 'nev@example.hu', ac: 'email' }), F('pw', 'Jelszó', 'password', { ac: 'current-password' })],
+        btn: 'Bejelentkezés', links: [{ label: 'Elfelejtetted a jelszavad?', href: base + '/jelszo' }, { label: 'Új fiók létrehozása', href: base + '/regisztracio' }],
+        submit: () => {
+          const e = {};
+          if (!s.v.email) e.email = 'Add meg az e-mail-címed.'; else if (!emailOk(s.v.email)) e.email = 'Érvényes e-mail-címet adj meg.';
+          if (!s.v.pw) e.pw = 'Add meg a jelszavad.';
+          if (Object.keys(e).length) return this.setState({ errors: e, status: 'idle' });
+          if (s.fails >= 2) return this.setState({ status: 'locked' });
+          later(() => {
+            if (s.v.pw.length < 6 || s.v.pw === 'rossz') this.setState(p => ({ status: p.fails + 1 >= 3 ? 'locked' : 'badcred', fails: p.fails + 1 }));
+            else { this.setState({ status: 'idle', fails: 0, v: {} }); this.props.setLoggedIn && this.props.setLoggedIn(true); this.props.nav && this.props.nav(base + '/fiok'); }
+          });
+        }
+      },
+      [base + '/regisztracio']: {
+        title: 'Új fiók létrehozása', lead: 'A fiókkal előzetes bejelentést tehetsz és követheted az igényléseid állapotát.',
+        fields: [F('name', 'Teljes név', 'text', { ph: 'Kovács Anna', ac: 'name' }), F('email', 'E-mail-cím', 'email', { ph: 'nev@example.hu', ac: 'email' }), F('pw', 'Jelszó', 'password', { ac: 'new-password', hint: 'Legalább 8 karakter, benne szám is.' }), F('pw2', 'Jelszó még egyszer', 'password', { ac: 'new-password' })],
+        btn: 'Fiók létrehozása', privacy: true, strength: true, links: [{ label: 'Már van fiókod? Bejelentkezés', href: base }],
+        submit: () => {
+          const e = {}, v = s.v;
+          if (!v.name) e.name = 'Add meg a neved.';
+          if (!v.email) e.email = 'Add meg az e-mail-címed.'; else if (!emailOk(v.email)) e.email = 'Érvényes e-mail-címet adj meg.';
+          if (!v.pw) e.pw = 'Adj meg egy jelszót.'; else if (v.pw.length < 8 || !/\d/.test(v.pw)) e.pw = 'A jelszó legalább 8 karakter legyen, és tartalmazzon számot.';
+          if (v.pw && v.pw2 !== v.pw) e.pw2 = 'A két jelszó nem egyezik.';
+          const pe = !s.priv;
+          if (Object.keys(e).length || pe) return this.setState({ errors: e, privErr: pe, status: 'idle' });
+          later(() => { if ((v.email || '').includes('foglalt')) this.setState({ status: 'taken', errors: { email: 'Ezzel az e-mail-címmel már van fiók.' } }); else this.setState({ status: 'regdone' }); });
+        }
+      },
+      [base + '/jelszo']: {
+        title: 'Új jelszó igénylése', lead: 'Add meg a fiókodhoz tartozó e-mail-címet, és küldünk egy linket az új jelszó beállításához.',
+        fields: [F('email', 'E-mail-cím', 'email', { ph: 'nev@example.hu', ac: 'email' })],
+        btn: 'Link küldése', links: [{ label: '← Vissza a bejelentkezéshez', href: base }],
+        submit: () => { if (!emailOk(s.v.email)) return this.setState({ errors: { email: s.v.email ? 'Érvényes e-mail-címet adj meg.' : 'Add meg az e-mail-címed.' } }); later(() => this.setState({ status: 'sent' })); }
+      },
+      [base + '/uj-jelszo']: {
+        title: 'Új jelszó beállítása', lead: 'Adj meg egy új jelszót a fiókodhoz.',
+        fields: [F('pw', 'Új jelszó', 'password', { ac: 'new-password', hint: 'Legalább 8 karakter, benne szám is.' }), F('pw2', 'Új jelszó még egyszer', 'password', { ac: 'new-password' })],
+        btn: 'Jelszó mentése', strength: true, links: [{ label: '← Vissza a bejelentkezéshez', href: base }],
+        submit: () => {
+          const e = {}, v = s.v;
+          if (!v.pw || v.pw.length < 8 || !/\d/.test(v.pw)) e.pw = 'A jelszó legalább 8 karakter legyen, és tartalmazzon számot.';
+          if (v.pw && v.pw2 !== v.pw) e.pw2 = 'A két jelszó nem egyezik.';
+          if (Object.keys(e).length) return this.setState({ errors: e });
+          later(() => this.setState({ status: v.pw.startsWith('lejart') ? 'expired' : 'pwdone' }));
+        }
+      },
+      [base + '/fiok']: { title: 'Üdv újra, Anna', lead: 'Itt követheted az igényléseid állapotát.' }
+    };
+    const V = views[page] || views[base];
+    const isDash = page === base + '/fiok';
+    const alerts = {
+      badcred: ['alert', 'Hibás e-mail-cím vagy jelszó', 'Ellenőrizd az adatokat, és próbáld újra. Harmadik sikertelen kísérlet után átmenetileg letiltjuk a belépést.', 'err'],
+      locked: ['alert', 'Túl sok sikertelen próbálkozás', 'Biztonsági okokból 15 percig nem tudsz belépni. Addig új jelszót is igényelhetsz.', 'warn'],
+      taken: ['alert', 'Ez az e-mail-cím már regisztrálva van', 'Jelentkezz be, vagy igényelj új jelszót, ha elfelejtetted.', 'err'],
+      expired: ['alert', 'A link lejárt', 'A jelszó-visszaállító link 24 óráig érvényes. Igényelj újat.', 'warn']
+    };
+    const A = alerts[st];
+    const tone = A ? A[3] : 'err';
+    const done = {
+      regdone: ['Ellenőrizd a postafiókodat', 'Megerősítő linket küldtünk a(z) ' + (s.v.email || '') + ' címre. A fiók a link megnyitása után aktív.', 'Tovább a bejelentkezéshez', base, true, 'mail'],
+      sent: ['Elküldtük a linket', 'Ha a megadott címhez tartozik fiók, pár percen belül megérkezik a jelszó-visszaállító link. Nézd meg a levélszemét mappát is.', 'Vissza a bejelentkezéshez', base, true, 'mail'],
+      pwdone: ['Jelszó módosítva', 'Az új jelszóval most már bejelentkezhetsz.', 'Bejelentkezés', base, false, 'ok']
+    }[st];
+    const pw = s.v.pw || '';
+    const score = (pw.length >= 8) + /\d/.test(pw) + /[A-ZÁÉÍÓÖŐÚÜŰ]/.test(pw) + /[^A-Za-z0-9]/.test(pw);
+    const sc = ['oklch(0.9 0.01 262)', 'oklch(0.6 0.19 27)', 'oklch(0.75 0.15 75)', 'oklch(0.6 0.12 150)', 'oklch(0.5 0.12 150)'][score];
+    const claimsData = [
+      ['MMD-2026-00412', '2026. 09. 12.', 'Memóriakártya × 2', 'Elbírálás alatt', 'Az írásos megerősítés megérkezett.', 'blue'],
+      ['MMD-2026-00377', '2026. 08. 28.', 'Külső merevlemez × 1', 'Hiánypótlás szükséges', 'Hiányzik a hologramos címke.', 'warn'],
+      ['MMD-2026-00201', '2026. 05. 03.', 'Pendrive × 3', 'Jóváhagyva', 'A visszatérítést átutaltuk.', 'ok'],
+      ['MMD-2026-00118', '2026. 03. 17.', 'Írható DVD × 10', 'Elutasítva', 'A hordozón más szerzők művei is szerepeltek.', 'err']
+    ];
+    const tones = { blue: ['oklch(0.95 0.02 262)', 'oklch(0.3 0.08 262)', 'oklch(0.45 0.12 255)'], warn: ['oklch(0.96 0.05 85)', 'oklch(0.4 0.08 70)', 'oklch(0.72 0.14 75)'], ok: ['oklch(0.95 0.04 150)', 'oklch(0.38 0.1 150)', 'oklch(0.55 0.12 150)'], err: ['oklch(0.95 0.035 27)', 'oklch(0.45 0.16 27)', 'oklch(0.55 0.2 27)'] };
+    const claims = this.props.demoEmpty ? [] : claimsData.map(([id, date, media, status, note, t]) => ({ id, date, media, status, note, bg: tones[t][0], fg: tones[t][1], dot: tones[t][2] }));
+    const isLoginTab = page === base, isRegTab = page === base + '/regisztracio';
+    return {
+      go, title: V.title, lead: V.lead, isAuth: !isDash, isDash,
+      tabLoginFg: isLoginTab ? 'oklch(0.24 0.04 262)' : 'oklch(0.5 0.03 262)', tabLoginLine: isLoginTab ? 'oklch(0.85 0.14 85)' : 'transparent',
+      tabRegFg: isRegTab ? 'oklch(0.24 0.04 262)' : 'oklch(0.5 0.03 262)', tabRegLine: isRegTab ? 'oklch(0.85 0.14 85)' : 'transparent',
+      alertShow: !!A, alertRole: 'alert', alertTitle: A ? A[1] : '', alertText: A ? A[2] : '',
+      alertBg: tone === 'warn' ? 'oklch(0.96 0.05 85)' : 'oklch(0.95 0.035 27)', alertDot: tone === 'warn' ? 'oklch(0.72 0.14 75)' : RED, alertIcon: '!', alertTitleC: tone === 'warn' ? 'oklch(0.4 0.08 70)' : 'oklch(0.42 0.16 27)',
+      doneShow: !!done, formShow: !done && !isDash,
+      doneTitle: done ? done[0] : '', doneText: done ? done[1] : '', doneBtn: done ? done[2] : '', doneHref: done ? done[3] : base, canResend: done ? done[4] : false,
+      doneBg: done && done[5] === 'ok' ? 'oklch(0.93 0.06 150)' : 'oklch(0.95 0.02 262)', doneStroke: done && done[5] === 'ok' ? 'oklch(0.45 0.12 150)' : 'oklch(0.28 0.08 262)',
+      donePath: done && done[5] === 'ok' ? 'M5 12l5 5L20 7' : 'M3 6h18v12H3zM3 6l9 7 9-7',
+      resend: () => this.setState({ resent: true }), resendLabel: s.resent ? 'Újraküldve ✓' : 'Újraküldés',
+      formIntro: '', fields: V.fields || [], btnLabel: st === 'busy' ? 'Folyamatban…' : V.btn, busy: st === 'busy', btnOpacity: st === 'locked' ? 0.5 : 1,
+      submit: (e) => { e.preventDefault(); V.submit && V.submit(); },
+      links: V.links || [],
+      showPrivacy: !!V.privacy, priv: s.priv, togglePriv: () => this.setState(p => ({ priv: !p.priv, privErr: false })), privErr: s.privErr, privBg: s.privErr ? 'oklch(0.95 0.035 27)' : 'oklch(0.97 0.012 262)',
+      showStrength: !!V.strength && pw.length > 0, strength: [0, 1, 2, 3].map(i => i < score ? sc : 'oklch(0.92 0.01 262)'),
+      hasClaims: claims.length > 0, noClaims: claims.length === 0, claims,
+      logout: () => { this.props.setLoggedIn && this.props.setLoggedIn(false); this.props.nav && this.props.nav(base); }
+    };
+  }
+}
+</script>
+</body>
+</html>
