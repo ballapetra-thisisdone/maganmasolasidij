@@ -173,7 +173,7 @@ class Component extends DCLogic {
         { name: 'Hungart Vizuális Művészek Közös Jogkezelő Társasága Egyesület', url: 'https://www.hungart.org/', host: 'hungart.org' },
         { name: 'Magyar Hangfelvétel-kiadók Szövetsége Közös Jogkezelő Egyesület', url: 'https://www.mahasz.hu/', host: 'mahasz.hu' }
       ],
-      fields: [F('name', 'Név', 'text', { ph: 'Kovács Anna' }), F('email', 'E-mail-cím', 'email', { ph: 'nev@example.hu' }), F('topic', 'Téma', 'select', { options: ['Visszatérítés', 'Díjfizetés, díjszabás', 'Ügyfélportál, belépés', 'Egyéb'] }), F('msg', 'Üzenet', 'textarea', { ph: 'Miben segíthetünk?' })],
+      fields: [F('name', 'Név', 'text', { ph: 'Kovács Anna' }), F('email', 'E-mail-cím', 'email', { ph: 'nev@example.hu' }), F('topic', 'Téma', 'select', { options: ['Visszatérítés', 'Díjfizetés, díjszabás', 'Regisztráció, ügyfélportál', 'Egyéb'] }), F('msg', 'Üzenet', 'textarea', { ph: 'Miben segíthetünk?' })],
       sending: st === 'sending', sendLabel: st === 'sending' ? 'Küldés…' : 'Üzenet küldése',
       msgOk: st === 'ok', msgForm: st !== 'ok', msgFail: st === 'fail',
       resetMsg: () => this.setState({ status: 'idle', v: {}, errors: {} }),
@@ -190,7 +190,7 @@ class Component extends DCLogic {
       toc: D ? D.sections.map(([id, h]) => ({ href: '#' + id, label: h })) : [],
       sections: D ? D.sections.map(([id, h, p, t]) => ({ id, h, p, hasTable: !!t })) : [],
       cookies: [
-        { n: 'SESS…', p: 'maganmasolasidij.hu', c: 'Szükséges – bejelentkezett munkamenet (Drupal)', d: 'Munkamenet' },
+        { n: 'SESS…', p: 'maganmasolasidij.hu', c: 'Szükséges – munkamenet (Drupal)', d: 'Munkamenet' },
         { n: 'cookie-agreed', p: 'maganmasolasidij.hu', c: 'Szükséges – a süti-hozzájárulás tárolása', d: '100 nap' },
         { n: '_ga', p: 'Google Analytics', c: 'Statisztikai – látogatók megkülönböztetése', d: '2 év' },
         { n: '_ga_…', p: 'Google Analytics', c: 'Statisztikai – munkamenet állapota', d: '2 év' }

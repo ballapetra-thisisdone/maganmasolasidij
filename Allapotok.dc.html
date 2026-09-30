@@ -33,9 +33,9 @@ a:hover{color:oklch(0.32 0.12 255);text-decoration:underline}
       <p style="margin:0 0 20px;color:oklch(0.45 0.03 262)">Űrlapok felett, oldalon belül. Kör ikon + félkövér cím + magyarázó szöveg. Hiba: role="alert", siker/infó: role="status".</p>
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:14px">
         <div role="status" style="display:flex;gap:14px;padding:18px 20px;border-radius:12px;background:oklch(0.95 0.04 150)"><span style="width:28px;height:28px;border-radius:50%;background:oklch(0.5 0.12 150);color:#fff;display:grid;place-items:center;flex:none"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"></path></svg></span><div><div style="font-weight:700;color:oklch(0.35 0.1 150)">Sikeres művelet</div><div style="font-size:15px;color:oklch(0.36 0.03 262)">Például: „Regisztrált státuszú – a díjat megfizették” (ellenőrző)</div></div></div>
-        <div role="alert" style="display:flex;gap:14px;padding:18px 20px;border-radius:12px;background:oklch(0.95 0.035 27)"><span style="width:28px;height:28px;border-radius:50%;background:oklch(0.55 0.2 27);color:#fff;display:grid;place-items:center;flex:none;font-weight:700">!</span><div><div style="font-weight:700;color:oklch(0.42 0.16 27)">Hiba</div><div style="font-size:15px;color:oklch(0.36 0.03 262)">„Hibás e-mail-cím vagy jelszó” (belépés) · „A bejelentést nem sikerült elküldeni” (űrlap)</div></div></div>
-        <div role="status" style="display:flex;gap:14px;padding:18px 20px;border-radius:12px;background:oklch(0.96 0.05 85)"><span style="width:28px;height:28px;border-radius:50%;background:oklch(0.72 0.14 75);color:#fff;display:grid;place-items:center;flex:none;font-weight:700">!</span><div><div style="font-weight:700;color:oklch(0.4 0.08 70)">Figyelmeztetés</div><div style="font-size:15px;color:oklch(0.36 0.03 262)">„Túl sok sikertelen próbálkozás” · „A link lejárt” · „Nem található a nyilvántartásban”</div></div></div>
-        <div role="status" style="display:flex;gap:14px;padding:18px 20px;border-radius:12px;background:oklch(0.95 0.02 262)"><span style="width:28px;height:28px;border-radius:50%;background:oklch(0.28 0.08 262);color:#fff;display:grid;place-items:center;flex:none;font-weight:700;font-family:'Source Serif 4',serif">i</span><div><div style="font-weight:700">Tájékoztatás</div><div style="font-size:15px;color:oklch(0.36 0.03 262)">„A bejelentéshez be kell jelentkezned” (ügyintézés, kijelentkezve)</div></div></div>
+        <div role="alert" style="display:flex;gap:14px;padding:18px 20px;border-radius:12px;background:oklch(0.95 0.035 27)"><span style="width:28px;height:28px;border-radius:50%;background:oklch(0.55 0.2 27);color:#fff;display:grid;place-items:center;flex:none;font-weight:700">!</span><div><div style="font-weight:700;color:oklch(0.42 0.16 27)">Hiba</div><div style="font-size:15px;color:oklch(0.36 0.03 262)">„A regisztrációt nem sikerült elküldeni” (regisztráció) · „Az ellenőrzés most nem érhető el” (ellenőrző)</div></div></div>
+        <div role="status" style="display:flex;gap:14px;padding:18px 20px;border-radius:12px;background:oklch(0.96 0.05 85)"><span style="width:28px;height:28px;border-radius:50%;background:oklch(0.72 0.14 75);color:#fff;display:grid;place-items:center;flex:none;font-weight:700">!</span><div><div style="font-weight:700;color:oklch(0.4 0.08 70)">Figyelmeztetés</div><div style="font-size:15px;color:oklch(0.36 0.03 262)">„Nem található a nyilvántartásban” (ellenőrző)</div></div></div>
+        <div role="status" style="display:flex;gap:14px;padding:18px 20px;border-radius:12px;background:oklch(0.95 0.02 262)"><span style="width:28px;height:28px;border-radius:50%;background:oklch(0.28 0.08 262);color:#fff;display:grid;place-items:center;flex:none;font-weight:700;font-family:'Source Serif 4',serif">i</span><div><div style="font-weight:700">Tájékoztatás</div><div style="font-size:15px;color:oklch(0.36 0.03 262)">„N mezőt kell javítanod” – összesítő a regisztrációs kérdőív tetején</div></div></div>
       </div>
     </section>
 
@@ -46,13 +46,12 @@ a:hover{color:oklch(0.32 0.12 255);text-decoration:underline}
         <label style="display:grid;gap:6px"><span style="font-weight:600;font-size:15px">Alap</span><input placeholder="nev@example.hu" style="padding:13px 14px;border-radius:10px;border:1.5px solid oklch(0.86 0.015 262);font:inherit;font-size:16px;outline:none"><span style="font-size:14px;color:oklch(0.5 0.03 262)">Segédszöveg</span></label>
         <label style="display:grid;gap:6px"><span style="font-weight:600;font-size:15px">Fókusz</span><input value="Kovács Anna" style="padding:13px 14px;border-radius:10px;border:1.5px solid oklch(0.28 0.08 262);box-shadow:0 0 0 3px oklch(0.9 0.04 262);font:inherit;font-size:16px;outline:none"></label>
         <label style="display:grid;gap:6px"><span style="font-weight:600;font-size:15px">Hibás</span><input value="anna@" aria-invalid="true" style="padding:13px 14px;border-radius:10px;border:1.5px solid oklch(0.55 0.2 27);background:oklch(0.985 0.01 27);font:inherit;font-size:16px;outline:none"><span style="font-size:14px;font-weight:600;color:oklch(0.5 0.19 27)">Érvényes e-mail-címet adj meg (pl. nev@example.hu).</span></label>
-        <label style="display:grid;gap:6px"><span style="font-weight:600;font-size:15px">Jelszóerősség</span><input type="password" value="titok2026" style="padding:13px 14px;border-radius:10px;border:1.5px solid oklch(0.86 0.015 262);font:inherit;font-size:16px;outline:none"><span style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px"><span style="height:6px;border-radius:999px;background:oklch(0.75 0.15 75)"></span><span style="height:6px;border-radius:999px;background:oklch(0.75 0.15 75)"></span><span style="height:6px;border-radius:999px;background:oklch(0.92 0.01 262)"></span><span style="height:6px;border-radius:999px;background:oklch(0.92 0.01 262)"></span></span></label>
         <label style="display:flex;gap:12px;align-items:flex-start;padding:14px 16px;border-radius:10px;background:oklch(0.95 0.035 27);font-size:15px;grid-column:1 / -1"><input type="checkbox" style="width:20px;height:20px;margin:1px 0 0;accent-color:oklch(0.28 0.08 262);flex:none"><span>Kötelező nyilatkozat, nincs bejelölve<span style="display:block;margin-top:4px;font-weight:600;color:oklch(0.5 0.19 27)">Ezt a nyilatkozatot el kell fogadnod.</span></span></label>
       </div>
       <div style="margin-top:14px;padding:16px 18px;border-radius:12px;background:#fff">
         <div style="font-weight:700;margin-bottom:8px">Validációs szabályok</div>
         <div style="display:grid;gap:4px;font-size:15px;color:oklch(0.36 0.03 262)">
-          <span>E-mail: <code>^[^@\s]+@[^@\s]+\.[^@\s]+$</code> · Jelszó: min. 8 karakter + szám · IMEI: pontosan 15 számjegy</span>
+          <span>E-mail: <code>^[^@\s]+@[^@\s]+\.[^@\s]+$</code> · IMEI: pontosan 15 számjegy</span>
           <span>Címkesorszám: 6–20 karakter [A-Za-z0-9-] · PCSN/SN: 6–24 karakter · Vásárlás dátuma: csak az aktuális év · Darabszám ≥ 1 · Kapcsolati üzenet ≥ 20 karakter</span>
         </div>
       </div>
@@ -86,18 +85,8 @@ a:hover{color:oklch(0.32 0.12 255);text-decoration:underline}
     </section>
 
     <section data-screen-label="Státuszok és üres állapot">
-      <h2 style="font-family:'Source Serif 4',serif;font-weight:700;font-size:28px;margin:0 0 6px">5. Igénylés-státuszok és üres állapotok</h2>
-      <div style="display:flex;gap:10px;flex-wrap:wrap;margin:14px 0 20px">
-        <sc-for list="{{ pills }}" as="p" hint-placeholder-count="5">
-          <span style="display:inline-flex;gap:8px;align-items:center;padding:7px 14px;border-radius:999px;font-size:15px;font-weight:700;background:{{ p.bg }};color:{{ p.fg }}"><span style="width:8px;height:8px;border-radius:50%;background:{{ p.dot }}"></span>{{ p.t }}</span>
-        </sc-for>
-      </div>
+      <h2 style="font-family:'Source Serif 4',serif;font-weight:700;font-size:28px;margin:0 0 20px">5. Üres állapotok</h2>
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:14px">
-        <div style="text-align:center;padding:36px 20px;background:#fff;border-radius:16px">
-          <div style="width:64px;height:64px;border-radius:50%;margin:0 auto 14px;background:repeating-radial-gradient(circle,#11141d 0 1.5px,#262c3d 1.5px 3px);display:grid;place-items:center"><span style="width:20px;height:20px;border-radius:50%;background:oklch(0.85 0.14 85)"></span></div>
-          <div style="font-family:'Source Serif 4',serif;font-weight:700;font-size:21px">Még nincs igénylésed</div>
-          <div style="font-size:15px;color:oklch(0.42 0.03 262)">Ügyfélportál / Igényléseim</div>
-        </div>
         <div style="text-align:center;padding:36px 20px;background:#fff;border-radius:16px">
           <div style="width:64px;height:64px;border-radius:50%;margin:0 auto 14px;background:oklch(0.95 0.02 262);display:grid;place-items:center"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="oklch(0.28 0.08 262)" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-4-4M8 11h6"></path></svg></div>
           <div style="font-family:'Source Serif 4',serif;font-weight:700;font-size:21px">Nincs találat</div>
@@ -128,34 +117,18 @@ class Component extends DCLogic {
   renderVals() {
     const OK = ['oklch(0.93 0.06 150)', 'oklch(0.45 0.12 150)', 'M5 12l5 5L20 7'], MAIL = ['oklch(0.95 0.02 262)', 'oklch(0.28 0.08 262)', 'M3 6h18v12H3zM3 6l9 7 9-7'];
     const d = (t, x, where, k) => ({ t, x, where, bg: k[0], stroke: k[1], path: k[2] });
-    const p = (t, bg, fg, dot) => ({ t, bg, fg, dot });
     return {
       dones: [
-        d('Előzetes bejelentésedet rögzítettük', 'Azonosító + „Hogyan tovább?” 3 lépés + PDF-összesítő', '/visszaterites/ugyintezes', OK),
-        d('Ellenőrizd a postafiókodat', 'Megerősítő link elküldve, „Újraküldés” gombbal', '/ugyfelportal/regisztracio', MAIL),
-        d('Elküldtük a linket', 'Semleges szöveg: nem árulja el, létezik-e a fiók', '/ugyfelportal/jelszo', MAIL),
-        d('Jelszó módosítva', 'Az új jelszóval most már bejelentkezhetsz', '/ugyfelportal/uj-jelszo', OK),
-        d('Köszönjük, üzenetedet megkaptuk', '3 munkanapon belül válaszolunk', '/kapcsolat', OK),
-        d('Sikeres belépés', 'Átirányítás az Igényléseim oldalra, a fejlécben „Fiókom”', '/ugyfelportal → /fiok', OK)
-      ],
-      pills: [
-        p('Elbírálás alatt', 'oklch(0.95 0.02 262)', 'oklch(0.3 0.08 262)', 'oklch(0.45 0.12 255)'),
-        p('Hiánypótlás szükséges', 'oklch(0.96 0.05 85)', 'oklch(0.4 0.08 70)', 'oklch(0.72 0.14 75)'),
-        p('Jóváhagyva', 'oklch(0.95 0.04 150)', 'oklch(0.38 0.1 150)', 'oklch(0.55 0.12 150)'),
-        p('Elutasítva', 'oklch(0.95 0.035 27)', 'oklch(0.45 0.16 27)', 'oklch(0.55 0.2 27)')
+        d('Regisztrációdat rögzítettük', 'Azonosító + „Hogyan tovább?” 3 lépés + PDF-összesítő', '/ugyfelportal/regisztracio', OK),
+        d('Köszönjük, üzenetedet megkaptuk', '3 munkanapon belül válaszolunk', '/kapcsolat', OK)
       ],
       triggers: [
-        { where: 'Belépés', how: 'Jelszó < 6 karakter vagy „rossz”', res: 'Hibás adatok; 3. alkalommal: letiltás 15 percre' },
-        { where: 'Belépés', how: 'Bármilyen e-mail + ≥ 6 karakteres jelszó', res: 'Sikeres belépés → Igényléseim' },
-        { where: 'Regisztráció', how: 'E-mail-címben „foglalt”', res: 'Már regisztrált cím hiba' },
-        { where: 'Új jelszó beállítása', how: 'Jelszó „lejart”-tal kezdődik', res: 'Lejárt link figyelmeztetés' },
-        { where: 'Előzetes bejelentés', how: 'Címkesorszám „0000”-val kezdődik', res: 'Szerverhiba: sorszám nincs a nyilvántartásban' },
-        { where: 'Előzetes bejelentés', how: 'Vásárlás dátuma nem az aktuális évben', res: 'Mezőhiba (visszamenőleg nem igényelhető)' },
+        { where: 'Regisztráció', how: 'Címkesorszám „0000”-val kezdődik', res: 'Szerverhiba: sorszám nincs a nyilvántartásban' },
+        { where: 'Regisztráció', how: 'Vásárlás dátuma nem az aktuális évben', res: 'Mezőhiba (visszamenőleg nem igényelhető)' },
         { where: 'IMEI-ellenőrző', how: '15 számjegy, páros utolsó jegy / páratlan', res: 'Regisztrált / Nem található' },
         { where: 'PCSN-ellenőrző', how: '„X”-szel kezdődik / egyéb', res: 'Nem található / Regisztrált' },
         { where: 'Mindkét ellenőrző', how: '„999”-cel kezdődik', res: 'Rendszer nem érhető el + Újrapróbálás' },
-        { where: 'Kapcsolat', how: 'E-mail „hiba”-val kezdődik', res: 'Hálózati hiba riasztás' },
-        { where: 'Igényléseim', how: 'PagePortal „demoEmpty” prop', res: 'Üres állapot' }
+        { where: 'Kapcsolat', how: 'E-mail „hiba”-val kezdődik', res: 'Hálózati hiba riasztás' }
       ]
     };
   }

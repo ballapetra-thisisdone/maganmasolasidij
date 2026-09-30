@@ -52,10 +52,10 @@ a:hover{color:oklch(0.32 0.12 255);text-decoration:underline}
     <dc-import name="PageSorsa" page="{{ route }}" nav="{{ nav }}" hint-size="100%,1600px"></dc-import>
   </sc-if>
   <sc-if value="{{ isVissza }}" hint-placeholder-val="{{ false }}">
-    <dc-import name="PageVissza" page="{{ route }}" nav="{{ nav }}" logged-in="{{ loggedIn }}" hint-size="100%,1600px"></dc-import>
+    <dc-import name="PageVissza" page="{{ route }}" nav="{{ nav }}" hint-size="100%,1600px"></dc-import>
   </sc-if>
   <sc-if value="{{ isPortal }}" hint-placeholder-val="{{ false }}">
-    <dc-import name="PagePortal" page="{{ route }}" nav="{{ nav }}" logged-in="{{ loggedIn }}" set-logged-in="{{ setLoggedIn }}" hint-size="100%,1000px"></dc-import>
+    <dc-import name="PagePortal" page="{{ route }}" nav="{{ nav }}" hint-size="100%,1600px"></dc-import>
   </sc-if>
   <sc-if value="{{ isInfo }}" hint-placeholder-val="{{ false }}">
     <dc-import name="PageInfo" page="{{ route }}" nav="{{ nav }}" open-cookie="{{ openCookie }}" hint-size="100%,1200px"></dc-import>
@@ -141,8 +141,7 @@ class Component extends DCLogic {
   state = {
     route: (typeof localStorage !== 'undefined' && localStorage.getItem('mmd-route')) || '/',
     cookie: (typeof localStorage !== 'undefined' && localStorage.getItem('mmd-cookie')) || null,
-    cookieOpen: false, cookieDetail: false, analytics: true, toast: null,
-    loggedIn: (typeof localStorage !== 'undefined' && localStorage.getItem('mmd-login') === '1')
+    cookieOpen: false, cookieDetail: false, analytics: true, toast: null
   };
   nav = (p) => {
     const [path, hash] = p.split('#');
@@ -172,9 +171,7 @@ class Component extends DCLogic {
         mk('Visszatérítés', '/visszaterites', isVissza),
         mk('Kapcsolat', '/kapcsolat', r === '/kapcsolat')
       ],
-      portalLabel: this.state.loggedIn ? 'Fiókom' : 'Ügyfélportál',
-      loggedIn: this.state.loggedIn,
-      setLoggedIn: (v) => { try { localStorage.setItem('mmd-login', v ? '1' : '0'); } catch (e) {} this.setState({ loggedIn: v }); },
+      portalLabel: 'Ügyfélportál',
       footCols: [
         { title: 'Tájékoztatás', links: [
           { label: 'A magánmásolási díjról', href: '/a-maganmasolasi-dijrol' },
@@ -187,7 +184,7 @@ class Component extends DCLogic {
           { label: 'Ügyintézés', href: '/visszaterites/ugyintezes' },
           { label: 'PCSN- és IMEI-ellenőrző', href: '/visszaterites/ellenorzok' },
           { label: 'Gyakori kérdések', href: '/visszaterites/gyik' },
-          { label: 'Ügyfélportál', href: '/ugyfelportal' } ] }
+          { label: 'Regisztráció (ügyfélportál)', href: '/ugyfelportal/regisztracio' } ] }
       ],
       showCookie, cookieDetail: this.state.cookieDetail, cookieNoDetail: !this.state.cookieDetail,
       analytics: this.state.analytics,

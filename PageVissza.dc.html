@@ -90,94 +90,19 @@ a:hover{color:oklch(0.32 0.12 255);text-decoration:underline}
     </sc-if>
 
     <sc-if value="{{ isForm }}" hint-placeholder-val="{{ false }}">
-      <sc-if value="{{ formLocked }}" hint-placeholder-val="{{ false }}">
-        <div role="status" style="display:flex;gap:16px;flex-wrap:wrap;align-items:center;padding:22px 24px;border-radius:14px;background:oklch(0.95 0.02 262);margin-bottom:28px">
-          <span style="width:44px;height:44px;border-radius:50%;background:oklch(0.28 0.08 262);color:#fff;display:grid;place-items:center;flex:none"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="5" y="11" width="14" height="10" rx="2"></rect><path d="M8 11V8a4 4 0 0 1 8 0v3"></path></svg></span>
-          <div style="flex:1 1 240px"><div style="font-weight:700">A bejelentéshez be kell jelentkezned</div><div style="font-size:15px;color:oklch(0.42 0.03 262)">Az előzetes bejelentési űrlap az ügyfélportál fiókodból érhető el.</div></div>
-          <div style="display:flex;gap:8px;flex-wrap:wrap">
-            <a href="/ugyfelportal" onClick="{{ go }}" style="padding:10px 18px;border-radius:999px;background:oklch(0.28 0.08 262);color:#fff;font-weight:700" style-hover="color:#fff;text-decoration:none">Bejelentkezés</a>
-            <a href="/ugyfelportal/regisztracio" onClick="{{ go }}" style="padding:9px 18px;border-radius:999px;border:1.5px solid oklch(0.28 0.08 262);color:oklch(0.28 0.08 262);font-weight:700" style-hover="text-decoration:none">Új fiók létrehozása</a>
-          </div>
+      <p style="margin:0 0 16px;color:oklch(0.3 0.03 262)">A visszatérítést az ügyfélportálon, a regisztrációs kérdőív kitöltésével kezdeményezheted. Fiók létrehozására és bejelentkezésre nincs szükség – a beküldés után azonosítót és visszaigazoló e-mailt kapsz.</p>
+      <p style="margin:0 0 28px;color:oklch(0.3 0.03 262)">A regisztrációt követően írásban is meg kell erősítened az igényt, és csatolnod kell az alábbi dokumentumokat:</p>
+      <div style="display:grid;gap:10px;margin-bottom:32px">
+        <div style="display:flex;gap:12px;padding:14px 16px;border-radius:10px;background:#fff"><span style="width:24px;height:24px;border-radius:50%;background:oklch(0.85 0.14 85);display:grid;place-items:center;flex:none;font-weight:700;font-size:13px">1</span><span>a vásárlást igazoló számlát vagy nyugtát (eladó neve, hordozó megnevezése és darabszáma, vásárlás időpontja);</span></div>
+        <div style="display:flex;gap:12px;padding:14px 16px;border-radius:10px;background:#fff"><span style="width:24px;height:24px;border-radius:50%;background:oklch(0.85 0.14 85);display:grid;place-items:center;flex:none;font-weight:700;font-size:13px">2</span><span>a hordozóról vagy csomagolásáról eltávolított Artisjus hologramos címkét.</span></div>
+      </div>
+      <div style="display:flex;gap:20px;align-items:center;flex-wrap:wrap;padding:28px;border-radius:16px;background:oklch(0.28 0.08 262);color:#fff">
+        <div style="flex:1 1 260px">
+          <div style="font-family:'Source Serif 4',serif;font-weight:700;font-size:24px;margin-bottom:4px">Regisztráció a visszatérítéshez</div>
+          <div style="font-size:15px;color:oklch(0.88 0.03 262)">Nagyjából 10–15 perc. Belépés nem szükséges.</div>
         </div>
-      </sc-if>
-
-      <sc-if value="{{ formOk }}" hint-placeholder-val="{{ false }}">
-        <div role="status" style="background:#fff;border-radius:16px;padding:36px;box-shadow:0 1px 2px rgba(30,35,70,.06);animation:mmdin 300ms cubic-bezier(.22,.61,.36,1)">
-          <div style="width:64px;height:64px;border-radius:50%;background:oklch(0.93 0.06 150);display:grid;place-items:center;margin-bottom:18px"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="oklch(0.45 0.12 150)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"></path></svg></div>
-          <h2 style="font-family:'Source Serif 4',serif;font-weight:700;font-size:30px;margin:0 0 8px">Előzetes bejelentésedet rögzítettük</h2>
-          <p style="margin:0 0 20px;color:oklch(0.36 0.03 262)">Azonosító: <b style="font-family:ui-monospace,monospace">{{ refId }}</b>. A visszaigazolást elküldtük a megadott e-mail-címre.</p>
-          <div style="padding:20px 22px;border-radius:12px;background:oklch(0.96 0.045 85);margin-bottom:24px">
-            <div style="font-weight:700;margin-bottom:10px">Hogyan tovább?</div>
-            <div style="display:grid;gap:8px;font-size:16px">
-              <div style="display:flex;gap:10px"><b>1.</b><span>Erősítsd meg az igényt írásban, postai úton vagy az ügyfélszolgálaton.</span></div>
-              <div style="display:flex;gap:10px"><b>2.</b><span>Csatold a vásárlást igazoló számlát vagy nyugtát (eladó neve, hordozó megnevezése és darabszáma, vásárlás időpontja).</span></div>
-              <div style="display:flex;gap:10px"><b>3.</b><span>Csatold a hordozóról vagy csomagolásáról eltávolított Artisjus hologramos címkét.</span></div>
-            </div>
-          </div>
-          <div style="display:flex;gap:10px;flex-wrap:wrap">
-            <button style="cursor:pointer;padding:12px 20px;border-radius:999px;border:0;background:oklch(0.28 0.08 262);color:#fff;font:inherit;font-weight:700">Összesítő letöltése (PDF)</button>
-            <a href="/ugyfelportal/fiok" onClick="{{ go }}" style="padding:11px 20px;border-radius:999px;border:1.5px solid oklch(0.28 0.08 262);color:oklch(0.28 0.08 262);font-weight:700" style-hover="text-decoration:none">Igényléseim</a>
-            <button onClick="{{ resetForm }}" style="cursor:pointer;padding:11px 12px;border:0;background:none;color:oklch(0.42 0.12 255);font:inherit;font-weight:600">Új bejelentés</button>
-          </div>
-        </div>
-      </sc-if>
-
-      <sc-if value="{{ formVisible }}" hint-placeholder-val="{{ true }}">
-        <sc-if value="{{ hasFail }}" hint-placeholder-val="{{ false }}">
-          <div role="alert" style="display:flex;gap:14px;padding:18px 20px;border-radius:12px;background:oklch(0.95 0.035 27);margin-bottom:20px;animation:mmdin 250ms">
-            <span style="width:28px;height:28px;border-radius:50%;background:oklch(0.55 0.2 27);color:#fff;display:grid;place-items:center;flex:none;font-weight:700">!</span>
-            <div><div style="font-weight:700;color:oklch(0.42 0.16 27)">A bejelentést nem sikerült elküldeni</div><div style="font-size:15px;color:oklch(0.36 0.03 262)">{{ failMsg }}</div></div>
-          </div>
-        </sc-if>
-        <sc-if value="{{ hasErrors }}" hint-placeholder-val="{{ false }}">
-          <div role="alert" style="display:flex;gap:14px;padding:18px 20px;border-radius:12px;background:oklch(0.95 0.035 27);margin-bottom:20px;animation:mmdin 250ms">
-            <span style="width:28px;height:28px;border-radius:50%;background:oklch(0.55 0.2 27);color:#fff;display:grid;place-items:center;flex:none;font-weight:700">!</span>
-            <div><div style="font-weight:700;color:oklch(0.42 0.16 27)">{{ errorCount }}</div><div style="font-size:15px;color:oklch(0.36 0.03 262)">Javítsd a pirossal jelölt mezőket, majd küldd el újra.</div></div>
-          </div>
-        </sc-if>
-
-        <form onSubmit="{{ submit }}" novalidate style="background:#fff;border-radius:16px;padding:32px;box-shadow:0 1px 2px rgba(30,35,70,.06);opacity:{{ formOpacity }};pointer-events:{{ formPe }}">
-          <h2 style="font-family:'Source Serif 4',serif;font-weight:700;font-size:26px;margin:0 0 6px">Előzetes bejelentési űrlap</h2>
-          <p style="margin:0 0 26px;font-size:15px;color:oklch(0.45 0.03 262)">A *-gal jelölt mezők kitöltése kötelező.</p>
-          <sc-for list="{{ groups }}" as="g" hint-placeholder-count="3">
-            <fieldset style="border:0;padding:0;margin:0 0 28px">
-              <legend style="font-weight:700;font-size:13px;letter-spacing:.07em;text-transform:uppercase;color:oklch(0.42 0.12 255);margin-bottom:14px;padding:0">{{ g.title }}</legend>
-              <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:16px">
-                <sc-for list="{{ g.fields }}" as="f" hint-placeholder-count="3">
-                  <label style="display:grid;gap:6px;grid-column:{{ f.span }}">
-                    <span style="font-weight:600;font-size:15px">{{ f.label }}</span>
-                    <sc-if value="{{ f.isInput }}"><input type="{{ f.type }}" value="{{ f.value }}" onChange="{{ f.onChange }}" placeholder="{{ f.ph }}" aria-invalid="{{ f.invalid }}" style="padding:12px 14px;border-radius:10px;border:1.5px solid {{ f.border }};background:{{ f.bg }};font:inherit;font-size:16px;outline:none;min-width:0" style-focus="border-color:oklch(0.28 0.08 262);box-shadow:0 0 0 3px oklch(0.9 0.04 262)"></sc-if>
-                    <sc-if value="{{ f.isSelect }}"><select value="{{ f.value }}" onChange="{{ f.onChange }}" aria-invalid="{{ f.invalid }}" style="padding:12px 14px;border-radius:10px;border:1.5px solid {{ f.border }};background:{{ f.bg }};font:inherit;font-size:16px;outline:none">
-                      <option value="">Válassz…</option>
-                      <sc-for list="{{ f.options }}" as="o" hint-placeholder-count="4"><option value="{{ o }}">{{ o }}</option></sc-for>
-                    </select></sc-if>
-                    <sc-if value="{{ f.isArea }}"><textarea value="{{ f.value }}" onChange="{{ f.onChange }}" placeholder="{{ f.ph }}" rows="4" aria-invalid="{{ f.invalid }}" style="padding:12px 14px;border-radius:10px;border:1.5px solid {{ f.border }};background:{{ f.bg }};font:inherit;font-size:16px;outline:none;resize:vertical"></textarea></sc-if>
-                    <sc-if value="{{ f.hasHint }}"><span style="font-size:14px;color:oklch(0.5 0.03 262)">{{ f.hint }}</span></sc-if>
-                    <sc-if value="{{ f.invalid }}"><span style="font-size:14px;font-weight:600;color:oklch(0.5 0.19 27)">{{ f.error }}</span></sc-if>
-                  </label>
-                </sc-for>
-              </div>
-            </fieldset>
-          </sc-for>
-          <fieldset style="border:0;padding:0;margin:0 0 28px">
-            <legend style="font-weight:700;font-size:13px;letter-spacing:.07em;text-transform:uppercase;color:oklch(0.42 0.12 255);margin-bottom:14px;padding:0">Nyilatkozatok</legend>
-            <div style="display:grid;gap:10px">
-              <sc-for list="{{ checks }}" as="c" hint-placeholder-count="4">
-                <label style="display:flex;gap:12px;align-items:flex-start;padding:14px 16px;border-radius:10px;background:{{ c.bg }};cursor:pointer;font-size:15px">
-                  <input type="checkbox" checked="{{ c.checked }}" onChange="{{ c.onChange }}" style="width:20px;height:20px;margin:1px 0 0;accent-color:oklch(0.28 0.08 262);flex:none">
-                  <span>{{ c.label }}<sc-if value="{{ c.invalid }}"><span style="display:block;margin-top:4px;font-weight:600;color:oklch(0.5 0.19 27)">Ezt a nyilatkozatot el kell fogadnod.</span></sc-if></span>
-                </label>
-              </sc-for>
-            </div>
-          </fieldset>
-          <div style="display:flex;gap:14px;align-items:center;flex-wrap:wrap">
-            <button type="submit" disabled="{{ sending }}" style="cursor:pointer;padding:14px 26px;border-radius:999px;border:0;background:oklch(0.28 0.08 262);color:#fff;font:inherit;font-weight:700;display:inline-flex;gap:10px;align-items:center">
-              <sc-if value="{{ sending }}" hint-placeholder-val="{{ false }}"><span style="width:16px;height:16px;border-radius:50%;border:2.5px solid rgba(255,255,255,.35);border-top-color:#fff;animation:mmdspin 700ms linear infinite"></span></sc-if>
-              {{ submitLabel }}</button>
-            <span style="font-size:14px;color:oklch(0.5 0.03 262)">A bejelentés után írásban is meg kell erősítened az igényt.</span>
-          </div>
-        </form>
-      </sc-if>
+        <a href="/ugyfelportal/regisztracio" onClick="{{ go }}" style="padding:14px 24px;border-radius:999px;background:oklch(0.85 0.14 85);color:oklch(0.24 0.06 262);font-weight:700" style-hover="text-decoration:none;background:oklch(0.9 0.12 85);color:oklch(0.24 0.06 262)">Tovább a regisztrációhoz →</a>
+      </div>
     </sc-if>
 
     <sc-if value="{{ isCheck }}" hint-placeholder-val="{{ false }}">
@@ -256,21 +181,10 @@ a:hover{color:oklch(0.32 0.12 255);text-decoration:underline}
   </article>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;page&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;/visszaterites&quot;,&quot;/visszaterites/tajekoztato&quot;,&quot;/visszaterites/ugyintezes&quot;,&quot;/visszaterites/ellenorzok&quot;,&quot;/visszaterites/gyik&quot;],&quot;default&quot;:&quot;/visszaterites&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;loggedIn&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;nav&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;(path: string) =&gt; void&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;page&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;/visszaterites&quot;,&quot;/visszaterites/tajekoztato&quot;,&quot;/visszaterites/ugyintezes&quot;,&quot;/visszaterites/ellenorzok&quot;,&quot;/visszaterites/gyik&quot;],&quot;default&quot;:&quot;/visszaterites&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;nav&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;(path: string) =&gt; void&quot;}}">
 class Component extends DCLogic {
-  state = { open: 0, query: '', v: {}, c: {}, errors: {}, cerr: {}, status: 'idle', failMsg: '', refId: '', tab: 'imei', code: '', codeErr: '', res: null, checking: false, checkedCode: '' };
+  state = { open: 0, query: '', tab: 'imei', code: '', codeErr: '', res: null, checking: false, checkedCode: '' };
   componentDidUpdate(pp) { if (pp.page !== this.props.page) this.setState({ open: 0, query: '', res: null, codeErr: '' }); }
-  validate() {
-    const v = this.state.v, e = {}, year = new Date().getFullYear();
-    const req = ['name', 'email', 'address', 'role', 'media', 'qty', 'date', 'seller', 'label', 'content'];
-    req.forEach(k => { if (!String(v[k] || '').trim()) e[k] = 'Kötelező mező.'; });
-    if (v.email && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v.email)) e.email = 'Érvényes e-mail-címet adj meg (pl. nev@example.hu).';
-    if (v.qty && !(Number(v.qty) >= 1)) e.qty = 'Legalább 1 darabot adj meg.';
-    if (v.date && new Date(v.date).getFullYear() !== year) e.date = 'Csak az aktuális évben (' + year + ') vásárolt hordozóra igényelhető visszatérítés.';
-    if (v.label && !/^[A-Za-z0-9-]{6,20}$/.test(v.label.trim())) e.label = 'A sorszám 6–20 karakter, csak betű, szám és kötőjel.';
-    const ce = {}; ['own', 'nouse', 'privacy'].forEach(k => { if (!this.state.c[k]) ce[k] = true; });
-    return { e, ce };
-  }
   renderVals() {
     const base = '/visszaterites';
     const page = this.props.page || base;
@@ -279,36 +193,13 @@ class Component extends DCLogic {
     const titles = {
       [base]: ['Visszatérítés', 'Kivételes visszatérítés professzionális alkotóknak, akik a hordozón kizárólag saját, védett tartalmat tárolnak.'],
       [base + '/tajekoztato']: ['Tájékoztató', 'A díj visszatérítésének feltételei és a hivatalos tájékoztató.'],
-      [base + '/ugyintezes']: ['Ügyintézés', 'Előzetes bejelentés, majd írásos megerősítés a szükséges mellékletekkel.'],
+      [base + '/ugyintezes']: ['Ügyintézés', 'Regisztráció az ügyfélportálon, majd írásos megerősítés a szükséges mellékletekkel.'],
       [base + '/ellenorzok']: ['PCSN- és IMEI-ellenőrző', 'Ellenőrizd, hogy a hordozó vagy készülék után megfizették-e a magánmásolási díjat.'],
       [base + '/gyik']: ['Gyakori kérdések a visszatérítésről', 'Ki jogosult, mi számít saját alkotásnak, és milyen dokumentumok kellenek.']
     };
     const [title, lead] = titles[page] || titles[base];
-    const s = this.state, st = s.status;
-    const loggedIn = !!this.props.loggedIn;
+    const s = this.state;
     const RED = 'oklch(0.55 0.2 27)';
-    const setV = (k) => (e) => { const val = e.target.value; this.setState(p => ({ v: { ...p.v, [k]: val }, errors: { ...p.errors, [k]: undefined } })); };
-    const F = (key, label, type, o = {}) => { const err = s.errors[key]; return { key, label, type, isInput: !['select', 'textarea'].includes(type), isSelect: type === 'select', isArea: type === 'textarea', value: s.v[key] || '', onChange: setV(key), ph: o.ph || '', options: o.options || [], hint: o.hint || '', hasHint: !!o.hint, span: o.full ? '1 / -1' : 'auto', invalid: !!err, error: err || '', border: err ? RED : 'oklch(0.86 0.015 262)', bg: err ? 'oklch(0.985 0.01 27)' : '#fff' }; };
-    const groups = [
-      { title: 'Igénylő adatai', fields: [F('name', 'Teljes név *', 'text', { ph: 'Kovács Anna' }), F('email', 'E-mail-cím *', 'email', { ph: 'nev@example.hu' }), F('phone', 'Telefonszám', 'tel', { ph: '+36 30 123 4567' }), F('address', 'Lakcím *', 'text', { ph: 'Irányítószám, település, utca, házszám' }), F('role', 'Alkotói tevékenység *', 'select', { options: ['Zeneszerző', 'Szövegíró', 'Író, költő', 'Előadóművész', 'Fotóművész, vizuális alkotó', 'Filmes alkotó', 'Egyéb'] })] },
-      { title: 'A hordozó adatai', fields: [F('media', 'Hordozó típusa *', 'select', { options: ['Írható CD-R / DVD', 'Memóriakártya', 'Pendrive, USB Flash Drive', 'Külső merevlemez (HDD)', 'Táblagép', 'Személyi számítógép tárolóegysége', 'Mobiltelefon'] }), F('qty', 'Darabszám *', 'number', { ph: '1' }), F('date', 'Vásárlás dátuma *', 'date', { hint: 'Csak az aktuális évben vásárolt hordozó.' }), F('seller', 'Eladó cégneve vagy teljes neve *', 'text', { ph: 'A számlán szereplő eladó' }), F('label', 'Hologramos címke sorszáma / IMEI-szám *', 'text', { ph: 'pl. HU-1234567', full: true })] },
-      { title: 'Tárolt tartalom', fields: [F('content', 'A hordozón tárolt saját művek leírása *', 'textarea', { ph: 'Mit tárolsz a hordozón, és miért minősül saját, professzionális alkotásnak?', full: true })] }
-    ];
-    const setC = (k) => () => this.setState(p => ({ c: { ...p.c, [k]: !p.c[k] }, cerr: { ...p.cerr, [k]: false } }));
-    const C = (key, label) => ({ label, checked: !!s.c[key], onChange: setC(key), invalid: !!s.cerr[key], bg: s.cerr[key] ? 'oklch(0.95 0.035 27)' : 'oklch(0.97 0.012 262)' });
-    const checks = [C('own', 'Nyilatkozom, hogy a hordozón kizárólag saját, professzionális, szerzői jog által védett tartalmaimat tárolom. *'), C('nouse', 'Nyilatkozom, hogy a hordozót a szabad felhasználás körébe tartozó másolatkészítésre nem használtam és nem is fogom használni. *'), C('coauthor', 'Közös mű esetén tudomásul veszem, hogy a visszatérítési igényt minden szerzőtársnak, előadótársnak és közreműködőnek azonos módon meg kell tennie.'), C('privacy', 'Az adatvédelmi tájékoztatót megismertem és elfogadom. *')];
-    const nErr = Object.values(s.errors).filter(Boolean).length + Object.values(s.cerr).filter(Boolean).length;
-    const submit = (e) => {
-      e.preventDefault();
-      const { e: er, ce } = this.validate();
-      if (Object.keys(er).length || Object.keys(ce).length) { this.setState({ errors: er, cerr: ce, status: 'idle', failMsg: '' }); window.scrollTo({ top: 300, behavior: 'smooth' }); return; }
-      this.setState({ status: 'sending', errors: {}, cerr: {}, failMsg: '' });
-      setTimeout(() => {
-        if ((s.v.label || '').trim().startsWith('0000')) this.setState({ status: 'fail', failMsg: 'A megadott címkesorszám nem szerepel az Artisjus nyilvántartásában. Ellenőrizd a hordozón lévő hologramos címkét.' });
-        else this.setState({ status: 'ok', refId: 'MMD-' + new Date().getFullYear() + '-' + String(Math.floor(Math.random() * 90000) + 10000) });
-        window.scrollTo({ top: 300, behavior: 'smooth' });
-      }, 1300);
-    };
     const tab = s.tab;
     const imei = tab === 'imei';
     const runCheck = (e) => {
@@ -355,12 +246,8 @@ class Component extends DCLogic {
       crumbs: page === base ? [] : [{ label: 'Visszatérítés', href: base }],
       side: sideDef.map(([label, href]) => ({ label, href, bg: href === page ? on : 'transparent', fg: href === page ? '#fff' : 'oklch(0.24 0.04 262)' })),
       isOverview: page === base || !titles[page], isInfo: page === base + '/tajekoztato', isForm: page === base + '/ugyintezes', isCheck: page === base + '/ellenorzok', isFaq: page === base + '/gyik',
-      steps: [{ n: '1', t: 'Tájékoztató', d: 'Olvasd el a visszatérítés feltételeit.' }, { n: '2', t: 'Fiók', d: 'Regisztrálj, majd jelentkezz be.' }, { n: '3', t: 'Előzetes bejelentés', d: 'Töltsd ki hiánytalanul az űrlapot.' }, { n: '4', t: 'Írásos megerősítés', d: 'Számla vagy nyugta és a hologramos címke.' }, { n: '5', t: 'Beküldés', d: 'Postán vagy az ügyfélszolgálaton.' }],
-      cards: [{ t: 'Tájékoztató', d: 'Feltételek és hivatalos PDF', href: base + '/tajekoztato' }, { t: 'Ügyintézés', d: 'Előzetes bejelentési űrlap', href: base + '/ugyintezes' }, { t: 'Ellenőrzők', d: 'PCSN- és IMEI-szám', href: base + '/ellenorzok' }, { t: 'Gyakori kérdések', d: '16 kérdés és válasz', href: base + '/gyik' }],
-      formLocked: !loggedIn && st !== 'ok', formOk: st === 'ok', formVisible: st !== 'ok', formOpacity: loggedIn ? 1 : 0.55, formPe: loggedIn ? 'auto' : 'none',
-      hasFail: st === 'fail', failMsg: s.failMsg, hasErrors: nErr > 0, errorCount: nErr + ' mezőt kell javítanod',
-      groups, checks, submit, sending: st === 'sending', submitLabel: st === 'sending' ? 'Küldés…' : 'Bejelentés elküldése', refId: s.refId,
-      resetForm: () => this.setState({ status: 'idle', v: {}, c: {}, errors: {}, cerr: {} }),
+      steps: [{ n: '1', t: 'Tájékoztató', d: 'Olvasd el a visszatérítés feltételeit.' }, { n: '2', t: 'Regisztráció', d: 'Töltsd ki a kérdőívet az ügyfélportálon, belépés nélkül.' }, { n: '3', t: 'Visszaigazolás', d: 'Azonosítót kapsz e-mailben.' }, { n: '4', t: 'Írásos megerősítés', d: 'Számla vagy nyugta és a hologramos címke.' }, { n: '5', t: 'Beküldés', d: 'Postán vagy az ügyfélszolgálaton.' }],
+      cards: [{ t: 'Tájékoztató', d: 'Feltételek és hivatalos PDF', href: base + '/tajekoztato' }, { t: 'Ügyintézés', d: 'Regisztráció és mellékletek', href: base + '/ugyintezes' }, { t: 'Ellenőrzők', d: 'PCSN- és IMEI-szám', href: base + '/ellenorzok' }, { t: 'Gyakori kérdések', d: '16 kérdés és válasz', href: base + '/gyik' }],
       imeiBg: imei ? on : 'transparent', imeiFg: imei ? '#fff' : 'oklch(0.3 0.04 262)', pcsnBg: imei ? 'transparent' : on, pcsnFg: imei ? 'oklch(0.3 0.04 262)' : '#fff',
       setImei: () => this.setState({ tab: 'imei', res: null, codeErr: '', code: '' }), setPcsn: () => this.setState({ tab: 'pcsn', res: null, codeErr: '', code: '' }),
       chkTitle: imei ? 'IMEI-szám ellenőrzése' : 'PCSN-szám (SN azonosító) ellenőrzése',

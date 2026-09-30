@@ -24,14 +24,13 @@ A `.dc.html` fájlok böngészőben közvetlenül megnyithatók (a `support.js` 
 | `/befizetett-dijak-sorsa/kulturalis-celok` | `PageSorsa.dc.html` | NKA, Hangfoglaló, alprogramok, Kollégium |
 | `/visszaterites` | `PageVissza.dc.html` | áttekintés, lépések |
 | `/visszaterites/tajekoztato` | `PageVissza.dc.html` | teljes tájékoztató + PDF |
-| `/visszaterites/ugyintezes` | `PageVissza.dc.html` | előzetes bejelentési űrlap (belépéshez kötött) |
+| `/visszaterites/ugyintezes` | `PageVissza.dc.html` | ügyintézés menete, mellékletek + gomb a regisztrációhoz |
 | `/visszaterites/ellenorzok` | `PageVissza.dc.html` | IMEI / PCSN ellenőrző |
 | `/visszaterites/gyik` | `PageVissza.dc.html` | 16 kérdés, kereső |
-| `/ugyfelportal` | `PagePortal.dc.html` | belépés (belépve → `/fiok`) |
-| `/ugyfelportal/regisztracio` | `PagePortal.dc.html` | regisztráció |
-| `/ugyfelportal/jelszo` | `PagePortal.dc.html` | új jelszó igénylése |
-| `/ugyfelportal/uj-jelszo` | `PagePortal.dc.html` | új jelszó beállítása (e-mailes linkről) |
-| `/ugyfelportal/fiok` | `PagePortal.dc.html` | Igényléseim (belépés nélkül → `/ugyfelportal`) |
+| `/ugyfelportal` | `PagePortal.dc.html` | áttekintés: mire lesz szükség, menet, CTA a regisztrációhoz |
+| `/ugyfelportal/regisztracio` | `PagePortal.dc.html` | regisztrációs kérdőív (külön oldal, sok kérdéscsoport) |
+
+**Az oldalon nincs belépés.** Nincs fiók, jelszó, bejelentkezés, „Igényléseim” vagy kijelentkezés; a regisztráció egy belépés nélkül kitölthető kérdőív, amelynek beküldése után az igénylő azonosítót és visszaigazoló e-mailt kap.
 | `/kapcsolat` | `PageInfo.dc.html` | elérhetőség, üzemeltetők (`#uzemeltetok`), kapcsolati űrlap |
 | `/adatvedelmi-tajekoztato` | `PageInfo.dc.html` | tartalomjegyzékes dokumentum |
 | `/suti-tajekoztato` | `PageInfo.dc.html` | sütitáblázat + beállítás gomb |
@@ -44,7 +43,7 @@ A `.dc.html` fájlok böngészőben közvetlenül megnyithatók (a `support.js` 
 ## Globális elrendezés
 
 - **Konténer:** `max-width: 1200px; margin: 0 auto; padding: 0 28px`.
-- **Fejléc (sticky, z 40):** háttér navy, padding 16px 28px. Bal: logó (34px bakelit-kör + „Magánmásolási díj” Source Serif 4 700 22px). Jobb: fő navigáció (15px/500, gap 18px, aktív: mustár szín + 2px mustár alsó vonal) + „Ügyfélportál” pill gomb (mustár, belépve „Fiókom”). Skip link: „Ugrás a tartalomra”.
+- **Fejléc (sticky, z 40):** háttér navy, padding 16px 28px. Bal: logó (34px bakelit-kör + „Magánmásolási díj” Source Serif 4 700 22px). Jobb: fő navigáció (15px/500, gap 18px, aktív: mustár szín + 2px mustár alsó vonal) + „Ügyfélportál” pill gomb (mustár). Skip link: „Ugrás a tartalomra”.
 - **Aloldal-hero:** navy sáv, jobb felső sarokban barázdás kör dekor (`repeating-radial-gradient`, 6% fehér). Morzsamenü (14px), eyebrow (13px/700, uppercase, .07em, mustár), H1 (Source Serif 4 700, `clamp(34px,4.4vw,52px)`, lh 1.08), lead (19px, `oklch(0.88 0.03 262)`). Padding 40px 28px 56px.
 - **Aloldal-törzs:** flex-wrap, gap 48px. Bal oldalsáv (`flex:1 1 220px; max-width:280px; position:sticky; top:96px`) – „Ebben a részben” almenü, aktív elem navy háttér + fehér szöveg, radius 10px. Tartalom: `flex:999 1 520px; max-width:780px`. Oldal végén „Tovább” kártyák (halványkék, radius 14px).
 - **Lábléc:** sötét navy; 4 oszlop (Ügyfélszolgálat, Ügyfélfogadás, Tájékoztatás linkek, Visszatérítés linkek), GVH-szöveg + PDF, impresszum, Adatvédelmi / Süti-tájékoztató / Süti-beállítások.
@@ -58,39 +57,34 @@ A `.dc.html` fájlok böngészőben közvetlenül megnyithatók (a `support.js` 
 ## Interakciók és viselkedés
 - **Navigáció:** belső linkek valódi `href`-fel, a prototípusban kliensoldali router (`nav(path)`); horgony (`/kapcsolat#uzemeltetok`) esetén 90px offsettel görget (sticky fejléc). Oldalváltáskor lap tetejére ugrik.
 - **GYIK harmonika:** egyszerre egy nyitott elem (első alapból nyitva); `+`/`−` kör ikon (nyitva navy). Keresés: kérdés + válasz szövegében, találatok automatikusan nyitva, számláló („3 találat”), üres állapot „Nincs találat” + „Keresés törlése”. Minden kérdésnek van `id`-je (`k1…k11`, `v1…v16`) mélylinkhez.
-- **Belépés-függés:** `/visszaterites/ugyintezes` kijelentkezve tájékoztató sávot mutat, az űrlap 55% opacitású és nem interaktív.
 - **Hover:** kártyák `translateY(-2px/-3px)` 200–250ms; linkek sötétebb kék + aláhúzás; pill gombok világosabb árnyalat.
 - **Megjelenés:** visszajelzések `mmdin` animációval (opacity 0→1, translateY 8px→0, 250–300ms, `cubic-bezier(.22,.61,.36,1)`).
 - **Toast:** jobb alul, navy, zöld pipás kör, 2,8 s után eltűnik (süti-mentés után).
 - **Süti-sáv:** első látogatáskor alul középen (max 760px). „Összes elfogadása” / „Csak a szükségesek” / „Beállítások” (kinyitja: Szükséges – mindig aktív, Statisztikai – kapcsolható, „Kiválasztottak mentése”). A láblécből és a Süti-tájékoztatóból újranyitható. Tárolás: `mmd-cookie` = `all` | `needed`.
 
 ## Űrlapok, validáció, állapotok
-Beküldéskor validál (nem gépelés közben); gépeléskor az adott mező hibája törlődik. Hibás mező: 1.5px piros keret, halvány piros háttér, `aria-invalid`, alatta félkövér piros üzenet. Az előzetes bejelentésnél összesítő riasztás a lap tetején („N mezőt kell javítanod”).
+Beküldéskor validál (nem gépelés közben); gépeléskor az adott mező hibája törlődik. Hibás mező: 1.5px piros keret, halvány piros háttér, `aria-invalid`, alatta félkövér piros üzenet. A regisztrációnál összesítő riasztás a lap tetején („N mezőt kell javítanod”).
 
-**Előzetes bejelentési űrlap** (`/visszaterites/ugyintezes`) – csoportok:
-- Igénylő adatai: Teljes név*, E-mail*, Telefonszám, Lakcím*, Alkotói tevékenység* (select)
-- A hordozó adatai: Hordozó típusa* (select), Darabszám* (≥1), Vásárlás dátuma* (**csak aktuális év**), Eladó neve*, Hologramos címke sorszáma / IMEI* (6–20 karakter, `[A-Za-z0-9-]`)
-- Tárolt tartalom: leírás* (textarea)
-- Nyilatkozatok: saját professzionális tartalom*, nem használom magánmásolásra*, társszerzői nyilatkozat (15.4 pont), adatvédelem*
-- Állapotok: idle → sending (gomb letiltva, spinner, „Küldés…”) → **ok** (azonosító `MMD-ÉÉÉÉ-NNNNN`, „Hogyan tovább?” 3 lépés, PDF-összesítő, Igényléseim, Új bejelentés) | **fail** (riasztás, űrlap megmarad).
-- **Megjegyzés:** a mezőlistát az éles előzetes bejelentőlap alapján pontosítani kell (a jelenlegi megvalósítás belépés mögött van, nem látható).
+**Regisztrációs kérdőív** (`/ugyfelportal/regisztracio`, belépés nélkül) – számozott kérdéscsoportok, mindegyik külön fehér kártyán; az oldalsávban „Kérdéscsoportok” lista, kattintásra a csoporthoz görget (90px offset), hibás csoport száma piros:
+1. Igénylő adatai: Teljes név*, E-mail*, Telefonszám, Lakcím*
+2. Alkotói tevékenység: Alkotói tevékenység* (select)
+3. A hordozó adatai: Hordozó típusa* (select), Darabszám* (≥1), Vásárlás dátuma* (**csak aktuális év**), Eladó neve*, Hologramos címke sorszáma / IMEI* (6–20 karakter, `[A-Za-z0-9-]`)
+4. Tárolt tartalom: leírás* (textarea)
+5. Nyilatkozatok: saját professzionális tartalom*, nem használom magánmásolásra*, társszerzői nyilatkozat (15.4 pont), adatvédelem*
+- Állapotok: idle → sending (gomb letiltva, spinner, „Küldés…”) → **ok** (azonosító `MMD-ÉÉÉÉ-NNNNN`, „Hogyan tovább?” 3 lépés, PDF-összesítő, Új regisztráció) | **fail** (riasztás, űrlap megmarad).
+- **Megjegyzés:** a kérdéslista egyelőre az előzetes bejelentőlap ismert mezőiből áll; a teljes kérdéssort az ügyféltől kell bekérni, és a csoportokat ennek megfelelően bővíteni (a kártyás, számozott szerkezet tetszőleges számú csoportra skálázódik).
 
 **Ellenőrzők** (`/visszaterites/ellenorzok`): fül IMEI / PCSN. IMEI = pontosan 15 számjegy; SN = 6–24 karakter. Eredmény: **Regisztrált státuszú** (zöld) / **Nem található** (mustár, link az ügyfélszolgálathoz) / **Rendszer nem érhető el** (piros, Újrapróbálás). Élesben az Artisjus IMEI (imei.artisjus.com) és PCSN (artisjus.hu) rendszerének API-ját kell bekötni – egyeztetendő; ha nincs API, maradjon külső link.
 
-**Ügyfélportál:**
-- Belépés: hibás adat → piros riasztás; 3. hibás próbálkozás → figyelmeztetés, 15 perc tiltás. Siker → `/ugyfelportal/fiok`.
-- Regisztráció: név, e-mail, jelszó (min. 8 + szám, 4 szegmenses erősségjelző), jelszó újra, adatvédelmi checkbox. Foglalt e-mail → hiba. Siker → „Ellenőrizd a postafiókodat” + Újraküldés.
-- Új jelszó igénylése: siker üzenete szándékosan semleges (nem árulja el, létezik-e a fiók).
-- Új jelszó beállítása: siker „Jelszó módosítva”; lejárt link → figyelmeztetés.
-- Igényléseim: lista (azonosító, dátum, hordozó, státusz pill, megjegyzés); státuszok: Elbírálás alatt / Hiánypótlás szükséges / Jóváhagyva / Elutasítva; üres állapot bakelit ikonnal. A belépés utáni valós funkciókat az ügyféltől kell bekérni.
+**Ügyfélportál** (`/ugyfelportal`): áttekintő oldal – rövid leírás („fiók és bejelentkezés nélkül”), „Mire lesz szükséged?” 4 kártya, a regisztráció menete (4 lépés), navy CTA-sáv „Tovább a regisztrációhoz”. Az oldalsáv almenüje: Áttekintés / Regisztráció.
 
 **Kapcsolati űrlap** (új elem): név, e-mail, téma (select), üzenet (≥20 karakter) → „Köszönjük, üzenetedet megkaptuk” | hálózati hiba riasztás.
 
-A prototípusbeli tesztbemeneteket (pl. „0000” címke, „foglalt” e-mail) az `Allapotok.dc.html` 6. szakasza sorolja fel – ezek csak a demo miatt vannak, élesben a backend válaszai vezérlik.
+A prototípusbeli tesztbemeneteket (pl. „0000” címke, „999” ellenőrző-kód) az `Allapotok.dc.html` 6. szakasza sorolja fel – ezek csak a demo miatt vannak, élesben a backend válaszai vezérlik.
 
 ## State Management
-- Shell: `route`, `loggedIn`, `cookie` (consent), `cookieOpen`, `cookieDetail`, `analytics`, `toast`. Prototípusban localStorage: `mmd-route`, `mmd-login`, `mmd-cookie`.
-- Űrlapok: `values`, `errors`, `status` (`idle | sending/busy | ok | fail | badcred | locked | taken | regdone | sent | pwdone | expired`), `fails` (belépési kísérletek).
+- Shell: `route`, `cookie` (consent), `cookieOpen`, `cookieDetail`, `analytics`, `toast`. Prototípusban localStorage: `mmd-route`, `mmd-cookie`.
+- Űrlapok: `values`, `errors`, `status` (`idle | sending | ok | fail`).
 - GYIK: `open` index, `query`.
 - Ellenőrző: `tab`, `code`, `codeErr`, `checking`, `res` (`ok | no | err`).
 
