@@ -119,11 +119,14 @@ class Component extends DCLogic {
     const d = (t, x, where, k) => ({ t, x, where, bg: k[0], stroke: k[1], path: k[2] });
     return {
       dones: [
-        d('Regisztrációdat rögzítettük', 'Azonosító + „Hogyan tovább?” 3 lépés + PDF-összesítő', '/ugyfelportal/regisztracio', OK),
+        d('Regisztrációdat rögzítettük', 'Azonosító + „Hogyan tovább?” 3 lépés + PDF-összesítő', '/visszaterites/regisztracio', OK),
+        d('Kitöltés elmentve', '„Mentés és folytatás később”: folytató link e-mailben, 30 napig érvényes', '/visszaterites/regisztracio', MAIL),
         d('Köszönjük, üzenetedet megkaptuk', '3 munkanapon belül válaszolunk', '/kapcsolat', OK)
       ],
       triggers: [
-        { where: 'Regisztráció', how: 'Címkesorszám „0000”-val kezdődik', res: 'Szerverhiba: sorszám nincs a nyilvántartásban' },
+        { where: 'Regisztráció', how: '„Tovább →” kitöltetlen kötelező mezőkkel', res: 'Csak az aktuális lépés mezőit validálja; összesítő riasztás + mezőhibák' },
+        { where: 'Regisztráció', how: '„Mentés és folytatás később” (2. lépéstől)', res: 'Kitöltés elmentve, folytató link e-mailben' },
+        { where: 'Regisztráció', how: 'Címkesorszám „0000”-val kezdődik', res: 'Szerverhiba a beküldéskor; „Vissza a hordozó adataihoz” a 3. lépésre ugrik' },
         { where: 'Regisztráció', how: 'Vásárlás dátuma nem az aktuális évben', res: 'Mezőhiba (visszamenőleg nem igényelhető)' },
         { where: 'IMEI-ellenőrző', how: '15 számjegy, páros utolsó jegy / páratlan', res: 'Regisztrált / Nem található' },
         { where: 'PCSN-ellenőrző', how: '„X”-szel kezdődik / egyéb', res: 'Nem található / Regisztrált' },

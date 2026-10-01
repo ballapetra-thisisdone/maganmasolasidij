@@ -33,7 +33,7 @@ a:hover{color:oklch(0.32 0.12 255);text-decoration:underline}
         <a href="/visszaterites" style="color:#fff" style-hover="color:oklch(0.85 0.14 85);text-decoration:none">Visszatérítés</a>
         <a href="/kapcsolat" style="color:#fff" style-hover="color:oklch(0.85 0.14 85);text-decoration:none">Kapcsolat</a>
       </nav>
-      <a href="/ugyfelportal" style="padding:9px 18px;border-radius:999px;background:oklch(0.85 0.14 85);color:oklch(0.24 0.06 262);font-weight:700;font-size:15px" style-hover="background:oklch(0.9 0.12 85);color:oklch(0.24 0.06 262);text-decoration:none">Ügyfélportál</a>
+      <a href="/visszaterites/regisztracio" style="padding:9px 18px;border-radius:999px;background:oklch(0.85 0.14 85);color:oklch(0.24 0.06 262);font-weight:700;font-size:15px;display:inline-flex;gap:8px;align-items:center" style-hover="background:oklch(0.9 0.12 85);color:oklch(0.24 0.06 262);text-decoration:none"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"></path><path d="M14 3v5h5M9 13h6M9 17h4"></path></svg>Igénylés indítása</a>
     </div>
   </div>
 </header>
@@ -185,7 +185,7 @@ a:hover{color:oklch(0.32 0.12 255);text-decoration:underline}
           <a href="/visszaterites/ugyintezes" style="padding:14px 16px;background:#fff;border-radius:10px;font-weight:600;text-align:center;color:oklch(0.24 0.04 262)">Ügyintézés lépései</a>
           <a href="/visszaterites/ellenorzok" style="padding:14px 16px;background:#fff;border-radius:10px;font-weight:600;text-align:center;color:oklch(0.24 0.04 262)">PCSN- és IMEI-ellenőrző</a>
           <a href="/visszaterites/gyik" style="padding:14px 16px;background:#fff;border-radius:10px;font-weight:600;text-align:center;color:oklch(0.24 0.04 262)">Gyakori kérdések</a>
-          <a href="/ugyfelportal/regisztracio" style="padding:14px 16px;background:#fff;border-radius:10px;font-weight:600;text-align:center;color:oklch(0.24 0.04 262)">Regisztráció</a>
+          <a href="/visszaterites/regisztracio" style="padding:14px 16px;background:#fff;border-radius:10px;font-weight:600;text-align:center;color:oklch(0.24 0.04 262)">Regisztráció</a>
         </div>
         <a href="/visszaterites" style="font-weight:700;margin-top:6px">A visszatérítésről →</a>
       </div>
@@ -318,7 +318,7 @@ class Component extends DCLogic {
         { n: '3', c: N, soft: soft.mustard, title: 'Kapcsolat', text: 'Visszatérítési ügyfélszolgálat telefonon, e-mailben vagy személyesen, időpontfoglalás után.', links: [
           { label: 'Ügyfélszolgálat', href: '/kapcsolat' },
           { label: 'A portál üzemeltetői', href: '/kapcsolat#uzemeltetok' },
-          { label: 'Regisztráció (ügyfélportál)', href: '/ugyfelportal/regisztracio' } ] }
+          { label: 'Regisztráció', href: '/visszaterites/regisztracio' } ] }
       ],
       free: [
         { t: 'zeneművek hangfelvételeiről', c: C.coral, soft: soft.coral },
@@ -335,7 +335,7 @@ class Component extends DCLogic {
       ],
       steps: [
         { n: '1', c: C.coral, t: 'Tájékoztató letöltése', d: 'Olvasd el a visszatérítés feltételeit.' },
-        { n: '2', c: N, t: 'Regisztráció', d: 'Töltsd ki a kérdőívet az ügyfélportálon, belépés nélkül.' },
+        { n: '2', c: N, t: 'Regisztráció', d: 'Töltsd ki a kérdőívet, belépés nélkül.' },
         { n: '3', c: C.teal, t: 'Visszaigazolás', d: 'Azonosítót kapsz e-mailben.' },
         { n: '4', c: C.blue, t: 'Írásos megerősítés', d: 'Számla vagy nyugta és a hologramos címke csatolásával.' },
         { n: '5', c: C.navy, t: 'Beküldés', d: 'Postán vagy az ügyfélszolgálaton.' }

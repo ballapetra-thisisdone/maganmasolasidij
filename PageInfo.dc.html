@@ -173,7 +173,7 @@ class Component extends DCLogic {
         { name: 'Hungart Vizuális Művészek Közös Jogkezelő Társasága Egyesület', url: 'https://www.hungart.org/', host: 'hungart.org' },
         { name: 'Magyar Hangfelvétel-kiadók Szövetsége Közös Jogkezelő Egyesület', url: 'https://www.mahasz.hu/', host: 'mahasz.hu' }
       ],
-      fields: [F('name', 'Név', 'text', { ph: 'Kovács Anna' }), F('email', 'E-mail-cím', 'email', { ph: 'nev@example.hu' }), F('topic', 'Téma', 'select', { options: ['Visszatérítés', 'Díjfizetés, díjszabás', 'Regisztráció, ügyfélportál', 'Egyéb'] }), F('msg', 'Üzenet', 'textarea', { ph: 'Miben segíthetünk?' })],
+      fields: [F('name', 'Név', 'text', { ph: 'Kovács Anna' }), F('email', 'E-mail-cím', 'email', { ph: 'nev@example.hu' }), F('topic', 'Téma', 'select', { options: ['Visszatérítés', 'Díjfizetés, díjszabás', 'Regisztráció, igénylés', 'Egyéb'] }), F('msg', 'Üzenet', 'textarea', { ph: 'Miben segíthetünk?' })],
       sending: st === 'sending', sendLabel: st === 'sending' ? 'Küldés…' : 'Üzenet küldése',
       msgOk: st === 'ok', msgForm: st !== 'ok', msgFail: st === 'fail',
       resetMsg: () => this.setState({ status: 'idle', v: {}, errors: {} }),

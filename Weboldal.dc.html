@@ -35,8 +35,8 @@ a:hover{color:oklch(0.32 0.12 255);text-decoration:underline}
           <a href="{{ n.href }}" onClick="{{ go }}" style="color:{{ n.color }};padding:6px 0;border-bottom:2px solid {{ n.line }}" style-hover="color:oklch(0.85 0.14 85);text-decoration:none">{{ n.label }}</a>
         </sc-for>
       </nav>
-      <a href="/ugyfelportal" onClick="{{ go }}" style="padding:9px 18px;border-radius:999px;background:oklch(0.85 0.14 85);color:oklch(0.24 0.06 262);font-weight:700;font-size:15px;display:inline-flex;gap:8px;align-items:center" style-hover="background:oklch(0.9 0.12 85);color:oklch(0.24 0.06 262);text-decoration:none">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="4"></circle><path d="M4 21c0-4 4-6 8-6s8 2 8 6"></path></svg>{{ portalLabel }}</a>
+      <a href="/visszaterites/regisztracio" onClick="{{ go }}" style="padding:9px 18px;border-radius:999px;background:oklch(0.85 0.14 85);color:oklch(0.24 0.06 262);font-weight:700;font-size:15px;display:inline-flex;gap:8px;align-items:center" style-hover="background:oklch(0.9 0.12 85);color:oklch(0.24 0.06 262);text-decoration:none">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"></path><path d="M14 3v5h5M9 13h6M9 17h4"></path></svg>Igénylés indítása</a>
     </div>
   </div>
 </header>
@@ -54,8 +54,8 @@ a:hover{color:oklch(0.32 0.12 255);text-decoration:underline}
   <sc-if value="{{ isVissza }}" hint-placeholder-val="{{ false }}">
     <dc-import name="PageVissza" page="{{ route }}" nav="{{ nav }}" hint-size="100%,1600px"></dc-import>
   </sc-if>
-  <sc-if value="{{ isPortal }}" hint-placeholder-val="{{ false }}">
-    <dc-import name="PagePortal" page="{{ route }}" nav="{{ nav }}" hint-size="100%,1600px"></dc-import>
+  <sc-if value="{{ isReg }}" hint-placeholder-val="{{ false }}">
+    <dc-import name="PageRegisztracio" nav="{{ nav }}" hint-size="100%,1400px"></dc-import>
   </sc-if>
   <sc-if value="{{ isInfo }}" hint-placeholder-val="{{ false }}">
     <dc-import name="PageInfo" page="{{ route }}" nav="{{ nav }}" open-cookie="{{ openCookie }}" hint-size="100%,1200px"></dc-import>
@@ -138,14 +138,16 @@ a:hover{color:oklch(0.32 0.12 255);text-decoration:underline}
 </x-dc>
 <script type="text/x-dc" data-dc-script>
 class Component extends DCLogic {
+  // A régi /ugyfelportal… útvonalak a regisztrációra mutatnak (élesben 301-es átirányítás).
+  static fixRoute(r) { return r && (r === '/ugyfelportal' || r.startsWith('/ugyfelportal/')) ? '/visszaterites/regisztracio' : r; }
   state = {
-    route: (typeof localStorage !== 'undefined' && localStorage.getItem('mmd-route')) || '/',
+    route: Component.fixRoute(typeof localStorage !== 'undefined' && localStorage.getItem('mmd-route')) || '/',
     cookie: (typeof localStorage !== 'undefined' && localStorage.getItem('mmd-cookie')) || null,
     cookieOpen: false, cookieDetail: false, analytics: true, toast: null
   };
   nav = (p) => {
     const [path, hash] = p.split('#');
-    const route = path || '/';
+    const route = Component.fixRoute(path) || '/';
     this.setState({ route });
     try { localStorage.setItem('mmd-route', route); } catch (e) {}
     window.scrollTo(0, 0);
@@ -156,22 +158,22 @@ class Component extends DCLogic {
   renderVals() {
     const r = this.state.route;
     const sec = (p) => r === p || r.startsWith(p + '/');
-    const isDij = sec('/a-maganmasolasi-dijrol'), isSorsa = sec('/befizetett-dijak-sorsa'), isVissza = sec('/visszaterites'), isPortal = sec('/ugyfelportal');
+    const isReg = r === '/visszaterites/regisztracio';
+    const isDij = sec('/a-maganmasolasi-dijrol'), isSorsa = sec('/befizetett-dijak-sorsa'), isVissza = sec('/visszaterites') && !isReg;
     const isHome = r === '/';
-    const isInfo = !isHome && !isDij && !isSorsa && !isVissza && !isPortal;
+    const isInfo = !isHome && !isDij && !isSorsa && !isVissza && !isReg;
     const act = (on) => ({ color: on ? 'oklch(0.85 0.14 85)' : '#fff', line: on ? 'oklch(0.85 0.14 85)' : 'transparent' });
     const mk = (label, href, on) => ({ label, href, ...act(on) });
     const showCookie = !this.state.cookie || this.state.cookieOpen;
     return {
-      route: r, nav: this.nav, isHome, isDij, isSorsa, isVissza, isPortal, isInfo,
+      route: r, nav: this.nav, isHome, isDij, isSorsa, isVissza, isReg, isInfo,
       go: (ev) => { const u = ev.currentTarget.getAttribute('href'); if (u && u.startsWith('/')) { ev.preventDefault(); this.nav(u); } },
       navItems: [
         mk('A magánmásolási díjról', '/a-maganmasolasi-dijrol', isDij),
         mk('A befizetett díjak sorsa', '/befizetett-dijak-sorsa', isSorsa),
-        mk('Visszatérítés', '/visszaterites', isVissza),
+        mk('Visszatérítés', '/visszaterites', isVissza || isReg),
         mk('Kapcsolat', '/kapcsolat', r === '/kapcsolat')
       ],
-      portalLabel: 'Ügyfélportál',
       footCols: [
         { title: 'Tájékoztatás', links: [
           { label: 'A magánmásolási díjról', href: '/a-maganmasolasi-dijrol' },
@@ -182,9 +184,9 @@ class Component extends DCLogic {
         { title: 'Visszatérítés', links: [
           { label: 'Tájékoztató', href: '/visszaterites/tajekoztato' },
           { label: 'Ügyintézés', href: '/visszaterites/ugyintezes' },
+          { label: 'Regisztráció', href: '/visszaterites/regisztracio' },
           { label: 'PCSN- és IMEI-ellenőrző', href: '/visszaterites/ellenorzok' },
-          { label: 'Gyakori kérdések', href: '/visszaterites/gyik' },
-          { label: 'Regisztráció (ügyfélportál)', href: '/ugyfelportal/regisztracio' } ] }
+          { label: 'Gyakori kérdések', href: '/visszaterites/gyik' } ] }
       ],
       showCookie, cookieDetail: this.state.cookieDetail, cookieNoDetail: !this.state.cookieDetail,
       analytics: this.state.analytics,

@@ -1,15 +1,17 @@
 # Handoff: maganmasolasidij.hu – teljes webhely újratervezés
 
 ## Overview
-Az Artisjus és további 4 közös jogkezelő (EJI, FILMJUS, HUNGART, MAHASZ) tájékoztató portáljának újratervezése. A jelenlegi egyoldalas (one-page, horgonyos) Drupal 10 oldal helyett önálló, indexelhető aloldalak, ügyfélportál és teljes visszajelzés-rendszer (siker / hiba / figyelmeztetés / töltés / üres állapot).
+Az Artisjus és további 4 közös jogkezelő (EJI, FILMJUS, HUNGART, MAHASZ) tájékoztató portáljának újratervezése. A jelenlegi egyoldalas (one-page, horgonyos) Drupal 10 oldal helyett önálló, indexelhető aloldalak, belépés nélküli, lépésenkénti regisztrációs kérdőív és teljes visszajelzés-rendszer (siker / hiba / figyelmeztetés / töltés / üres állapot).
+
+**A célplatform WordPress** – a megvalósítás részleteit a [WordPress-megvalósítás](#wordpress-megvalósítás) fejezet írja le.
 
 ## About the Design Files
-A csomagban lévő fájlok **HTML-ben készült design-referenciák** (működő prototípus), nem közvetlenül átvehető production kód. A feladat ezeknek a designoknak az **újraépítése a cél-kódbázis környezetében** (jelenleg Drupal 10 – Twig téma + Drupal Form API / webform; vagy ha újraírás történik, a csapat által választott keretrendszerben), annak bevett mintáival és könyvtáraival.
+A csomagban lévő fájlok **HTML-ben készült design-referenciák** (működő prototípus), nem közvetlenül átvehető production kód. A feladat ezeknek a designoknak az **újraépítése WordPressben** (egyedi blokktéma vagy klasszikus téma + ACF-blokkok, Gravity Forms), annak bevett mintáival és bővítményeivel.
 
-A `.dc.html` fájlok böngészőben közvetlenül megnyithatók (a `support.js` futtatja őket). Minden fájl egy sablont (HTML + inline style, `{{ }}` helyőrzők, `<sc-for>` / `<sc-if>` vezérlés) és egy `class Component` logikai osztályt tartalmaz – a logikában található a **teljes szöveges tartalom**, a validáció és az állapotgép.
+A `.dc.html` fájlok helyi webszerverről nyithatók meg (a `support.js` futtatja őket, `file://`-ról nem töltenek be). Minden fájl egy sablont (HTML + inline style, `{{ }}` helyőrzők, `<sc-for>` / `<sc-if>` vezérlés) és egy `class Component` logikai osztályt tartalmaz – a logikában található a **teljes szöveges tartalom**, a validáció és az állapotgép.
 
 ## Fidelity
-**High-fidelity.** Végleges színek, tipográfia, térközök, interakciók és szövegek. Pixelpontos újraépítés az elvárás.
+**High-fidelity.** Végleges színek, tipográfia, térközök, interakciók és szövegek. Pixelpontos újraépítés az elvárás – kivéve, ahol a WordPress-fejezet bővítményre (Gravity Forms, süti-bővítmény) bízza a markupot: ott a bővítmény kimenetét kell a designhoz stílusozni.
 
 ## Oldaltérkép és fájlok
 
@@ -24,17 +26,16 @@ A `.dc.html` fájlok böngészőben közvetlenül megnyithatók (a `support.js` 
 | `/befizetett-dijak-sorsa/kulturalis-celok` | `PageSorsa.dc.html` | NKA, Hangfoglaló, alprogramok, Kollégium |
 | `/visszaterites` | `PageVissza.dc.html` | áttekintés, lépések |
 | `/visszaterites/tajekoztato` | `PageVissza.dc.html` | teljes tájékoztató + PDF |
-| `/visszaterites/ugyintezes` | `PageVissza.dc.html` | ügyintézés menete, mellékletek + gomb a regisztrációhoz |
+| `/visszaterites/ugyintezes` | `PageVissza.dc.html` | „Mire lesz szükséged?”, mellékletek, CTA a regisztrációhoz |
+| `/visszaterites/regisztracio` | `PageRegisztracio.dc.html` | lépésenkénti regisztrációs kérdőív (belépés nélkül) |
 | `/visszaterites/ellenorzok` | `PageVissza.dc.html` | IMEI / PCSN ellenőrző |
 | `/visszaterites/gyik` | `PageVissza.dc.html` | 16 kérdés, kereső |
-| `/ugyfelportal` | `PagePortal.dc.html` | áttekintés: mire lesz szükség, menet, CTA a regisztrációhoz |
-| `/ugyfelportal/regisztracio` | `PagePortal.dc.html` | regisztrációs kérdőív (külön oldal, sok kérdéscsoport) |
-
-**Az oldalon nincs belépés.** Nincs fiók, jelszó, bejelentkezés, „Igényléseim” vagy kijelentkezés; a regisztráció egy belépés nélkül kitölthető kérdőív, amelynek beküldése után az igénylő azonosítót és visszaigazoló e-mailt kap.
 | `/kapcsolat` | `PageInfo.dc.html` | elérhetőség, üzemeltetők (`#uzemeltetok`), kapcsolati űrlap |
 | `/adatvedelmi-tajekoztato` | `PageInfo.dc.html` | tartalomjegyzékes dokumentum |
 | `/suti-tajekoztato` | `PageInfo.dc.html` | sütitáblázat + beállítás gomb |
 | bármi más | `PageInfo.dc.html` | 404 |
+
+**Az oldalon nincs belépés.** Nincs fiók, jelszó, bejelentkezés, „Igényléseim” vagy kijelentkezés, és nincs külön „Ügyfélportál” sem. A regisztráció a Visszatérítés szekció része: belépés nélkül kitölthető kérdőív, amelynek beküldése után az igénylő azonosítót és visszaigazoló e-mailt kap. A régi `/ugyfelportal…` útvonalak a prototípusban a regisztrációra irányítanak – élesben 301-es átirányítás kell.
 
 - `Weboldal.dc.html` – **belépési pont / shell**: fejléc, kliensoldali router, lábléc, süti-hozzájárulás sáv, toast. Ezt nyisd meg a teljes prototípushoz.
 - `Allapotok.dc.html` – az összes visszajelzés-állapot egy lapon + tesztadatok az előidézésükhöz.
@@ -43,7 +44,7 @@ A `.dc.html` fájlok böngészőben közvetlenül megnyithatók (a `support.js` 
 ## Globális elrendezés
 
 - **Konténer:** `max-width: 1200px; margin: 0 auto; padding: 0 28px`.
-- **Fejléc (sticky, z 40):** háttér navy, padding 16px 28px. Bal: logó (34px bakelit-kör + „Magánmásolási díj” Source Serif 4 700 22px). Jobb: fő navigáció (15px/500, gap 18px, aktív: mustár szín + 2px mustár alsó vonal) + „Ügyfélportál” pill gomb (mustár). Skip link: „Ugrás a tartalomra”.
+- **Fejléc (sticky, z 40):** háttér navy, padding 16px 28px. Bal: logó (34px bakelit-kör + „Magánmásolási díj” Source Serif 4 700 22px). Jobb: fő navigáció (15px/500, gap 18px, aktív: mustár szín + 2px mustár alsó vonal; a Regisztráció oldalon a „Visszatérítés” aktív) + **„Igénylés indítása”** pill gomb (mustár, dokumentum ikon) → `/visszaterites/regisztracio`. Skip link: „Ugrás a tartalomra”.
 - **Aloldal-hero:** navy sáv, jobb felső sarokban barázdás kör dekor (`repeating-radial-gradient`, 6% fehér). Morzsamenü (14px), eyebrow (13px/700, uppercase, .07em, mustár), H1 (Source Serif 4 700, `clamp(34px,4.4vw,52px)`, lh 1.08), lead (19px, `oklch(0.88 0.03 262)`). Padding 40px 28px 56px.
 - **Aloldal-törzs:** flex-wrap, gap 48px. Bal oldalsáv (`flex:1 1 220px; max-width:280px; position:sticky; top:96px`) – „Ebben a részben” almenü, aktív elem navy háttér + fehér szöveg, radius 10px. Tartalom: `flex:999 1 520px; max-width:780px`. Oldal végén „Tovább” kártyák (halványkék, radius 14px).
 - **Lábléc:** sötét navy; 4 oszlop (Ügyfélszolgálat, Ügyfélfogadás, Tájékoztatás linkek, Visszatérítés linkek), GVH-szöveg + PDF, impresszum, Adatvédelmi / Süti-tájékoztató / Süti-beállítások.
@@ -59,24 +60,26 @@ A `.dc.html` fájlok böngészőben közvetlenül megnyithatók (a `support.js` 
 - **GYIK harmonika:** egyszerre egy nyitott elem (első alapból nyitva); `+`/`−` kör ikon (nyitva navy). Keresés: kérdés + válasz szövegében, találatok automatikusan nyitva, számláló („3 találat”), üres állapot „Nincs találat” + „Keresés törlése”. Minden kérdésnek van `id`-je (`k1…k11`, `v1…v16`) mélylinkhez.
 - **Hover:** kártyák `translateY(-2px/-3px)` 200–250ms; linkek sötétebb kék + aláhúzás; pill gombok világosabb árnyalat.
 - **Megjelenés:** visszajelzések `mmdin` animációval (opacity 0→1, translateY 8px→0, 250–300ms, `cubic-bezier(.22,.61,.36,1)`).
-- **Toast:** jobb alul, navy, zöld pipás kör, 2,8 s után eltűnik (süti-mentés után).
-- **Süti-sáv:** első látogatáskor alul középen (max 760px). „Összes elfogadása” / „Csak a szükségesek” / „Beállítások” (kinyitja: Szükséges – mindig aktív, Statisztikai – kapcsolható, „Kiválasztottak mentése”). A láblécből és a Süti-tájékoztatóból újranyitható. Tárolás: `mmd-cookie` = `all` | `needed`.
+- **Toast:** jobb alul, navy, zöld pipás kör, 2,8 s után eltűnik (süti-mentés után). WordPressben elhagyható, ha a süti-bővítmény nem ad visszajelzést.
+- **Süti-sáv:** első látogatáskor alul középen (max 760px). „Összes elfogadása” / „Csak a szükségesek” / „Beállítások” (kinyitja: Szükséges – mindig aktív, Statisztikai – kapcsolható, „Kiválasztottak mentése”). A láblécből és a Süti-tájékoztatóból újranyitható. Tárolás: `mmd-cookie` = `all` | `needed`. WordPressben a süti-bővítmény sávját kell erre a designra stílusozni.
 
 ## Űrlapok, validáció, állapotok
-Beküldéskor validál (nem gépelés közben); gépeléskor az adott mező hibája törlődik. Hibás mező: 1.5px piros keret, halvány piros háttér, `aria-invalid`, alatta félkövér piros üzenet. A regisztrációnál összesítő riasztás a lap tetején („N mezőt kell javítanod”).
+Beküldéskor (illetve lépésváltáskor) validál, nem gépelés közben; gépeléskor az adott mező hibája törlődik. Hibás mező: 1.5px piros keret, halvány piros háttér, `aria-invalid`, alatta félkövér piros üzenet. Az űrlap felett összesítő riasztás („N mezőt kell javítanod”).
 
-**Regisztrációs kérdőív** (`/ugyfelportal/regisztracio`, belépés nélkül) – számozott kérdéscsoportok, mindegyik külön fehér kártyán; az oldalsávban „Kérdéscsoportok” lista, kattintásra a csoporthoz görget (90px offset), hibás csoport száma piros:
-1. Igénylő adatai: Teljes név*, E-mail*, Telefonszám, Lakcím*
-2. Alkotói tevékenység: Alkotói tevékenység* (select)
-3. A hordozó adatai: Hordozó típusa* (select), Darabszám* (≥1), Vásárlás dátuma* (**csak aktuális év**), Eladó neve*, Hologramos címke sorszáma / IMEI* (6–20 karakter, `[A-Za-z0-9-]`)
-4. Tárolt tartalom: leírás* (textarea)
-5. Nyilatkozatok: saját professzionális tartalom*, nem használom magánmásolásra*, társszerzői nyilatkozat (15.4 pont), adatvédelem*
-- Állapotok: idle → sending (gomb letiltva, spinner, „Küldés…”) → **ok** (azonosító `MMD-ÉÉÉÉ-NNNNN`, „Hogyan tovább?” 3 lépés, PDF-összesítő, Új regisztráció) | **fail** (riasztás, űrlap megmarad).
-- **Megjegyzés:** a kérdéslista egyelőre az előzetes bejelentőlap ismert mezőiből áll; a teljes kérdéssort az ügyféltől kell bekérni, és a csoportokat ennek megfelelően bővíteni (a kártyás, számozott szerkezet tetszőleges számú csoportra skálázódik).
+**Regisztrációs kérdőív** (`/visszaterites/regisztracio`, belépés nélkül) – **többlépéses űrlap**, a Gravity Forms többoldalas űrlapjának mintájára:
+- **Lépésjelző** (fehér kártya az űrlap felett): „N. lépés / 5” eyebrow + „X% kész”, 6px-es navy folyamatsáv, alatta a lépések listája. Kész lépés: navy kör fehér pipával; aktuális: mustár kör navy számmal, halvány mustár gyűrű, félkövér címke; hátralévő: halványkék kör, szürke címke. `aria-current="step"` az aktuálison.
+- **Lépések:**
+  1. Igénylő adatai: Teljes név*, E-mail*, Telefonszám, Lakcím*
+  2. Alkotói tevékenység: Alkotói tevékenység* (select)
+  3. A hordozó adatai: Hordozó típusa* (select), Darabszám* (≥1), Vásárlás dátuma* (**csak aktuális év**), Eladó neve*, Hologramos címke sorszáma / IMEI* (6–20 karakter, `[A-Za-z0-9-]`)
+  4. Tárolt tartalom: leírás* (textarea)
+  5. Nyilatkozatok: saját professzionális tartalom*, nem használom magánmásolásra*, társszerzői nyilatkozat (15.4 pont), adatvédelem*
+- **Gombsor** (az űrlapkártya alján, hairline felett): „← Vissza” (másodlagos, 2. lépéstől; nem validál, az adatok megmaradnak) · „Tovább →” / az utolsó lépésen „Regisztráció elküldése” (elsődleges) · jobbra igazítva „Mentés és folytatás később” szöveges gomb (2. lépéstől, amikor már van e-mail-cím).
+- **Validáció:** a „Tovább →” csak az aktuális lépés mezőit ellenőrzi; hiba esetén a lépésen marad, összesítő riasztás + mezőhibák.
+- **Állapotok:** idle → sending (gomb letiltva, spinner, „Küldés…”) → **ok** (azonosító `MMD-ÉÉÉÉ-NNNNN`, „Hogyan tovább?” 3 lépés, PDF-összesítő, Új regisztráció) | **fail** (riasztás „Vissza a hordozó adataihoz →” linkkel, ami a 3. lépésre ugrik és a hibás mezőt jelöli) | **mentve** (halványkék riasztás: „Kitöltés elmentve – a folytatáshoz szükséges linket elküldtük a(z) … címre. A link 30 napig érvényes”).
+- **Megjegyzés:** a kérdéslista egyelőre az előzetes bejelentőlap ismert mezőiből áll; a teljes kérdéssort az ügyféltől kell bekérni. A lépésszerkezet tetszőleges számú lépésre és mezőre skálázódik; egy lépésben lehetőleg legfeljebb 6–8 kérdés legyen.
 
 **Ellenőrzők** (`/visszaterites/ellenorzok`): fül IMEI / PCSN. IMEI = pontosan 15 számjegy; SN = 6–24 karakter. Eredmény: **Regisztrált státuszú** (zöld) / **Nem található** (mustár, link az ügyfélszolgálathoz) / **Rendszer nem érhető el** (piros, Újrapróbálás). Élesben az Artisjus IMEI (imei.artisjus.com) és PCSN (artisjus.hu) rendszerének API-ját kell bekötni – egyeztetendő; ha nincs API, maradjon külső link.
-
-**Ügyfélportál** (`/ugyfelportal`): áttekintő oldal – rövid leírás („fiók és bejelentkezés nélkül”), „Mire lesz szükséged?” 4 kártya, a regisztráció menete (4 lépés), navy CTA-sáv „Tovább a regisztrációhoz”. Az oldalsáv almenüje: Áttekintés / Regisztráció.
 
 **Kapcsolati űrlap** (új elem): név, e-mail, téma (select), üzenet (≥20 karakter) → „Köszönjük, üzenetedet megkaptuk” | hálózati hiba riasztás.
 
@@ -84,12 +87,13 @@ A prototípusbeli tesztbemeneteket (pl. „0000” címke, „999” ellenőrző
 
 ## State Management
 - Shell: `route`, `cookie` (consent), `cookieOpen`, `cookieDetail`, `analytics`, `toast`. Prototípusban localStorage: `mmd-route`, `mmd-cookie`.
-- Űrlapok: `values`, `errors`, `status` (`idle | sending | ok | fail`).
+- Regisztráció: `step`, `v` (értékek), `c` (nyilatkozatok), `errors`, `cerr`, `status` (`idle | sending | ok | fail`), `saved`.
+- Kapcsolati űrlap: `values`, `errors`, `status`.
 - GYIK: `open` index, `query`.
 - Ellenőrző: `tab`, `code`, `codeErr`, `checking`, `res` (`ok | no | err`).
 
 ## Design Tokens
-Színek (oklch, zárójelben közelítő hex):
+Színek (oklch, zárójelben közelítő hex – a WordPress színpalettájába a hex értékek kerüljenek):
 - Navy (elsődleges, fejléc, gombok): `oklch(0.28 0.08 262)` (~#1B2A55)
 - Sötét navy (lábléc): `oklch(0.22 0.07 262)` (~#111D40)
 - Mustár (kiemelés, CTA): `oklch(0.85 0.14 85)` (~#EBC04A); hover `oklch(0.9 0.12 85)`; halvány `oklch(0.96 0.045 85)`
@@ -113,18 +117,86 @@ Radius: 6px (lemezborító), 8–12px (input, kis kártya), 14–16px (nagy kár
 ## Assets
 - Nincs raszterkép. A bakelit, barázda-dekor és logó CSS-gradiensekből készül; ikonok inline SVG (monoline, 2px, round cap).
 - A jogkezelők logói (a jelenlegi oldalon: `/sites/default/files/media/images/*-logo.*`) a Jogosulti csoportok oldalra beemelhetők.
-- PDF-ek: `/media/6/download` (visszatérítési tájékoztató), `/media/7/download` (GVH végzés).
+- PDF-ek: `/media/6/download` (visszatérítési tájékoztató), `/media/7/download` (GVH végzés) – WordPressben a Médiatárba kerülnek, a régi URL-ekről átirányítás kell.
+
+## WordPress-megvalósítás
+
+### Téma és design tokenek
+- Egyedi téma (blokktéma vagy klasszikus téma + ACF-blokkok – a fejlesztő döntése). A színek, betűk, betűméretek és térközök a `theme.json`-ba kerüljenek (`settings.color.palette`, `typography.fontFamilies` / `fontSizes`, `spacing.spacingSizes`), hex értékekkel; a szerkesztőben csak ez a paletta legyen elérhető (`custom: false`).
+- **Betűtípusok helyben**: a Source Serif 4 és a Source Sans 3 a témából töltődjön be (`theme.json` `fontFace`, woff2), **ne a Google Fonts CDN-ről** – az EU-ban a távoli betöltés GDPR-kockázat.
+- A prototípus inline style-jai helyett komponens-szintű CSS (blokkonként), BEM vagy blokk-osztályokkal.
+
+### Oldalszerkezet és menük
+- Minden útvonal valódi WP-oldal, a hierarchia a szülő–gyermek oldalakból jön (pl. Visszatérítés → Regisztráció). A kliensoldali router megszűnik.
+- **Fő menü**, **lábléc „Tájékoztatás”** és **lábléc „Visszatérítés”** oszlop: WP-menük (Megjelenés → Menük / navigációs blokk). Aktív állapot a menü `current-menu-item` / `current-menu-ancestor` osztályaiból.
+- **„Ebben a részben” oldalsáv**: a szekció szülőoldalának gyermekoldalaiból automatikusan (vagy külön menüből), sticky.
+- **Fejléc gomb** („Igénylés indítása”): a témabeállításokból / menüből szerkeszthető felirat és cél.
+- **Morzsamenü**: Yoast SEO vagy Rank Math breadcrumbs, a design szerinti markuppal.
+- **Mobil**: ~900px alatt hamburgermenü (a prototípusban még nincs megtervezve – a fejlesztés előtt pótolni kell); az oldalsáv mobilon a tartalom fölé kerül, összecsukható „Ebben a részben” menüként.
+
+### Blokk-leltár (ACF- vagy Gutenberg-blokkok)
+Minden ismétlődő elem legyen szerkeszthető blokk, **tetszőleges elemszámmal** (a 3 kártya, 5 lépés stb. csak a mostani tartalom):
+
+| Blokk | Hol látszik | Mezők |
+|---|---|---|
+| Aloldal-hero | minden aloldal | eyebrow, H1, lead (morzsamenü automatikus) |
+| Nyitóoldali hero + bakelit | `/` | H1 (kiemelt szóval), lead, 2 gomb; a bakelit **fix sablonelem**, nem szerkeszthető |
+| Link-kártya rács | „Kinek szól?”, „Tovább” kártyák | ismétlő: cím, leírás, link, (szám) |
+| Lépéssor | Visszatérítés, nyitóoldal | ismétlő: cím, leírás |
+| Pipás kártyarács | „Mire lesz szükséged?” | ismétlő: cím, leírás |
+| Számozott lista | feltételek, mellékletek | ismétlő: szöveg |
+| CTA-sáv (navy) | Ügyintézés | cím, alcím, gomb |
+| PDF letöltő kártya | Tájékoztató | cím, alcím, fájl (Médiatár) |
+| Riasztás / infó doboz | bárhol | típus (siker / hiba / figyelmeztetés / infó), cím, szöveg |
+| GYIK harmonika + kereső | GYIK oldalak, nyitóoldal | GYIK-kategória választó (ld. lent) |
+| Felosztási arány-sáv | Díjak sorsa | ismétlő: címke, százalék, szín |
+| Jogkezelő lista | Díjak sorsa | a Jogkezelők tartalomtípusból |
+| Kapcsolati blokk / ügyfélszolgálat | lábléc, oldalsáv | témabeállításokból (telefon, e-mail, nyitvatartás – egy helyen szerkeszthető) |
+
+- **Kiemelt szó a címben** (mustár „díj”): egyedi formázás a blokkszerkesztőben (pl. „Kiemelés” formátum → `<mark class="is-accent">`).
+
+### Tartalomtípusok
+- **GYIK** (egyedi tartalomtípus vagy ACF-ismétlő): kérdés, válasz (rich text), kategória (`kereskedoknek` / `visszaterites`), sorrend; a mélylink `id` a slugból. FAQ schema a SEO-bővítményből.
+- **Jogkezelők**: név, kinek a jogait kezeli, honlap, szabályzat URL, logó, szín.
+- Az **Adatvédelmi tájékoztató** sima oldal; a tartalomjegyzék a címsorokból generálódjon (tartalomjegyzék-blokk).
+
+### Űrlapok – Gravity Forms
+- **Regisztrációs kérdőív**: Gravity Forms többoldalas űrlap (Page Break mezők), lépésjelző stílusa: „Steps” – a design szerinti lépésjelzőre stílusozva. Validáció: oldalanként, beküldéskor (a GF alapviselkedése). A „Validation Summary” beállítás adja az összesítő riasztást.
+- **Mentés és folytatás később**: GF „Save and Continue” funkció; a folytató link e-mailben, 30 napos lejárattal (GF alapérték).
+- **Egyedi fejlesztés kell:**
+  - a vásárlás dátumának aktuális évre korlátozása és a címkesorszám formátuma (`gform_field_validation` hook);
+  - az `MMD-ÉÉÉÉ-NNNNN` formátumú azonosító (egyedi merge tag vagy rejtett mező, a beküldéskor generálva) a visszaigazoló oldalon és az e-mailben;
+  - a címkesorszám ellenőrzése az Artisjus nyilvántartásában, ha erre lesz API (hiba esetén a 3. lépésre visszavezető üzenet).
+- **PDF-összesítő**: Gravity PDF bővítmény, a design színeivel.
+- **Visszaigazoló képernyő**: GF Confirmation (szöveg típus) a design „Regisztrációdat rögzítettük” blokkjának markupjával.
+- Hibás mező, összesítő riasztás, gombok: a GF kimenetét (`.gfield_error`, `.gform_validation_errors`, `.gform_next_button` stb.) kell a design szerint stílusozni – ne saját markupot építsetek.
+- **Kapcsolati űrlap**: szintén Gravity Forms (egyoldalas).
+- Adatkezelés: a beküldött bejegyzések tárolási ideje és törlése (GF „Personal Data” beállítás) – egyeztetendő az adatvédelmi tájékoztatóval.
+
+### Süti-hozzájárulás
+- Bővítmény (pl. Complianz vagy CookieYes): kategóriák Szükséges + Statisztikai; a Google Analytics csak hozzájárulás után töltődjön be (Consent Mode v2). A sáv megjelenését a design szerint kell stílusozni; a „Süti-beállítások” link a láblécben és a Süti-tájékoztatón a bővítmény újranyitó függvényét hívja. A sütitáblázat a bővítményből generálható.
+
+### Ellenőrzők (IMEI / PCSN)
+- Ha van API: kis egyedi bővítmény (REST végpont + a design szerinti űrlap blokk), a három eredményállapottal. Ha nincs: a blokk külső linkként jelenjen meg (ugyanebben a kártyában).
+
+### Migráció, SEO, akadálymentesség
+- 301-es átirányítások a régi Drupal-útvonalakról, horgonyokról és PDF-linkekről (Redirection bővítmény vagy szerveroldali szabályok); a régi `/ugyfelportal…` útvonalak → `/visszaterites/regisztracio`.
+- SEO-bővítmény (Yoast / Rank Math): meta, breadcrumbs, FAQ schema, XML sitemap.
+- Akadálymentesség: WCAG 2.1 AA (kontrasztok, fókuszállapotok, `aria-current` a menüben és a lépésjelzőn, űrlaphibák `aria-describedby`-jal).
+- A forgó bakelit `prefers-reduced-motion` esetén álljon meg.
 
 ## Nyitott pontok
+- **A regisztrációs kérdőív teljes kérdéslistája** – az ügyféltől kell bekérni; ennek alapján véglegesíthető a lépések száma és tartalma.
+- **Mobil hamburgermenü** megtervezése.
 - Adatvédelmi tájékoztató: a prototípus csak a szerkezetet és rövid összefoglalót mutatja; a teljes jogi szöveget a jelenlegi oldalról kell átemelni.
-- Sütitáblázat nevei/időtartamai (SESS…, cookie-agreed 100 nap, _ga 2 év) a Drupal/GA alapértékei – ellenőrizendők.
+- Sütitáblázat nevei/időtartamai – a WordPress + süti-bővítmény + GA beállítás alapján újra kell gyűjteni.
 - Az eredeti oldal „kilenc alprogramról” ír, de csak nyolcat sorol fel – tisztázandó.
-- Mobil: a fő navigáció most tördelődik; ~900px alatt hamburger menü javasolt.
-- Angol nyelvű verzió, tarifatáblázat beemelése: ügyféldöntés.
+- IMEI/PCSN API elérhetősége – egyeztetendő az Artisjusszal.
+- Angol nyelvű verzió (WPML / Polylang), tarifatáblázat beemelése: ügyféldöntés.
 
 ## Files
 - `Weboldal.dc.html` – shell, router (belépési pont)
-- `PageHome.dc.html`, `PageDij.dc.html`, `PageSorsa.dc.html`, `PageVissza.dc.html`, `PagePortal.dc.html`, `PageInfo.dc.html`
+- `PageHome.dc.html`, `PageDij.dc.html`, `PageSorsa.dc.html`, `PageVissza.dc.html`, `PageRegisztracio.dc.html`, `PageInfo.dc.html`
 - `Allapotok.dc.html` – állapotgaléria
 - `Nyitóoldal v3.dc.html` – nyitóoldal referencia
 - `support.js` – a `.dc.html` fájlok futtatókörnyezete (csak a prototípus megnyitásához)
