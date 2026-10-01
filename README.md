@@ -52,7 +52,7 @@ A `.dc.html` fájlok helyi webszerverről nyithatók meg (a `support.js` futtatj
 ## Nyitóoldal (`/`)
 1. **Hero** (navy): bal – eyebrow, H1 „A szabad magáncélú másolás lehetőségéért fizetendő díj” (utolsó szó mustár), lead, 2 gomb. Jobb – **hanglemez-kompozíció**: mustár lemezborító (72% szélesség, aspect 1:1, radius 6px, árnyék `0 30px 60px rgba(0,0,0,.35)`) a hanghordozós felosztással (45/30/25%, navy sávok), mögötte jobbra kilógó bakelit (barázdák: `repeating-radial-gradient(circle,#12151e 0 2px,#252b3b 2px 3.2px)`), mustár címke körbefutó felirattal („ARTISJUS · EJI · FILMJUS · HUNGART · MAHASZ ·”, SVG textPath), statikus fényes conic-gradient réteg. **A lemez 7 s alatt fordul körbe, lineárisan, végtelenítve**; `prefers-reduced-motion` esetén álljon meg (production-ben add hozzá).
 2. **„Megfizették a díjat?”** kártya a hero aljára csúsztatva (`margin-top:-44px`), fehér, radius 14px, árnyék `0 18px 40px rgba(30,35,70,.12)`; IMEI és PCSN link-kártya.
-3. **Kinek szól?** 3 kártya (Fizetőknek / Visszatérítés / Kapcsolat), halványkék háttér, navy számozott kör, 3 link.
+3. **Kinek szól?** 3 kártya (Fizetőknek / Visszatérítés / Kapcsolat), halványkék háttér, számozás nélkül: cím, leírás, 3 link.
 4. **A díjról**, **Díjak sorsa** (25% NKA navy blokk, 5 jogkezelő lista), **Visszatérítés** (halványkék szekció, 5 lépés), **GYIK** (fül: Kereskedőknek / Visszatérítés).
 
 ## Interakciók és viselkedés
@@ -141,7 +141,7 @@ Minden ismétlődő elem legyen szerkeszthető blokk, **tetszőleges elemszámma
 |---|---|---|
 | Aloldal-hero | minden aloldal | eyebrow, H1, lead (morzsamenü automatikus) |
 | Nyitóoldali hero + bakelit | `/` | H1 (kiemelt szóval), lead, 2 gomb; a bakelit **fix sablonelem**, nem szerkeszthető |
-| Link-kártya rács | „Kinek szól?”, „Tovább” kártyák | ismétlő: cím, leírás, link, (szám) |
+| Link-kártya rács | „Kinek szól?”, „Tovább” kártyák | ismétlő: cím, leírás, link |
 | Lépéssor | Visszatérítés, nyitóoldal | ismétlő: cím, leírás |
 | Pipás kártyarács | „Mire lesz szükséged?” | ismétlő: cím, leírás |
 | Számozott lista | feltételek, mellékletek | ismétlő: szöveg |

@@ -75,8 +75,7 @@ a:hover{color:oklch(0.32 0.12 255);text-decoration:underline}
   <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:20px">
     <sc-for list="{{ entries }}" as="e" hint-placeholder-count="3">
       <div style="background:{{ e.soft }};border-radius:14px;padding:30px;display:flex;flex-direction:column;gap:14px;transition:transform 250ms" style-hover="transform:translateY(-3px)">
-        <span style="width:52px;height:52px;border-radius:50%;background:{{ e.c }};color:#fff;display:grid;place-items:center;font-family:'Source Serif 4',serif;font-weight:700;font-size:22px">{{ e.n }}</span>
-        <h3 style="font-family:'Source Serif 4',serif;font-size:26px;font-weight:700;margin:4px 0 0">{{ e.title }}</h3>
+        <h3 style="font-family:'Source Serif 4',serif;font-size:26px;font-weight:700;margin:0">{{ e.title }}</h3>
         <p style="font-size:16px;color:oklch(0.36 0.03 262);margin:0;text-wrap:pretty">{{ e.text }}</p>
         <ul style="list-style:none;margin:auto 0 0;padding:0;border-top:1px solid rgba(30,35,70,.12)">
           <sc-for list="{{ e.links }}" as="l" hint-placeholder-count="3">
