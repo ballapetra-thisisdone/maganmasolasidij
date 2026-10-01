@@ -49,15 +49,19 @@ a:hover{color:oklch(0.32 0.12 255);text-decoration:underline}
   <article style="flex:999 1 520px;min-width:0;max-width:800px">
 
     <sc-if value="{{ isOverview }}" hint-placeholder-val="{{ true }}">
+      <p style="margin:0 0 16px;color:oklch(0.3 0.03 262)">A magánmásolási díjat a jogosultak által elszenvedett vagyoni hátrányok részbeni kompenzálására átalány jelleggel meg kell fizetni minden olyan üres hordozó után, amely másolatkészítésre alkalmas, és amely a szabad felhasználás kedvezményezettjének, vagyis természetes személynek a rendelkezésére állhat.</p>
       <p style="margin:0 0 16px;color:oklch(0.3 0.03 262)">A díj átalány jellegéből adódóan, ha a hordozó természetes személy birtokába kerül, a díj visszatérítésére főszabályként nincsen lehetőség, mivel a természetes személy a hordozót választása szerint magánmásolásra is használhatja.</p>
-      <p style="margin:0 0 16px;color:oklch(0.3 0.03 262)">2017. évtől a díjszabásban biztosított kivétel, ha a hordozót olyan professzionális alkotó tevékenységet folytató természetes személy használja, aki megfelelő módon igazolja, hogy</p>
-      <div style="display:grid;gap:10px;margin-bottom:32px">
-        <div style="display:flex;gap:12px;padding:14px 16px;border-radius:10px;background:#fff"><span style="width:24px;height:24px;border-radius:50%;background:oklch(0.85 0.14 85);display:grid;place-items:center;flex:none;font-weight:700;font-size:13px">1</span><span>arra kizárólag saját, professzionális, szerzői jog által védett tartalmait másolja és</span></div>
-        <div style="display:flex;gap:12px;padding:14px 16px;border-radius:10px;background:#fff"><span style="width:24px;height:24px;border-radius:50%;background:oklch(0.85 0.14 85);display:grid;place-items:center;flex:none;font-weight:700;font-size:13px">2</span><span>a hordozót a szerzői jogi törvény által a szabad felhasználás körbe tartozó másolatkészítésre nem használta és nem is fogja használni.</span></div>
+      <p style="margin:0 0 16px;color:oklch(0.3 0.03 262)">2017. évtől a díjszabásban biztosított kivétel, ha a hordozót olyan professzionális alkotó tevékenységet folytató természetes személy használja, aki megfelelő módon igazolja, hogy a hordozó végső használata nyilvánvalóan a szabad felhasználás körébe tartozó másolás esetkörén kívül esik, azaz</p>
+      <div style="display:flex;gap:12px;margin:0 0 10px"><span style="width:7px;height:7px;border-radius:50%;background:oklch(0.28 0.08 262);flex:none;margin-top:10px"></span><span>arra kizárólag saját, professzionális, szerzői jog által védett tartalmait másolja és</span></div>
+      <div style="display:flex;gap:12px;margin:0 0 28px"><span style="width:7px;height:7px;border-radius:50%;background:oklch(0.28 0.08 262);flex:none;margin-top:10px"></span><span>a hordozót a szerzői jogi törvény által a szabad felhasználás körbe tartozó másolatkészítésre nem használta és nem is fogja használni.</span></div>
+      <div style="display:flex;gap:18px;align-items:center;flex-wrap:wrap;padding:24px;border-radius:14px;background:#fff;box-shadow:0 1px 2px rgba(30,35,70,.06);margin-bottom:48px">
+        <span style="width:56px;height:68px;border-radius:6px;background:oklch(0.95 0.02 262);display:grid;place-items:center;font-weight:700;font-size:13px;color:oklch(0.28 0.08 262);flex:none">PDF</span>
+        <div style="flex:1 1 220px"><div style="font-weight:700;font-size:18px">Hivatalos tájékoztató a díj visszatérítésének feltételeiről</div><div style="font-size:15px;color:oklch(0.45 0.03 262)">Visszatérítési tájékoztató</div></div>
+        <a href="https://maganmasolasidij.hu/media/6/download?inline" style="padding:12px 20px;border-radius:999px;background:oklch(0.28 0.08 262);color:#fff;font-weight:700;display:inline-flex;gap:8px;align-items:center" style-hover="color:#fff;text-decoration:none;background:oklch(0.22 0.08 262)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"></path></svg>Letöltés</a>
       </div>
       <h2 style="font-family:'Source Serif 4',serif;font-weight:700;font-size:28px;margin:0 0 18px">Az ügyintézés lépései</h2>
-      <ol style="list-style:none;margin:0 0 40px;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,140px),1fr));gap:12px">
-        <sc-for list="{{ steps }}" as="s" hint-placeholder-count="5">
+      <ol style="list-style:none;margin:0 0 32px;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,140px),1fr));gap:12px">
+        <sc-for list="{{ steps }}" as="s" hint-placeholder-count="4">
           <li style="background:#fff;border-radius:12px;padding:18px;border-top:4px solid oklch(0.28 0.08 262)">
             <div style="font-family:'Source Serif 4',serif;font-size:28px;font-weight:700;line-height:1;margin-bottom:10px">{{ s.n }}</div>
             <div style="font-weight:700;line-height:1.3;margin-bottom:4px">{{ s.t }}</div>
@@ -65,54 +69,7 @@ a:hover{color:oklch(0.32 0.12 255);text-decoration:underline}
           </li>
         </sc-for>
       </ol>
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:14px">
-        <sc-for list="{{ cards }}" as="c" hint-placeholder-count="4">
-          <a href="{{ c.href }}" onClick="{{ go }}" style="display:flex;flex-direction:column;gap:6px;padding:22px;border-radius:14px;background:oklch(0.95 0.02 262);color:oklch(0.24 0.04 262);transition:transform 200ms" style-hover="transform:translateY(-2px);text-decoration:none;color:oklch(0.24 0.04 262)">
-            <span style="font-family:'Source Serif 4',serif;font-weight:700;font-size:21px">{{ c.t }} →</span>
-            <span style="font-size:15px;color:oklch(0.42 0.03 262)">{{ c.d }}</span>
-          </a>
-        </sc-for>
-      </div>
-    </sc-if>
-
-    <sc-if value="{{ isInfo }}" hint-placeholder-val="{{ false }}">
-      <p style="margin:0 0 16px;color:oklch(0.3 0.03 262)">A magánmásolási díjat a jogosultak által elszenvedett vagyoni hátrányok részbeni kompenzálására átalány jelleggel meg kell fizetni minden olyan üres hordozó után, amely másolatkészítésre alkalmas, és amely a szabad felhasználás kedvezményezettjének, vagyis természetes személynek a rendelkezésére állhat.</p>
-      <p style="margin:0 0 16px;color:oklch(0.3 0.03 262)">A díj átalány jellegéből adódóan, ha a hordozó természetes személy birtokába kerül, a díj visszatérítésére főszabályként nincsen lehetőség, mivel a természetes személy a hordozót választása szerint magánmásolásra is használhatja.</p>
-      <p style="margin:0 0 16px;color:oklch(0.3 0.03 262)">2017. évtől a díjszabásban biztosított kivétel, ha a hordozót olyan professzionális alkotó tevékenységet folytató természetes személy használja, aki megfelelő módon igazolja, hogy a hordozó végső használata nyilvánvalóan a szabad felhasználás körébe tartozó másolás esetkörén kívül esik, azaz</p>
-      <div style="display:flex;gap:12px;margin:0 0 10px"><span style="width:7px;height:7px;border-radius:50%;background:oklch(0.28 0.08 262);flex:none;margin-top:10px"></span><span>arra kizárólag saját, professzionális, szerzői jog által védett tartalmait másolja és</span></div>
-      <div style="display:flex;gap:12px;margin:0 0 28px"><span style="width:7px;height:7px;border-radius:50%;background:oklch(0.28 0.08 262);flex:none;margin-top:10px"></span><span>a hordozót a szerzői jogi törvény által a szabad felhasználás körbe tartozó másolatkészítésre nem használta és nem is fogja használni.</span></div>
-      <div style="display:flex;gap:18px;align-items:center;flex-wrap:wrap;padding:24px;border-radius:14px;background:#fff;box-shadow:0 1px 2px rgba(30,35,70,.06)">
-        <span style="width:56px;height:68px;border-radius:6px;background:oklch(0.95 0.02 262);display:grid;place-items:center;font-weight:700;font-size:13px;color:oklch(0.28 0.08 262);flex:none">PDF</span>
-        <div style="flex:1 1 220px"><div style="font-weight:700;font-size:18px">Hivatalos tájékoztató a díj visszatérítésének feltételeiről</div><div style="font-size:15px;color:oklch(0.45 0.03 262)">Visszatérítési tájékoztató</div></div>
-        <a href="https://maganmasolasidij.hu/media/6/download?inline" style="padding:12px 20px;border-radius:999px;background:oklch(0.28 0.08 262);color:#fff;font-weight:700;display:inline-flex;gap:8px;align-items:center" style-hover="color:#fff;text-decoration:none;background:oklch(0.22 0.08 262)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"></path></svg>Letöltés</a>
-      </div>
-      <div style="margin-top:28px"><a href="/visszaterites/ugyintezes" onClick="{{ go }}" style="padding:14px 24px;border-radius:999px;background:oklch(0.85 0.14 85);color:oklch(0.24 0.06 262);font-weight:700;display:inline-block" style-hover="text-decoration:none;background:oklch(0.9 0.12 85);color:oklch(0.24 0.06 262)">Tovább az ügyintézéshez →</a></div>
-    </sc-if>
-
-    <sc-if value="{{ isForm }}" hint-placeholder-val="{{ false }}">
-      <p style="margin:0 0 32px;color:oklch(0.3 0.03 262)">A visszatérítést a regisztrációs kérdőív kitöltésével kezdeményezheted. Fiók létrehozására és bejelentkezésre nincs szükség – a beküldés után azonosítót és visszaigazoló e-mailt kapsz. A kérdőív több lépésből áll, a kitöltést el is mentheted, és később folytathatod.</p>
-      <h2 style="font-family:'Source Serif 4',serif;font-weight:700;font-size:28px;margin:0 0 18px">Mire lesz szükséged?</h2>
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:12px;margin-bottom:40px">
-        <sc-for list="{{ needs }}" as="n" hint-placeholder-count="4">
-          <div style="display:flex;gap:12px;padding:16px 18px;border-radius:12px;background:#fff;box-shadow:0 1px 2px rgba(30,35,70,.06)">
-            <span style="width:24px;height:24px;border-radius:50%;background:oklch(0.85 0.14 85);display:grid;place-items:center;flex:none;margin-top:2px"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="oklch(0.24 0.06 262)" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"></path></svg></span>
-            <div><div style="font-weight:700;line-height:1.35">{{ n.t }}</div><div style="font-size:15px;color:oklch(0.42 0.03 262)">{{ n.d }}</div></div>
-          </div>
-        </sc-for>
-      </div>
-      <h2 style="font-family:'Source Serif 4',serif;font-weight:700;font-size:28px;margin:0 0 12px">A regisztráció után</h2>
-      <p style="margin:0 0 20px;color:oklch(0.3 0.03 262)">Írásban is meg kell erősítened az igényt (postán vagy az ügyfélszolgálaton), és csatolnod kell az alábbi dokumentumokat:</p>
-      <div style="display:grid;gap:10px;margin-bottom:32px">
-        <div style="display:flex;gap:12px;padding:14px 16px;border-radius:10px;background:#fff"><span style="width:24px;height:24px;border-radius:50%;background:oklch(0.85 0.14 85);display:grid;place-items:center;flex:none;font-weight:700;font-size:13px">1</span><span>a vásárlást igazoló számlát vagy nyugtát (eladó neve, hordozó megnevezése és darabszáma, vásárlás időpontja);</span></div>
-        <div style="display:flex;gap:12px;padding:14px 16px;border-radius:10px;background:#fff"><span style="width:24px;height:24px;border-radius:50%;background:oklch(0.85 0.14 85);display:grid;place-items:center;flex:none;font-weight:700;font-size:13px">2</span><span>a hordozóról vagy csomagolásáról eltávolított Artisjus hologramos címkét.</span></div>
-      </div>
-      <div style="display:flex;gap:20px;align-items:center;flex-wrap:wrap;padding:28px;border-radius:16px;background:oklch(0.28 0.08 262);color:#fff">
-        <div style="flex:1 1 260px">
-          <div style="font-family:'Source Serif 4',serif;font-weight:700;font-size:24px;margin-bottom:4px">Regisztráció a visszatérítéshez</div>
-          <div style="font-size:15px;color:oklch(0.88 0.03 262)">Nagyjából 10–15 perc. Belépés nem szükséges.</div>
-        </div>
-        <a href="/visszaterites/regisztracio" onClick="{{ go }}" style="padding:14px 24px;border-radius:999px;background:oklch(0.85 0.14 85);color:oklch(0.24 0.06 262);font-weight:700" style-hover="text-decoration:none;background:oklch(0.9 0.12 85);color:oklch(0.24 0.06 262)">Tovább a regisztrációhoz →</a>
-      </div>
+      <a href="/visszaterites/regisztracio" onClick="{{ go }}" style="padding:14px 24px;border-radius:999px;background:oklch(0.85 0.14 85);color:oklch(0.24 0.06 262);font-weight:700;display:inline-block" style-hover="text-decoration:none;background:oklch(0.9 0.12 85);color:oklch(0.24 0.06 262)">Regisztráció indítása →</a>
     </sc-if>
 
     <sc-if value="{{ isCheck }}" hint-placeholder-val="{{ false }}">
@@ -191,7 +148,7 @@ a:hover{color:oklch(0.32 0.12 255);text-decoration:underline}
   </article>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;page&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;/visszaterites&quot;,&quot;/visszaterites/tajekoztato&quot;,&quot;/visszaterites/ugyintezes&quot;,&quot;/visszaterites/ellenorzok&quot;,&quot;/visszaterites/gyik&quot;],&quot;default&quot;:&quot;/visszaterites&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;nav&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;(path: string) =&gt; void&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;page&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;/visszaterites&quot;,&quot;/visszaterites/ellenorzok&quot;,&quot;/visszaterites/gyik&quot;],&quot;default&quot;:&quot;/visszaterites&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;nav&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;(path: string) =&gt; void&quot;}}">
 class Component extends DCLogic {
   state = { open: 0, query: '', tab: 'imei', code: '', codeErr: '', res: null, checking: false, checkedCode: '' };
   componentDidUpdate(pp) { if (pp.page !== this.props.page) this.setState({ open: 0, query: '', res: null, codeErr: '' }); }
@@ -201,9 +158,7 @@ class Component extends DCLogic {
     const go = (ev) => { const u = ev.currentTarget.getAttribute('href'); if (u && u.startsWith('/')) { ev.preventDefault(); this.props.nav && this.props.nav(u); } };
     const B = (a) => a.map(([t, x]) => ({ isP: t === 'p', isLi: t === 'li', x }));
     const titles = {
-      [base]: ['Visszatérítés', 'Kivételes visszatérítés professzionális alkotóknak, akik a hordozón kizárólag saját, védett tartalmat tárolnak.'],
-      [base + '/tajekoztato']: ['Tájékoztató', 'A díj visszatérítésének feltételei és a hivatalos tájékoztató.'],
-      [base + '/ugyintezes']: ['Ügyintézés', 'Regisztráció belépés nélkül, majd írásos megerősítés a szükséges mellékletekkel.'],
+      [base]: ['Visszatérítés', 'Kivételes visszatérítés professzionális alkotóknak, akik a hordozón kizárólag saját, védett tartalmat tárolnak – a feltételek és az ügyintézés lépései.'],
       [base + '/ellenorzok']: ['PCSN- és IMEI-ellenőrző', 'Ellenőrizd, hogy a hordozó vagy készülék után megfizették-e a magánmásolási díjat.'],
       [base + '/gyik']: ['Gyakori kérdések a visszatérítésről', 'Ki jogosult, mi számít saját alkotásnak, és milyen dokumentumok kellenek.']
     };
@@ -249,21 +204,14 @@ class Component extends DCLogic {
     const faq = faqRaw.map(([qq, a], i) => ({ i, q: qq, a: B(a), txt: (qq + ' ' + a.map(x => x[1]).join(' ')).toLowerCase() }))
       .filter(f => !q || f.txt.includes(q))
       .map(f => { const open = q ? true : s.open === f.i; return { id: 'v' + (f.i + 1), q: f.q, a: f.a, open, sign: open ? '−' : '+', iconBg: open ? 'oklch(0.28 0.08 262)' : 'oklch(0.95 0.02 262)', iconFg: open ? '#fff' : 'oklch(0.28 0.08 262)', toggle: () => this.setState(p => ({ open: p.open === f.i ? -1 : f.i })) }; });
-    const sideDef = [['Áttekintés', base], ['Tájékoztató', base + '/tajekoztato'], ['Ügyintézés', base + '/ugyintezes'], ['Regisztráció', base + '/regisztracio'], ['PCSN- és IMEI-ellenőrző', base + '/ellenorzok'], ['Gyakori kérdések', base + '/gyik']];
+    const sideDef = [['Feltételek', base], ['Regisztráció', base + '/regisztracio'], ['PCSN- és IMEI-ellenőrző', base + '/ellenorzok'], ['Gyakori kérdések', base + '/gyik']];
     const on = 'oklch(0.28 0.08 262)';
     return {
       go, title, lead,
       crumbs: page === base ? [] : [{ label: 'Visszatérítés', href: base }],
       side: sideDef.map(([label, href]) => ({ label, href, bg: href === page ? on : 'transparent', fg: href === page ? '#fff' : 'oklch(0.24 0.04 262)' })),
-      isOverview: page === base || !titles[page], isInfo: page === base + '/tajekoztato', isForm: page === base + '/ugyintezes', isCheck: page === base + '/ellenorzok', isFaq: page === base + '/gyik',
-      steps: [{ n: '1', t: 'Tájékoztató', d: 'Olvasd el a visszatérítés feltételeit.' }, { n: '2', t: 'Regisztráció', d: 'Töltsd ki a kérdőívet, belépés nélkül.' }, { n: '3', t: 'Visszaigazolás', d: 'Azonosítót kapsz e-mailben.' }, { n: '4', t: 'Írásos megerősítés', d: 'Számla vagy nyugta és a hologramos címke.' }, { n: '5', t: 'Beküldés', d: 'Postán vagy az ügyfélszolgálaton.' }],
-      needs: [
-        { t: 'Személyes adatok', d: 'Név, e-mail-cím, lakcím, telefonszám.' },
-        { t: 'A vásárlás adatai', d: 'Számla vagy nyugta: eladó, hordozó, darabszám, dátum.' },
-        { t: 'Hologramos címke', d: 'A címke sorszáma, illetve mobiltelefonnál az IMEI-szám.' },
-        { t: 'A tárolt tartalom leírása', d: 'Milyen saját, védett alkotást tárolsz a hordozón.' }
-      ],
-      cards: [{ t: 'Tájékoztató', d: 'Feltételek és hivatalos PDF', href: base + '/tajekoztato' }, { t: 'Regisztráció', d: 'Az igénylés indítása, belépés nélkül', href: base + '/regisztracio' }, { t: 'Ellenőrzők', d: 'PCSN- és IMEI-szám', href: base + '/ellenorzok' }, { t: 'Gyakori kérdések', d: '16 kérdés és válasz', href: base + '/gyik' }],
+      isOverview: page === base || !titles[page], isCheck: page === base + '/ellenorzok', isFaq: page === base + '/gyik',
+      steps: [{ n: '1', t: 'Regisztráció', d: 'Töltsd ki a kérdőívet, belépés nélkül.' }, { n: '2', t: 'Visszaigazolás', d: 'Azonosítót kapsz e-mailben.' }, { n: '3', t: 'Írásos megerősítés', d: 'Számla vagy nyugta és a hologramos címke.' }, { n: '4', t: 'Beküldés', d: 'Postán vagy az ügyfélszolgálaton.' }],
       imeiBg: imei ? on : 'transparent', imeiFg: imei ? '#fff' : 'oklch(0.3 0.04 262)', pcsnBg: imei ? 'transparent' : on, pcsnFg: imei ? 'oklch(0.3 0.04 262)' : '#fff',
       setImei: () => this.setState({ tab: 'imei', res: null, codeErr: '', code: '' }), setPcsn: () => this.setState({ tab: 'pcsn', res: null, codeErr: '', code: '' }),
       chkTitle: imei ? 'IMEI-szám ellenőrzése' : 'PCSN-szám (SN azonosító) ellenőrzése',

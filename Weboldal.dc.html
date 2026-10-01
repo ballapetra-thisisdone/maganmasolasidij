@@ -138,8 +138,13 @@ a:hover{color:oklch(0.32 0.12 255);text-decoration:underline}
 </x-dc>
 <script type="text/x-dc" data-dc-script>
 class Component extends DCLogic {
-  // A régi /ugyfelportal… útvonalak a regisztrációra mutatnak (élesben 301-es átirányítás).
-  static fixRoute(r) { return r && (r === '/ugyfelportal' || r.startsWith('/ugyfelportal/')) ? '/visszaterites/regisztracio' : r; }
+  // Megszűnt útvonalak (élesben 301-es átirányítás): /ugyfelportal… és /visszaterites/ugyintezes → regisztráció, /visszaterites/tajekoztato → /visszaterites.
+  static fixRoute(r) {
+    if (!r) return r;
+    if (r === '/ugyfelportal' || r.startsWith('/ugyfelportal/') || r === '/visszaterites/ugyintezes') return '/visszaterites/regisztracio';
+    if (r === '/visszaterites/tajekoztato') return '/visszaterites';
+    return r;
+  }
   state = {
     route: Component.fixRoute(typeof localStorage !== 'undefined' && localStorage.getItem('mmd-route')) || '/',
     cookie: (typeof localStorage !== 'undefined' && localStorage.getItem('mmd-cookie')) || null,
@@ -182,8 +187,7 @@ class Component extends DCLogic {
           { label: 'Jogosulti csoportok', href: '/befizetett-dijak-sorsa/jogosulti-csoportok' },
           { label: 'Kulturális célok', href: '/befizetett-dijak-sorsa/kulturalis-celok' } ] },
         { title: 'Visszatérítés', links: [
-          { label: 'Tájékoztató', href: '/visszaterites/tajekoztato' },
-          { label: 'Ügyintézés', href: '/visszaterites/ugyintezes' },
+          { label: 'Feltételek', href: '/visszaterites' },
           { label: 'Regisztráció', href: '/visszaterites/regisztracio' },
           { label: 'PCSN- és IMEI-ellenőrző', href: '/visszaterites/ellenorzok' },
           { label: 'Gyakori kérdések', href: '/visszaterites/gyik' } ] }

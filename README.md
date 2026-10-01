@@ -24,10 +24,8 @@ A `.dc.html` fájlok helyi webszerverről nyithatók meg (a `support.js` futtatj
 | `/befizetett-dijak-sorsa` | `PageSorsa.dc.html` | áttekintés + felosztási arányok |
 | `/befizetett-dijak-sorsa/jogosulti-csoportok` | `PageSorsa.dc.html` | arányok + 5 jogkezelő + szabályzat-linkek |
 | `/befizetett-dijak-sorsa/kulturalis-celok` | `PageSorsa.dc.html` | NKA, Hangfoglaló, alprogramok, Kollégium |
-| `/visszaterites` | `PageVissza.dc.html` | áttekintés, lépések |
-| `/visszaterites/tajekoztato` | `PageVissza.dc.html` | teljes tájékoztató + PDF |
-| `/visszaterites/ugyintezes` | `PageVissza.dc.html` | „Mire lesz szükséged?”, mellékletek, CTA a regisztrációhoz |
-| `/visszaterites/regisztracio` | `PageRegisztracio.dc.html` | lépésenkénti regisztrációs kérdőív (belépés nélkül) |
+| `/visszaterites` | `PageVissza.dc.html` | Feltételek: teljes tájékoztató szöveg + PDF + az ügyintézés 4 lépése + CTA |
+| `/visszaterites/regisztracio` | `PageRegisztracio.dc.html` | lépésenkénti regisztrációs kérdőív (belépés nélkül), az 1. lépés felett „Mire lesz szükséged?” |
 | `/visszaterites/ellenorzok` | `PageVissza.dc.html` | IMEI / PCSN ellenőrző |
 | `/visszaterites/gyik` | `PageVissza.dc.html` | 16 kérdés, kereső |
 | `/kapcsolat` | `PageInfo.dc.html` | elérhetőség, üzemeltetők (`#uzemeltetok`), kapcsolati űrlap |
@@ -35,25 +33,34 @@ A `.dc.html` fájlok helyi webszerverről nyithatók meg (a `support.js` futtatj
 | `/suti-tajekoztato` | `PageInfo.dc.html` | sütitáblázat + beállítás gomb |
 | bármi más | `PageInfo.dc.html` | 404 |
 
-**Az oldalon nincs belépés.** Nincs fiók, jelszó, bejelentkezés, „Igényléseim” vagy kijelentkezés, és nincs külön „Ügyfélportál” sem. A regisztráció a Visszatérítés szekció része: belépés nélkül kitölthető kérdőív, amelynek beküldése után az igénylő azonosítót és visszaigazoló e-mailt kap. A régi `/ugyfelportal…` útvonalak a prototípusban a regisztrációra irányítanak – élesben 301-es átirányítás kell.
+**Az oldalon nincs belépés.** Nincs fiók, jelszó, bejelentkezés, „Igényléseim” vagy kijelentkezés, és nincs külön „Ügyfélportál” sem. A regisztráció a Visszatérítés szekció része: belépés nélkül kitölthető kérdőív, amelynek beküldése után az igénylő azonosítót és visszaigazoló e-mailt kap. A megszűnt útvonalak a prototípusban átirányítanak – élesben 301-es átirányítás kell: `/ugyfelportal…` és `/visszaterites/ugyintezes` → `/visszaterites/regisztracio`; `/visszaterites/tajekoztato` → `/visszaterites`.
+
+**Szerkezeti elv – nincs ismétlődés, nincs körbe mutató link:**
+- Egy szekción belül az **oldalsáv az egyetlen navigáció**; az oldalak alján nincsenek „Tovább” kártyák, amelyek a testvéroldalakra visszamutatnának.
+- Egy szöveg (bekezdés, lista, lépéssor) **csak egy oldalon** szerepel teljes terjedelmében; máshol legfeljebb egymondatos összefoglaló + link.
+- A nyitóoldalon minden célra **egy belépési pont** mutat (a fejléc- és lábléc-menü kivételével): ellenőrzők → „Megfizették a díjat?” kártya; díj, visszatérítés, kapcsolat → „Kinek szól?” kártyák; jogosultak, NKA → Díjak sorsa szekció.
+- A lépéssor egyetlen helye a `/visszaterites` oldal; a regisztráció utáni teendők a sikeres beküldés képernyőjén jelennek meg.
 
 - `Weboldal.dc.html` – **belépési pont / shell**: fejléc, kliensoldali router, lábléc, süti-hozzájárulás sáv, toast. Ezt nyisd meg a teljes prototípushoz.
 - `Allapotok.dc.html` – az összes visszajelzés-állapot egy lapon + tesztadatok az előidézésükhöz.
-- `Nyitóoldal v3.dc.html` – a jóváhagyott nyitóoldal önálló változata (referencia).
 
 ## Globális elrendezés
 
 - **Konténer:** `max-width: 1200px; margin: 0 auto; padding: 0 28px`.
 - **Fejléc (sticky, z 40):** háttér navy, padding 16px 28px. Bal: logó (34px bakelit-kör + „Magánmásolási díj” Source Serif 4 700 22px). Jobb: fő navigáció (15px/500, gap 18px, aktív: mustár szín + 2px mustár alsó vonal; a Regisztráció oldalon a „Visszatérítés” aktív) + **„Igénylés indítása”** pill gomb (mustár, dokumentum ikon) → `/visszaterites/regisztracio`. Skip link: „Ugrás a tartalomra”.
 - **Aloldal-hero:** navy sáv, jobb felső sarokban barázdás kör dekor (`repeating-radial-gradient`, 6% fehér). Morzsamenü (14px), eyebrow (13px/700, uppercase, .07em, mustár), H1 (Source Serif 4 700, `clamp(34px,4.4vw,52px)`, lh 1.08), lead (19px, `oklch(0.88 0.03 262)`). Padding 40px 28px 56px.
-- **Aloldal-törzs:** flex-wrap, gap 48px. Bal oldalsáv (`flex:1 1 220px; max-width:280px; position:sticky; top:96px`) – „Ebben a részben” almenü, aktív elem navy háttér + fehér szöveg, radius 10px. Tartalom: `flex:999 1 520px; max-width:780px`. Oldal végén „Tovább” kártyák (halványkék, radius 14px).
+- **Aloldal-törzs:** flex-wrap, gap 48px. Bal oldalsáv (`flex:1 1 220px; max-width:280px; position:sticky; top:96px`) – „Ebben a részben” almenü, aktív elem navy háttér + fehér szöveg, radius 10px. Tartalom: `flex:999 1 520px; max-width:780px`. Az oldalak alján nincs „Tovább” kártya – a szekción belüli navigáció kizárólag az oldalsáv.
 - **Lábléc:** sötét navy; 4 oszlop (Ügyfélszolgálat, Ügyfélfogadás, Tájékoztatás linkek, Visszatérítés linkek), GVH-szöveg + PDF, impresszum, Adatvédelmi / Süti-tájékoztató / Süti-beállítások.
 
 ## Nyitóoldal (`/`)
-1. **Hero** (navy): bal – eyebrow, H1 „A szabad magáncélú másolás lehetőségéért fizetendő díj” (utolsó szó mustár), lead, 2 gomb. Jobb – **hanglemez-kompozíció**: mustár lemezborító (72% szélesség, aspect 1:1, radius 6px, árnyék `0 30px 60px rgba(0,0,0,.35)`) a hanghordozós felosztással (45/30/25%, navy sávok), mögötte jobbra kilógó bakelit (barázdák: `repeating-radial-gradient(circle,#12151e 0 2px,#252b3b 2px 3.2px)`), mustár címke körbefutó felirattal („ARTISJUS · EJI · FILMJUS · HUNGART · MAHASZ ·”, SVG textPath), statikus fényes conic-gradient réteg. **A lemez 7 s alatt fordul körbe, lineárisan, végtelenítve**; `prefers-reduced-motion` esetén álljon meg (production-ben add hozzá).
+1. **Hero** (navy): bal – eyebrow, H1 „A szabad magáncélú másolás lehetőségéért fizetendő díj” (utolsó szó mustár), lead, 1 gomb („Mi a magánmásolási díj?”). Jobb – **hanglemez-kompozíció**: mustár lemezborító (72% szélesség, aspect 1:1, radius 6px, árnyék `0 30px 60px rgba(0,0,0,.35)`) a hanghordozós felosztással (45/30/25%, navy sávok), mögötte jobbra kilógó bakelit (barázdák: `repeating-radial-gradient(circle,#12151e 0 2px,#252b3b 2px 3.2px)`), mustár címke körbefutó felirattal („ARTISJUS · EJI · FILMJUS · HUNGART · MAHASZ ·”, SVG textPath), statikus fényes conic-gradient réteg. **A lemez 7 s alatt fordul körbe, lineárisan, végtelenítve**; `prefers-reduced-motion` esetén álljon meg (production-ben add hozzá).
 2. **„Megfizették a díjat?”** kártya a hero aljára csúsztatva (`margin-top:-44px`), fehér, radius 14px, árnyék `0 18px 40px rgba(30,35,70,.12)`; IMEI és PCSN link-kártya.
-3. **Kinek szól?** 3 kártya (Fizetőknek / Visszatérítés / Kapcsolat), halványkék háttér, számozás nélkül: cím, leírás, 3 link.
-4. **A díjról**, **Díjak sorsa** (25% NKA navy blokk, 5 jogkezelő lista), **Visszatérítés** (halványkék szekció, 5 lépés), **GYIK** (fül: Kereskedőknek / Visszatérítés).
+3. **Kinek szól?** 3 kártya, halványkék háttér, számozás nélkül: cím, leírás, linklista.
+   - Fizetőknek: Díjszabás (Artisjus), Gyakori kérdések kereskedőknek
+   - Visszatérítés: Feltételek, Regisztráció, Gyakori kérdések
+   - Kapcsolat: Ügyfélszolgálat, A portál üzemeltetői
+4. **A díjról** (rövid magyarázat + „szabadon másolható” kártyák + kivételek doboz „Mit másolhatok szabadon? →” linkkel), **Díjak sorsa** (25% NKA navy blokk, 5 jogkezelő lista, linkek a Jogosulti csoportok és a Kulturális célok oldalra).
+5. A korábbi Visszatérítés és GYIK szekció megszűnt – mindkettőt a „Kinek szól?” kártyák vezetik be.
 
 ## Interakciók és viselkedés
 - **Navigáció:** belső linkek valódi `href`-fel, a prototípusban kliensoldali router (`nav(path)`); horgony (`/kapcsolat#uzemeltetok`) esetén 90px offsettel görget (sticky fejléc). Oldalváltáskor lap tetejére ugrik.
@@ -141,14 +148,12 @@ Minden ismétlődő elem legyen szerkeszthető blokk, **tetszőleges elemszámma
 |---|---|---|
 | Aloldal-hero | minden aloldal | eyebrow, H1, lead (morzsamenü automatikus) |
 | Nyitóoldali hero + bakelit | `/` | H1 (kiemelt szóval), lead, 2 gomb; a bakelit **fix sablonelem**, nem szerkeszthető |
-| Link-kártya rács | „Kinek szól?”, „Tovább” kártyák | ismétlő: cím, leírás, link |
-| Lépéssor | Visszatérítés, nyitóoldal | ismétlő: cím, leírás |
-| Pipás kártyarács | „Mire lesz szükséged?” | ismétlő: cím, leírás |
-| Számozott lista | feltételek, mellékletek | ismétlő: szöveg |
-| CTA-sáv (navy) | Ügyintézés | cím, alcím, gomb |
-| PDF letöltő kártya | Tájékoztató | cím, alcím, fájl (Médiatár) |
+| Link-kártya rács | „Kinek szól?” | ismétlő: cím, leírás, linklista |
+| Lépéssor | Visszatérítés (Feltételek) | ismétlő: cím, leírás |
+| Pipás lista | „Mire lesz szükséged?” (Regisztráció) | ismétlő: cím, leírás |
+| PDF letöltő kártya | Visszatérítés (Feltételek) | cím, alcím, fájl (Médiatár) |
 | Riasztás / infó doboz | bárhol | típus (siker / hiba / figyelmeztetés / infó), cím, szöveg |
-| GYIK harmonika + kereső | GYIK oldalak, nyitóoldal | GYIK-kategória választó (ld. lent) |
+| GYIK harmonika + kereső | GYIK oldalak | GYIK-kategória választó (ld. lent) |
 | Felosztási arány-sáv | Díjak sorsa | ismétlő: címke, százalék, szín |
 | Jogkezelő lista | Díjak sorsa | a Jogkezelők tartalomtípusból |
 | Kapcsolati blokk / ügyfélszolgálat | lábléc, oldalsáv | témabeállításokból (telefon, e-mail, nyitvatartás – egy helyen szerkeszthető) |
@@ -198,5 +203,4 @@ Minden ismétlődő elem legyen szerkeszthető blokk, **tetszőleges elemszámma
 - `Weboldal.dc.html` – shell, router (belépési pont)
 - `PageHome.dc.html`, `PageDij.dc.html`, `PageSorsa.dc.html`, `PageVissza.dc.html`, `PageRegisztracio.dc.html`, `PageInfo.dc.html`
 - `Allapotok.dc.html` – állapotgaléria
-- `Nyitóoldal v3.dc.html` – nyitóoldal referencia
 - `support.js` – a `.dc.html` fájlok futtatókörnyezete (csak a prototípus megnyitásához)

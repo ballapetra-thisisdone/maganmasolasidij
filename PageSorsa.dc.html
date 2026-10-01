@@ -112,14 +112,6 @@ a:hover{color:oklch(0.32 0.12 255);text-decoration:underline}
       </div>
     </sc-if>
 
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:14px;margin-top:48px">
-      <sc-for list="{{ next }}" as="n" hint-placeholder-count="2">
-        <a href="{{ n.href }}" onClick="{{ go }}" style="display:block;padding:22px;border-radius:14px;background:oklch(0.95 0.02 262);color:oklch(0.24 0.04 262);transition:transform 200ms" style-hover="transform:translateY(-2px);text-decoration:none;color:oklch(0.24 0.04 262)">
-          <div style="font-size:13px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:oklch(0.42 0.12 255);margin-bottom:6px">Tovább</div>
-          <div style="font-family:'Source Serif 4',serif;font-weight:700;font-size:21px">{{ n.label }} →</div>
-        </a>
-      </sc-for>
-    </div>
   </article>
 </div>
 </x-dc>
@@ -130,15 +122,13 @@ class Component extends DCLogic {
     const page = this.props.page || base;
     const go = (ev) => { const u = ev.currentTarget.getAttribute('href'); if (u && u.startsWith('/')) { ev.preventDefault(); this.props.nav && this.props.nav(u); } };
     const B = (a) => a.map(([t, x, href, hl]) => ({ isH: t === 'h', isP: t === 'p', isLi: t === 'li', x: x || '', href: href || '', hl: hl || '', hasLink: !!href }));
-    const intro = ['p', 'A beszedett díjakat az Artisjus először a fő jogosulti csoportok között osztja meg. A megosztás arányát a szerzői jogi törvény tartalmazza (zenei szerzők, vizuális szerzők, filmes szerzők, előadóművészek, hangfelvétel-előállítók). Az Artisjus tehát a megfelelő díjrészeket átadja a közös jogkezelő szervezeteknek (valamint a díjak jogszabályban meghatározott 25%-os részét a Nemzeti Kulturális Alapnak).'];
     const pages = {
-      [base]: { title: 'A befizetett díjak sorsa', lead: 'Hová kerül a magánmásolási díj, és kik részesülnek belőle?', nka: true, split: true, blocks: B([intro,
-        ['p', 'E szervezetek azután a díjakat az egyes szerzők, előadók, kiadók, producerek között saját felosztási szabályzatuk szerint osztják fel. A díjak felosztása és kifizetése a díjak beszedését követő évben az egyedi jogosultak részére megtörténik.']]),
-        next: [{ label: 'Jogosulti csoportok', href: base + '/jogosulti-csoportok' }, { label: 'Kulturális célok', href: base + '/kulturalis-celok' }] },
-      [base + '/jogosulti-csoportok']: { title: 'Jogosulti csoportok', lead: 'Az öt közös jogkezelő saját, nyilvános felosztási szabályzata szerint osztja fel a díjakat.', split: true, orgs: true, blocks: B([intro,
-        ['p', 'E szervezetek azután a díjakat az egyes szerzők, előadók, kiadók, producerek között saját felosztási szabályzatuk szerint osztják fel. Ezeket a szabályokat mindegyik egyesületben maguk az érintett jogosultak közösen állapítják meg, és felosztási szabályzatban rögzítik. A szabályzatok nyilvánosak, minden szervezet honlapján elérhetőek. A díjak felosztása és kifizetése a díjak beszedését követő évben az egyedi jogosultak részére megtörténik.']]),
-        next: [{ label: 'Kulturális célok', href: base + '/kulturalis-celok' }, { label: 'A befizetett díjak sorsa', href: base }] },
-      [base + '/kulturalis-celok']: { title: 'Kulturális célok', lead: 'A magánmásolási díjak 25%-a a Nemzeti Kulturális Alapon keresztül kulturális támogatásokra jut.', nka: true, culture: true, blocks: B([
+      [base]: { title: 'A befizetett díjak sorsa', lead: 'Hová kerül a magánmásolási díj, és kik részesülnek belőle?', nka: true, blocks: B([
+        ['p', 'A beszedett díjakat az Artisjus a szerzői jogi törvényben rögzített arányban osztja meg a jogosulti csoportokat képviselő öt közös jogkezelő szervezet és a Nemzeti Kulturális Alap között.'],
+        ['p', 'A közös jogkezelők a díjakat saját felosztási szabályzatuk szerint osztják fel az egyes szerzők, előadók, kiadók és producerek között; a kifizetés a beszedést követő évben történik meg.']]) },
+      [base + '/jogosulti-csoportok']: { title: 'Jogosulti csoportok', lead: 'Az öt közös jogkezelő saját, nyilvános felosztási szabályzata szerint osztja fel a díjakat.', split: true, orgs: true, blocks: B([
+        ['p', 'A fő jogosulti csoportok – zenei szerzők, vizuális szerzők, filmes szerzők, előadóművészek, hangfelvétel-előállítók – közötti megosztás arányát a szerzői jogi törvény tartalmazza. A csoportokon belüli felosztás szabályait mindegyik egyesületben maguk az érintett jogosultak állapítják meg, és felosztási szabályzatban rögzítik. A szabályzatok nyilvánosak, alább mindegyik elérhető.']]) },
+      [base + '/kulturalis-celok']: { title: 'Kulturális célok', lead: 'A magánmásolási díjak 25%-a a Nemzeti Kulturális Alapon keresztül kulturális támogatásokra jut.', culture: true, blocks: B([
         ['p', 'A magánmásolási díjak nagyobb részét a közös jogkezelők felosztják a szerzők, előadók, kiadók és producerek között – ez a kifizetés pedig elsősorban a felhasználások mennyiségével és értékével arányos. A kifizetett jogdíjak tehát az adott produkció népszerűségével, sikerességével, gazdasági értékével arányosak.'],
         ['p', 'Ugyanakkor a magánmásolási díjak egy igen nagy, 25%-os része más szempontok alapján jut el a kulturális piac szereplőihez. Ezt a 25%-os részt kötelezően kulturális támogatásokra kell fordítani, a Nemzeti Kulturális Alap útján.'],
         ['h', 'A Nemzeti Kulturális Alap'],
@@ -146,14 +136,13 @@ class Component extends DCLogic {
         ['p', 'A Magyar Országgyűlés a nemzeti és egyetemes értékek létrehozásának, megőrzésének, valamint terjesztésének támogatása érdekében hozta létre ezt az elkülönített állami pénzalapot, amelynek fő bevételi forrása – a magánmásolási díjak 25%-a mellett – az ötöslottó játékadójának 90 százaléka. A rendelkezésére álló pénzforrásokat döntő hányadában társadalmasított kollégiumi rendszer működtetésével pályáztatja és juttatja el az arra érdemesített programok megvalósítóihoz.'],
         ['h', 'Hangfoglaló Program'],
         ['p', 'A magánmásolási díjak 25%-ának átadásával jelent meg az NKA-nál hangsúlyosan a könnyűzene támogatása. Az e célból létrehozott Hangfoglaló Program teljes egészében ebből a forrásból működik.'],
-        ['p', 'Az NKA Hangfoglaló Programjának célja a magyar könnyűzene támogatása, színvonalas produkciók fellépési lehetőségeinek, külföldi népszerűsítésének elősegítése. A program 2014. május 12-én indult (korábban: Cseh Tamás Program), azóta több száz könnyűzenei projektet támogatott.']]),
-        next: [{ label: 'Jogosulti csoportok', href: base + '/jogosulti-csoportok' }, { label: 'A befizetett díjak sorsa', href: base }] }
+        ['p', 'Az NKA Hangfoglaló Programjának célja a magyar könnyűzene támogatása, színvonalas produkciók fellépési lehetőségeinek, külföldi népszerűsítésének elősegítése. A program 2014. május 12-én indult (korábban: Cseh Tamás Program), azóta több száz könnyűzenei projektet támogatott.']]) }
     };
     const P = pages[page] || pages[base];
     const sideDef = [['Áttekintés', base], ['Jogosulti csoportok', base + '/jogosulti-csoportok'], ['Kulturális célok', base + '/kulturalis-celok']];
     const row = (who, org, pct) => ({ who, org, pct: pct + '%', w: pct + '%' });
     return {
-      go, title: P.title, lead: P.lead, blocks: P.blocks, next: P.next,
+      go, title: P.title, lead: P.lead, blocks: P.blocks,
       showNka: !!P.nka, showSplit: !!P.split, showOrgs: !!P.orgs, showCulture: !!P.culture,
       crumbs: page === base ? [] : [{ label: 'A befizetett díjak sorsa', href: base }],
       side: sideDef.map(([label, href]) => ({ label, href, bg: href === page ? 'oklch(0.28 0.08 262)' : 'transparent', fg: href === page ? '#fff' : 'oklch(0.24 0.04 262)' })),

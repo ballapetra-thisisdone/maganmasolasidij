@@ -86,7 +86,7 @@ a:hover{color:oklch(0.32 0.12 255);text-decoration:underline}
     <sc-if value="{{ isArticle }}" hint-placeholder-val="{{ true }}">
       <sc-for list="{{ blocks }}" as="b" hint-placeholder-count="8">
         <sc-if value="{{ b.isH }}"><h2 style="font-family:'Source Serif 4',serif;font-weight:700;font-size:28px;line-height:1.2;margin:36px 0 14px">{{ b.x }}</h2></sc-if>
-        <sc-if value="{{ b.isP }}"><p style="margin:0 0 16px;color:oklch(0.3 0.03 262);text-wrap:pretty">{{ b.x }}</p></sc-if>
+        <sc-if value="{{ b.isP }}"><p style="margin:0 0 16px;color:oklch(0.3 0.03 262);text-wrap:pretty">{{ b.x }}<sc-if value="{{ b.hasLink }}"> <a href="{{ b.href }}" onClick="{{ go }}" style="font-weight:600">{{ b.hl }} →</a></sc-if></p></sc-if>
         <sc-if value="{{ b.isLi }}"><div style="display:flex;gap:12px;margin:0 0 10px;color:oklch(0.3 0.03 262)"><span style="width:7px;height:7px;border-radius:50%;background:oklch(0.28 0.08 262);flex:none;margin-top:10px"></span><span>{{ b.x }}<sc-if value="{{ b.hasLink }}"> – <a href="{{ b.href }}" style="font-weight:600">{{ b.hl }}</a></sc-if></span></div></sc-if>
         <sc-if value="{{ b.isNote }}"><div style="margin:20px 0;padding:20px 22px;border-radius:12px;background:oklch(0.95 0.02 262);font-weight:600;font-size:18px;line-height:1.5">{{ b.x }}</div></sc-if>
         <sc-if value="{{ b.isNo }}"><div style="display:flex;gap:12px;margin:0 0 10px;padding:14px 16px;border-radius:10px;background:#fff;border:1px solid oklch(0.9 0.01 262)"><span style="width:24px;height:24px;border-radius:50%;background:oklch(0.28 0.08 262);color:#fff;display:grid;place-items:center;flex:none"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"></path></svg></span><span>{{ b.x }}</span></div></sc-if>
@@ -94,14 +94,6 @@ a:hover{color:oklch(0.32 0.12 255);text-decoration:underline}
       </sc-for>
     </sc-if>
 
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:14px;margin-top:48px">
-      <sc-for list="{{ next }}" as="n" hint-placeholder-count="2">
-        <a href="{{ n.href }}" onClick="{{ go }}" style="display:block;padding:22px;border-radius:14px;background:oklch(0.95 0.02 262);color:oklch(0.24 0.04 262);transition:transform 200ms" style-hover="transform:translateY(-2px);text-decoration:none;color:oklch(0.24 0.04 262)">
-          <div style="font-size:13px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:oklch(0.42 0.12 255);margin-bottom:6px">Tovább</div>
-          <div style="font-family:'Source Serif 4',serif;font-weight:700;font-size:21px">{{ n.label }} →</div>
-        </a>
-      </sc-for>
-    </div>
   </article>
 </div>
 </x-dc>
@@ -125,27 +117,20 @@ class Component extends DCLogic {
         ['p', 'A díjat minden másolatkészítésre alkalmas hordozóra meg kell fizetni, amely a szabad felhasználás kedvezményezettjének minősülő természetes személy birtokába kerülhet, és ezáltal ő arra magáncélú másolatot készíthet.'],
         ['h', 'Kik a jogosultak?'],
         ['p', 'A magánmásolási díjra jogosult személyek a következő kategóriákba tartoznak: zeneszerzők, zeneszövegírók, irodalmi szerzők, előadóművészek, hangfelvétel-kiadók, vizuális alkotók, filmes alkotók és filmelőállítók.'],
-        ['p', 'Ezt a díjat azonban ők nem közvetlenül, egyenként gyűjtik be, hanem minden országban saját közös jogkezelő szervezeteik érvényesítik. Magyarországon a közös jogkezelést egyesületi formában végzik a szerzők, előadók és kiadók – következő szervezeteik útján:'],
-        ['li', 'Zeneszerzők, szövegírók, írók: Artisjus Magyar Szerzői Jogvédő Iroda Egyesület', 'https://www.artisjus.hu/', 'www.artisjus.hu'],
-        ['li', 'Előadóművészek: Előadóművészi Jogvédő Iroda Egyesület', 'https://eji.hu/', 'www.eji.hu'],
-        ['li', 'Hangfelvétel-kiadók: Magyar Hangfelvétel-kiadók Szövetsége Közös Jogkezelő Egyesület', 'https://www.mahasz.hu/', 'www.mahasz.hu'],
-        ['li', 'Vizuális alkotók: Hungart Vizuális Alkotók Közös Jogkezelő Társasága Egyesület', 'http://www.hungart.org/', 'www.hungart.org'],
-        ['li', 'Filmes alkotók és előállítók: Filmjus Filmszerzők és Előállítók Szerzői Jogvédő Egyesülete', 'http://www.filmjus.hu/', 'www.filmjus.hu'],
-        ['p', 'A díjakat egyablakos ügyintézés keretében az Artisjus szedi be, de a díjak megállapításában mind az öt szervezet részt vesz, azok felosztását és kifizetését pedig mind az öt szervezet önállóan végzi.'],
+        ['p', 'Ezt a díjat azonban ők nem közvetlenül, egyenként gyűjtik be, hanem minden országban saját közös jogkezelő szervezeteik érvényesítik. Magyarországon ezt öt egyesület végzi: a díjakat egyablakos ügyintézés keretében az Artisjus szedi be, a felosztást és a kifizetést pedig mind az öt szervezet önállóan végzi.', '/befizetett-dijak-sorsa/jogosulti-csoportok', 'Az öt közös jogkezelő'],
         ['h', 'Díjszabás és igazolás'],
         ['p', 'Azt, hogy a díjakat pontosan milyen típusú üres hordozókra (pl. üres CD és DVD lemezekre, memóriakártyákra stb.) és milyen összegben kell megfizetni, az Artisjus díjszabása tartalmazza. Ez a díjszabás a többi közös jogkezelő szervezettel egyetértésben kerül kialakításra, majd a Szellemi Tulajdon Nemzeti Hivatala előtt zajló egyeztetések végén az igazságügyi miniszter hagyja jóvá – és végül megjelenik a Hivatalos Értesítőben.'],
         ['p', 'A díj megfizetését a hordozóra ragasztott, azonosítást lehetővé tevő hologramos matrica, vagy az IMEI számmal rendelkező termékeknél azok az IMEI-szám ellenőrző rendszerbe feltöltött és regisztrált státuszú IMEI száma, illetve egyes esetekben „ARTISJUS” védjegyet tartalmazó hologramos matrica nélküli PC-knél a PCSN-szám Ellenőrző Rendszerben feltöltött és regisztrált státuszú SN azonosító igazolja, ezeket az adatokat az Artisjus nyilvántartja.'],
         ['p', 'A megfizetendő díj mértékét a díjszabásban meghatározottakhoz képest csökkenti, ha a díjat a hordozó gyártója, importőre vagy forgalmazója az Artisjusszal kötött kedvezményes megállapodás alapján fizeti.']
-      ]), next: [{ label: 'Mit másolhatok szabadon?', href: base + '/mit-masolhatok-szabadon' }, { label: 'Gyakori kérdések kereskedőknek', href: base + '/gyik-kereskedoknek' }] },
+      ]) },
       [base + '/mit-masolhatok-szabadon']: { title: 'Mit másolhatok szabadon?', lead: 'Egy természetes személy magáncélra a szerzői jogosult engedélye nélkül másolatot készíthet, ha az jövedelemszerzés vagy jövedelemfokozás célját közvetve sem szolgálja.', blocks: B([
-        ['p', 'A törvény rendelkezik az ún. magáncélú másolatkészítés szabad felhasználásáról. Ennek alapján egy természetes személy magáncélra a hangfelvételekről, filmekről és más művekről a szerzői jogosult engedélye nélkül másolatot készíthet, ha az jövedelemszerzés vagy jövedelemfokozás célját közvetve sem szolgálja.'],
         ['h', 'Szabadon készíthető magáncélra másolat például'],
         ['yes', 'zeneművek hangfelvételeiről'], ['yes', 'irodalmi művekről, hangoskönyvekről'], ['yes', 'filmekről, televízió műsorokban elhangzó művekről'], ['yes', 'vizuális alkotásokról, fényképészeti művekről'],
         ['h', 'Kivételek'],
         ['p', 'Vannak a szabad magánmásolás lehetősége alól kivételek. Így például:'],
         ['no', 'nem készíthető szabad másolat szoftverről, adatbázisról, kottáról'], ['no', 'nem vehető fel a mű előadása'], ['no', 'nem készíthető másolat olyan műről sem, amelyet engedély nélkül, azaz jogellenesen töltöttek fel az internetre']
-      ]), next: [{ label: 'Mi a magánmásolási díj?', href: base }, { label: 'Gyakori kérdések kereskedőknek', href: base + '/gyik-kereskedoknek' }] },
-      [base + '/gyik-kereskedoknek']: { faq: true, title: 'Gyakori kérdések kereskedőknek', lead: 'Díjfizetés, felelősség, kedvezmények és kivételek – gyártóknak, importőröknek és forgalmazóknak.', next: [{ label: 'Mi a magánmásolási díj?', href: base }, { label: 'Díjfizetés ellenőrzése', href: '/visszaterites/ellenorzok' }] }
+      ]) },
+      [base + '/gyik-kereskedoknek']: { faq: true, title: 'Gyakori kérdések kereskedőknek', lead: 'Díjfizetés, felelősség, kedvezmények és kivételek – gyártóknak, importőröknek és forgalmazóknak.' }
     };
     const P = pages[page] || pages[base];
     const faqRaw = [
@@ -167,7 +152,7 @@ class Component extends DCLogic {
       .map(f => { const open = q ? true : this.state.open === f.i; return { id: 'k' + (f.i + 1), q: f.q, a: f.a, open, sign: open ? '−' : '+', iconBg: open ? 'oklch(0.28 0.08 262)' : 'oklch(0.95 0.02 262)', iconFg: open ? '#fff' : 'oklch(0.28 0.08 262)', toggle: () => this.setState(s => ({ open: s.open === f.i ? -1 : f.i })) }; });
     const sideDef = [['Mi a magánmásolási díj?', base], ['Mit másolhatok szabadon?', base + '/mit-masolhatok-szabadon'], ['Gyakori kérdések kereskedőknek', base + '/gyik-kereskedoknek']];
     return {
-      go, title: P.title, lead: P.lead, blocks: P.blocks || [], next: P.next,
+      go, title: P.title, lead: P.lead, blocks: P.blocks || [],
       isFaq: !!P.faq, isArticle: !P.faq,
       crumbs: page === base ? [] : [{ label: 'A magánmásolási díjról', href: base }],
       side: sideDef.map(([label, href]) => ({ label, href, bg: href === page ? 'oklch(0.28 0.08 262)' : 'transparent', fg: href === page ? '#fff' : 'oklch(0.24 0.04 262)' })),
