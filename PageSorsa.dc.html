@@ -34,7 +34,6 @@ a:hover{color:oklch(0.32 0.12 255);text-decoration:underline}
 
 <div style="max-width:1200px;margin:0 auto;padding:56px 28px 96px;display:flex;flex-wrap:wrap;gap:48px;align-items:flex-start">
   <aside style="flex:1 1 220px;max-width:280px;position:sticky;top:96px">
-    <div style="font-size:13px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:oklch(0.5 0.03 262);margin-bottom:10px">Ebben a részben</div>
     <nav style="display:grid;gap:4px">
       <sc-for list="{{ side }}" as="s" hint-placeholder-count="3">
         <a href="{{ s.href }}" onClick="{{ go }}" style="padding:10px 14px;border-radius:10px;font-weight:600;font-size:16px;background:{{ s.bg }};color:{{ s.fg }}" style-hover="background:oklch(0.95 0.02 262);text-decoration:none">{{ s.label }}</a>
@@ -53,7 +52,7 @@ a:hover{color:oklch(0.32 0.12 255);text-decoration:underline}
 
     <sc-for list="{{ blocks }}" as="b" hint-placeholder-count="6">
       <sc-if value="{{ b.isH }}"><h2 style="font-family:'Source Serif 4',serif;font-weight:700;font-size:28px;line-height:1.2;margin:36px 0 14px">{{ b.x }}</h2></sc-if>
-      <sc-if value="{{ b.isP }}"><p style="margin:0 0 16px;color:oklch(0.3 0.03 262);text-wrap:pretty">{{ b.x }}<sc-if value="{{ b.hasLink }}"> <a href="{{ b.href }}" style="font-weight:600">{{ b.hl }} ↗</a></sc-if></p></sc-if>
+      <sc-if value="{{ b.isP }}"><p style="margin:0 0 16px;color:oklch(0.3 0.03 262);text-wrap:pretty">{{ b.x }}<sc-if value="{{ b.hasLink }}"> <a href="{{ b.href }}" target="_blank" rel="noopener" style="font-weight:600">{{ b.hl }} ↗</a></sc-if></p></sc-if>
       <sc-if value="{{ b.isLi }}"><div style="display:flex;gap:12px;margin:0 0 10px;color:oklch(0.3 0.03 262)"><span style="width:7px;height:7px;border-radius:50%;background:oklch(0.28 0.08 262);flex:none;margin-top:10px"></span><span>{{ b.x }}</span></div></sc-if>
     </sc-for>
 
@@ -84,8 +83,8 @@ a:hover{color:oklch(0.32 0.12 255);text-decoration:underline}
           <div style="background:#fff;border-radius:14px;padding:20px 22px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));gap:14px;align-items:center">
             <div><div style="font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:oklch(0.5 0.03 262)">{{ o.who }}</div><div style="font-weight:700;font-size:17px;line-height:1.35;margin-top:2px">{{ o.full }}</div></div>
             <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end">
-              <a href="{{ o.url }}" style="padding:9px 16px;border-radius:999px;background:oklch(0.95 0.02 262);font-weight:600;font-size:15px;color:oklch(0.28 0.08 262)">{{ o.host }} ↗</a>
-              <a href="{{ o.rules }}" style="padding:9px 16px;border-radius:999px;border:1.5px solid oklch(0.28 0.08 262);font-weight:600;font-size:15px;color:oklch(0.28 0.08 262)">Felosztási szabályzat ↗</a>
+              <a href="{{ o.url }}" target="_blank" rel="noopener" style="padding:9px 16px;border-radius:999px;background:oklch(0.95 0.02 262);font-weight:600;font-size:15px;color:oklch(0.28 0.08 262)">{{ o.host }} ↗</a>
+              <a href="{{ o.rules }}" target="_blank" rel="noopener" style="padding:9px 16px;border-radius:999px;border:1.5px solid oklch(0.28 0.08 262);font-weight:600;font-size:15px;color:oklch(0.28 0.08 262)">Felosztási szabályzat ↗</a>
             </div>
           </div>
         </sc-for>
@@ -107,8 +106,8 @@ a:hover{color:oklch(0.32 0.12 255);text-decoration:underline}
         </sc-for>
       </div>
       <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:32px">
-        <a href="https://www.nka.hu/" style="padding:12px 20px;border-radius:999px;background:oklch(0.28 0.08 262);color:#fff;font-weight:700" style-hover="color:#fff;text-decoration:none;background:oklch(0.22 0.08 262)">www.nka.hu ↗</a>
-        <a href="https://hangfoglalo.hu/" style="padding:12px 20px;border-radius:999px;background:oklch(0.85 0.14 85);color:oklch(0.24 0.06 262);font-weight:700" style-hover="text-decoration:none;background:oklch(0.9 0.12 85);color:oklch(0.24 0.06 262)">hangfoglalo.hu ↗</a>
+        <a href="https://www.nka.hu/" target="_blank" rel="noopener" style="padding:12px 20px;border-radius:999px;background:oklch(0.28 0.08 262);color:#fff;font-weight:700" style-hover="color:#fff;text-decoration:none;background:oklch(0.22 0.08 262)">www.nka.hu ↗</a>
+        <a href="https://hangfoglalo.hu/" target="_blank" rel="noopener" style="padding:12px 20px;border-radius:999px;background:oklch(0.85 0.14 85);color:oklch(0.24 0.06 262);font-weight:700" style-hover="text-decoration:none;background:oklch(0.9 0.12 85);color:oklch(0.24 0.06 262)">hangfoglalo.hu ↗</a>
       </div>
     </sc-if>
 

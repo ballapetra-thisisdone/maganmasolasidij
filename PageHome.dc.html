@@ -60,10 +60,10 @@ a:hover{color:oklch(0.32 0.12 255);text-decoration:underline}
       <h2 style="font-family:'Source Serif 4',serif;font-size:26px;font-weight:700;margin:0 0 6px">Megfizették a díjat?</h2>
       <p style="font-size:15px;color:oklch(0.42 0.03 262);margin:0">A díj megfizetését hologramos matrica, mobiltelefonoknál a regisztrált IMEI-szám, egyes PC-knél a regisztrált SN-azonosító igazolja.</p>
     </div>
-    <a onClick="{{ go }}" href="/visszaterites/ellenorzok#imei" style="display:flex;align-items:center;gap:16px;padding:18px 20px;border-radius:12px;background:oklch(0.95 0.02 262);color:oklch(0.24 0.04 262);text-decoration:none;transition:transform 200ms" style-hover="transform:translateY(-2px);color:oklch(0.24 0.04 262);text-decoration:none">
+    <a onClick="{{ go }}" href="/ellenorzo#imei" style="display:flex;align-items:center;gap:16px;padding:18px 20px;border-radius:12px;background:oklch(0.95 0.02 262);color:oklch(0.24 0.04 262);text-decoration:none;transition:transform 200ms" style-hover="transform:translateY(-2px);color:oklch(0.24 0.04 262);text-decoration:none">
       <span style="width:44px;height:44px;border-radius:50%;background:oklch(0.28 0.08 262);color:#fff;display:grid;place-items:center;flex:none"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="2" width="10" height="20" rx="2"></rect><path d="M11 18h2"></path></svg></span>
       <span style="flex:1"><span style="display:block;font-weight:700">IMEI-szám ellenőrzése</span><span style="font-size:14px;color:oklch(0.42 0.03 262)">Mobiltelefonok, tabletek</span></span><span style="font-weight:700">→</span></a>
-    <a onClick="{{ go }}" href="/visszaterites/ellenorzok#pcsn" style="display:flex;align-items:center;gap:16px;padding:18px 20px;border-radius:12px;background:oklch(0.95 0.02 262);color:oklch(0.24 0.04 262);text-decoration:none;transition:transform 200ms" style-hover="transform:translateY(-2px);color:oklch(0.24 0.04 262);text-decoration:none">
+    <a onClick="{{ go }}" href="/ellenorzo#pcsn" style="display:flex;align-items:center;gap:16px;padding:18px 20px;border-radius:12px;background:oklch(0.95 0.02 262);color:oklch(0.24 0.04 262);text-decoration:none;transition:transform 200ms" style-hover="transform:translateY(-2px);color:oklch(0.24 0.04 262);text-decoration:none">
       <span style="width:44px;height:44px;border-radius:50%;background:oklch(0.28 0.08 262);color:#fff;display:grid;place-items:center;flex:none"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="2"></rect><path d="M8 20h8M12 16v4"></path></svg></span>
       <span style="flex:1"><span style="display:block;font-weight:700">PCSN-szám ellenőrzése</span><span style="font-size:14px;color:oklch(0.42 0.03 262)">Személyi számítógépek</span></span><span style="font-weight:700">→</span></a>
   </div>
@@ -73,12 +73,12 @@ a:hover{color:oklch(0.32 0.12 255);text-decoration:underline}
   <h2 style="font-family:'Source Serif 4',serif;font-size:clamp(28px,3.2vw,40px);font-weight:700;margin:0 0 28px">Kinek szól?</h2>
   <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:20px">
     <sc-for list="{{ entries }}" as="e" hint-placeholder-count="3">
-      <div style="background:{{ e.soft }};border-radius:14px;padding:30px;display:flex;flex-direction:column;gap:14px;transition:transform 250ms" style-hover="transform:translateY(-3px)">
+      <div style="background:oklch(0.95 0.02 262);border-radius:14px;padding:30px;display:flex;flex-direction:column;gap:14px">
         <h3 style="font-family:'Source Serif 4',serif;font-size:26px;font-weight:700;margin:0">{{ e.title }}</h3>
-        <p style="font-size:16px;color:oklch(0.36 0.03 262);margin:0;text-wrap:pretty">{{ e.text }}</p>
-        <ul style="list-style:none;margin:auto 0 0;padding:0;border-top:1px solid rgba(30,35,70,.12)">
+        <p style="font-size:16px;color:oklch(0.36 0.03 262);margin:0 0 6px;text-wrap:pretty">{{ e.text }}</p>
+        <ul style="list-style:none;margin:auto 0 0;padding:0">
           <sc-for list="{{ e.links }}" as="l" hint-placeholder-count="3">
-            <li style="border-bottom:1px solid rgba(30,35,70,.12)"><a onClick="{{ go }}" href="{{ l.href }}" style="display:flex;justify-content:space-between;gap:12px;padding:12px 0;font-weight:600;font-size:16px;color:oklch(0.24 0.04 262)">{{ l.label }}<span>→</span></a></li>
+            <li style="border-top:{{ l.sep }}"><a onClick="{{ go }}" href="{{ l.href }}" target="{{ l.target }}" rel="noopener" style="display:flex;justify-content:space-between;gap:12px;padding:12px 0;font-weight:600;font-size:16px;color:oklch(0.24 0.04 262)">{{ l.label }}<span style="color:oklch(0.42 0.12 255)">{{ l.icon }}</span></a></li>
           </sc-for>
         </ul>
       </div>
@@ -98,16 +98,17 @@ a:hover{color:oklch(0.32 0.12 255);text-decoration:underline}
       <div style="font-weight:700;margin-bottom:4px">Szabadon készíthető magáncélra másolat például:</div>
       <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px">
         <sc-for list="{{ free }}" as="f" hint-placeholder-count="4">
-          <div style="padding:18px;border-radius:12px;background:{{ f.soft }};display:flex;flex-direction:column;gap:10px">
-            <span style="width:36px;height:36px;border-radius:50%;background:{{ f.c }};color:#fff;display:grid;place-items:center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"></path></svg></span>
+          <div style="padding:14px 16px;border-radius:12px;background:#fff;border:1px solid oklch(0.9 0.01 262);display:flex;gap:12px;align-items:flex-start">
+            <span style="width:24px;height:24px;border-radius:50%;background:oklch(0.95 0.02 262);display:grid;place-items:center;flex:none"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="oklch(0.28 0.08 262)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"></path></svg></span>
             <span style="font-weight:600;line-height:1.35">{{ f.t }}</span>
           </div>
         </sc-for>
       </div>
-      <div style="display:flex;gap:14px;align-items:flex-start;padding:16px 18px;border:1.5px solid oklch(0.9 0.01 262);border-radius:12px;font-size:15px;color:oklch(0.36 0.03 262)">
-        <span style="width:28px;height:28px;border-radius:50%;background:oklch(0.28 0.08 262);color:#fff;display:grid;place-items:center;flex:none"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"></path></svg></span>
-        <span>Nem készíthető szabad másolat szoftverről, adatbázisról, kottáról, és olyan műről sem, amelyet jogellenesen töltöttek fel az internetre. <a onClick="{{ go }}" href="/a-maganmasolasi-dijrol/mit-masolhatok-szabadon" style="font-weight:600">Mit másolhatok szabadon? →</a></span>
+      <div style="display:flex;gap:12px;align-items:flex-start;padding:14px 16px;border-radius:12px;background:#fff;border:1px solid oklch(0.9 0.01 262);font-size:15px;color:oklch(0.36 0.03 262)">
+        <span style="width:24px;height:24px;border-radius:50%;background:oklch(0.95 0.02 262);display:grid;place-items:center;flex:none"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="oklch(0.28 0.08 262)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7l10 10M17 7L7 17"></path></svg></span>
+        <span>Nem készíthető szabad másolat szoftverről, adatbázisról, kottáról, és olyan műről sem, amelyet jogellenesen töltöttek fel az internetre.</span>
       </div>
+      <a onClick="{{ go }}" href="/a-maganmasolasi-dijrol#mit-masolhatok" style="font-weight:600;margin-top:4px">A kivételek részletesen →</a>
     </div>
   </div>
 </section>
@@ -118,23 +119,18 @@ a:hover{color:oklch(0.32 0.12 255);text-decoration:underline}
       <div style="font-size:13px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:oklch(0.42 0.12 255);margin-bottom:12px">A befizetett díjak sorsa</div>
       <h2 style="font-family:'Source Serif 4',serif;font-size:clamp(28px,3.2vw,40px);font-weight:700;line-height:1.15;margin:0 0 20px">Jogosulti csoportok és kulturális célok</h2>
       <p style="margin:0 0 24px;color:oklch(0.36 0.03 262)">A díjakat egyablakos ügyintézés keretében az Artisjus szedi be, de a díjak megállapításában mind az öt szervezet részt vesz, azok felosztását és kifizetését pedig mind az öt szervezet önállóan végzi.</p>
-      <div style="position:relative;overflow:hidden;display:flex;gap:20px;align-items:center;padding:28px;background:oklch(0.28 0.08 262);color:#fff;border-radius:14px;margin-bottom:24px">
+      <div style="position:relative;overflow:hidden;display:flex;gap:20px;align-items:center;padding:28px;background:oklch(0.28 0.08 262);color:#fff;border-radius:14px">
         <span style="position:absolute;right:-70px;top:-70px;width:200px;height:200px;border-radius:50%;background:repeating-radial-gradient(circle,rgba(255,255,255,.07) 0 2px,transparent 2px 5px)"></span>
         <span style="font-family:'Source Serif 4',serif;font-size:64px;font-weight:700;line-height:1;position:relative;color:oklch(0.85 0.14 85)">25%</span>
         <span style="font-size:16px;line-height:1.5;font-weight:600;position:relative">A díjak jogszabályban meghatározott része a Nemzeti Kulturális Alaphoz kerül. Ebből működik a Hangfoglaló Program.</span>
       </div>
-      <div style="display:flex;gap:20px;flex-wrap:wrap;font-weight:600">
-        <a onClick="{{ go }}" href="/befizetett-dijak-sorsa/jogosulti-csoportok">Jogosulti csoportok →</a>
-        <a onClick="{{ go }}" href="/befizetett-dijak-sorsa/kulturalis-celok">Kulturális célok →</a>
-      </div>
     </div>
-    <div style="background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 1px 2px rgba(30,35,70,.06)">
-      <sc-for list="{{ orgs }}" as="o" hint-placeholder-count="5">
-        <a onClick="{{ go }}" href="{{ o.url }}" style="display:grid;grid-template-columns:14px 110px 1fr auto;gap:16px;align-items:center;padding:20px 22px;border-bottom:1px solid oklch(0.93 0.01 262);color:oklch(0.24 0.04 262);text-decoration:none;transition:background 200ms" style-hover="background:oklch(0.97 0.012 262);text-decoration:none">
-          <span style="width:14px;height:14px;border-radius:50%;background:{{ o.c }}"></span>
-          <span style="font-weight:700;letter-spacing:.02em">{{ o.name }}</span>
-          <span style="font-size:15px;color:oklch(0.42 0.03 262)">{{ o.who }}</span>
-          <span style="color:oklch(0.42 0.12 255)">↗</span>
+    <div style="display:grid;gap:12px;align-content:start">
+      <div style="font-weight:700">Hová kerül a díj? Nézd meg részletesen:</div>
+      <sc-for list="{{ fate }}" as="t" hint-placeholder-count="2">
+        <a onClick="{{ go }}" href="{{ t.href }}" style="display:flex;gap:16px;align-items:center;padding:22px 24px;border-radius:14px;background:oklch(0.95 0.02 262);color:oklch(0.24 0.04 262);transition:transform 200ms" style-hover="transform:translateY(-2px);text-decoration:none;color:oklch(0.24 0.04 262)">
+          <span style="flex:1"><span style="display:block;font-family:'Source Serif 4',serif;font-weight:700;font-size:21px;margin-bottom:4px">{{ t.title }}</span><span style="font-size:15px;color:oklch(0.42 0.03 262)">{{ t.text }}</span></span>
+          <span style="font-weight:700;color:oklch(0.42 0.12 255)">→</span>
         </a>
       </sc-for>
     </div>
@@ -168,29 +164,30 @@ class Component extends DCLogic {
         { who: 'hangfelvétel-kiadók', pct: '25%', w: '25%', c: N }
       ],
       entries: [
-        { soft: soft.coral, title: 'Fizetőknek', text: 'Gyártóknak, importőröknek és kereskedőknek: ki köteles a díj megfizetésére, mikor nem kell fizetni, és hogyan vehető igénybe kedvezmény.', links: [
-          { label: 'Díjszabás (Artisjus)', href: 'https://www.artisjus.hu/felhasznaloknak/maganmasolasi-dij/tarifa-10/' },
-          { label: 'Gyakori kérdések kereskedőknek', href: '/a-maganmasolasi-dijrol/gyik-kereskedoknek' } ] },
-        { soft: soft.teal, title: 'Visszatérítés', text: 'Professzionális alkotóknak, akik a hordozón kizárólag saját, szerzői jog által védett tartalmat tárolnak.', links: [
-          { label: 'Feltételek', href: '/visszaterites' },
-          { label: 'Regisztráció', href: '/visszaterites/regisztracio' },
-          { label: 'Gyakori kérdések', href: '/visszaterites/gyik' } ] },
-        { soft: soft.mustard, title: 'Kapcsolat', text: 'Ügyfélszolgálat telefonon, e-mailben vagy személyesen, időpontfoglalás után.', links: [
-          { label: 'Ügyfélszolgálat', href: '/kapcsolat' },
-          { label: 'A portál üzemeltetői', href: '/kapcsolat#uzemeltetok' } ] }
-      ],
+        { title: 'Fizetőknek', text: 'Gyártóknak, importőröknek és kereskedőknek: ki köteles a díj megfizetésére, mikor nem kell fizetni, és hogyan vehető igénybe kedvezmény.', links: [
+          ['Díjszabás', '/a-maganmasolasi-dijrol#dijszabas'],
+          ['Gyakori kérdések a díjfizetésről', '/gyik#dijfizetes'] ] },
+        { title: 'Visszatérítés', text: 'Professzionális alkotóknak, akik a hordozón kizárólag saját, szerzői jog által védett tartalmat tárolnak.', links: [
+          ['Feltételek és menete', '/visszaterites'],
+          ['Igénylés indítása', '/visszaterites/igenyles'],
+          ['Gyakori kérdések a visszatérítésről', '/gyik#visszaterites'] ] },
+        { title: 'Kapcsolat', text: 'Ügyfélszolgálat telefonon, e-mailben vagy személyesen, időpontfoglalás után.', links: [
+          ['Írj nekünk', '/kapcsolat'],
+          ['A portál üzemeltetői', '/kapcsolat#uzemeltetok'] ] }
+      ].map(e => ({ ...e, links: e.links.map(([label, href], i) => {
+        // Belső link: →, külső (új lapon nyílik): ↗. Elválasztó vonal csak az elemek között.
+        const ext = !href.startsWith('/');
+        return { label, href, icon: ext ? '↗' : '→', target: ext ? '_blank' : '', sep: i ? '1px solid rgba(30,35,70,.12)' : '0' };
+      }) })),
       free: [
-        { t: 'zeneművek hangfelvételeiről', c: C.coral, soft: soft.coral },
-        { t: 'irodalmi művekről, hangoskönyvekről', c: C.teal, soft: soft.teal },
-        { t: 'filmekről, televízióműsorokban elhangzó művekről', c: C.blue, soft: soft.blue },
-        { t: 'vizuális alkotásokról, fényképészeti művekről', c: N, soft: soft.mustard }
+        { t: 'zeneművek hangfelvételeiről' },
+        { t: 'irodalmi művekről, hangoskönyvekről' },
+        { t: 'filmekről, televízióműsorokban elhangzó művekről' },
+        { t: 'vizuális alkotásokról, fényképészeti művekről' }
       ],
-      orgs: [
-        { name: 'ARTISJUS', who: 'zeneszerzők, szövegírók, írók', url: 'https://www.artisjus.hu/', c: C.coral },
-        { name: 'EJI', who: 'előadóművészek', url: 'https://www.eji.hu/', c: C.navy },
-        { name: 'FILMJUS', who: 'filmes szerzők és előállítók', url: 'https://www.filmjus.hu/', c: C.blue },
-        { name: 'HUNGART', who: 'vizuális alkotók', url: 'https://www.hungart.org/', c: N },
-        { name: 'MAHASZ', who: 'hangfelvétel-kiadók', url: 'https://www.mahasz.hu/', c: C.teal }
+      fate: [
+        { title: 'Jogosulti csoportok', text: 'Milyen arányban osztják fel a díjat a szerzők, előadók és kiadók között, és melyik szervezet fizeti ki.', href: '/befizetett-dijak-sorsa/jogosulti-csoportok' },
+        { title: 'Kulturális célok', text: 'Mire fordítja a Nemzeti Kulturális Alap a díjak 25%-át – a Hangfoglaló Program és alprogramjai.', href: '/befizetett-dijak-sorsa/kulturalis-celok' }
       ]
     };
   }

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,500;8..60,600;8..60,700&family=Source+Sans+3:wght@400;500;600;700&display=swap">
+<style>
+body{margin:0;background:#F6F5F1;font-family:'Source Sans 3',system-ui,sans-serif;color:oklch(0.24 0.04 262);font-size:17px;line-height:1.6}
+*{box-sizing:border-box}
+a{color:oklch(0.42 0.12 255);text-decoration:none}
+a:hover{color:oklch(0.32 0.12 255);text-decoration:underline}
+@keyframes mmdspin{to{transform:rotate(360deg)}}
+@keyframes mmdin{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+</style>
+</helmet>
+<section data-screen-label="Ellenőrző – fejléc" style="background:oklch(0.28 0.08 262);color:#fff;position:relative;overflow:hidden">
+  <span style="position:absolute;right:-120px;top:-120px;width:340px;height:340px;border-radius:50%;background:repeating-radial-gradient(circle,rgba(255,255,255,.06) 0 2px,transparent 2px 6px)"></span>
+  <div style="max-width:1200px;margin:0 auto;padding:40px 28px 56px;position:relative">
+    <nav aria-label="Morzsamenü" style="display:flex;gap:8px;flex-wrap:wrap;font-size:14px;color:oklch(0.8 0.03 262);margin-bottom:28px">
+      <a href="/" onClick="{{ go }}" style="color:oklch(0.8 0.03 262)">Főoldal</a><span>/</span><span style="color:#fff">Díjfizetés ellenőrzése</span>
+    </nav>
+    <h1 style="font-family:'Source Serif 4',serif;font-weight:700;font-size:clamp(34px,4.4vw,52px);line-height:1.08;margin:0 0 16px">Megfizették a díjat?</h1>
+    <p style="font-size:19px;color:oklch(0.88 0.03 262);margin:0;max-width:720px;text-wrap:pretty">Ellenőrizd az IMEI- vagy a PCSN-számot. A díj megfizetését a legtöbb hordozónál a csomagoláson lévő hologramos címke igazolja – mobiltelefonoknál és egyes PC-knél ezt a nyilvántartott szám helyettesíti.</p>
+  </div>
+</section>
+
+<div style="max-width:860px;margin:0 auto;padding:48px 28px 96px">
+  <div role="tablist" aria-label="Ellenőrzés típusa" style="display:inline-flex;gap:6px;padding:5px;background:#fff;border-radius:999px;box-shadow:0 1px 2px rgba(30,35,70,.08);margin-bottom:20px">
+    <button role="tab" aria-selected="{{ imeiOn }}" onClick="{{ setImei }}" style="border:0;cursor:pointer;padding:10px 18px;border-radius:999px;font:inherit;font-size:15px;font-weight:600;background:{{ imeiBg }};color:{{ imeiFg }}">IMEI-szám</button>
+    <button role="tab" aria-selected="{{ pcsnOn }}" onClick="{{ setPcsn }}" style="border:0;cursor:pointer;padding:10px 18px;border-radius:999px;font:inherit;font-size:15px;font-weight:600;background:{{ pcsnBg }};color:{{ pcsnFg }}">PCSN-szám (SN)</button>
+  </div>
+  <form onSubmit="{{ runCheck }}" novalidate style="background:#fff;border-radius:16px;padding:30px;box-shadow:0 1px 2px rgba(30,35,70,.06)">
+    <h2 style="font-family:'Source Serif 4',serif;font-weight:700;font-size:26px;margin:0 0 6px">{{ chkTitle }}</h2>
+    <p style="margin:0 0 20px;font-size:15px;color:oklch(0.42 0.03 262)">{{ chkDesc }}</p>
+    <label style="display:grid;gap:6px">
+      <span style="font-weight:600;font-size:15px">{{ chkLabel }}</span>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <input value="{{ code }}" onChange="{{ onCode }}" placeholder="{{ chkPh }}" inputmode="{{ chkMode }}" aria-invalid="{{ codeInvalid }}" style="flex:1 1 240px;padding:14px 16px;border-radius:10px;border:1.5px solid {{ codeBorder }};font-family:ui-monospace,monospace;font-size:17px;outline:none;min-width:0" style-focus="border-color:oklch(0.28 0.08 262);box-shadow:0 0 0 3px oklch(0.9 0.04 262)">
+        <button type="submit" style="cursor:pointer;padding:14px 24px;border-radius:999px;border:0;background:oklch(0.28 0.08 262);color:#fff;font:inherit;font-weight:700;display:inline-flex;gap:10px;align-items:center">
+          <sc-if value="{{ checking }}" hint-placeholder-val="{{ false }}"><span style="width:16px;height:16px;border-radius:50%;border:2.5px solid rgba(255,255,255,.35);border-top-color:#fff;animation:mmdspin 700ms linear infinite"></span></sc-if>
+          {{ chkBtn }}</button>
+      </div>
+      <sc-if value="{{ codeInvalid }}"><span style="font-size:14px;font-weight:600;color:oklch(0.5 0.19 27)">{{ codeError }}</span></sc-if>
+      <span style="font-size:14px;color:oklch(0.5 0.03 262)">{{ chkHint }}</span>
+    </label>
+  </form>
+  <sc-if value="{{ resOk }}" hint-placeholder-val="{{ false }}">
+    <div role="status" style="display:flex;gap:16px;padding:22px 24px;border-radius:14px;background:oklch(0.95 0.04 150);margin-top:16px;animation:mmdin 250ms">
+      <span style="width:40px;height:40px;border-radius:50%;background:oklch(0.5 0.12 150);color:#fff;display:grid;place-items:center;flex:none"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"></path></svg></span>
+      <div><div style="font-weight:700;font-size:18px;color:oklch(0.35 0.1 150)">Regisztrált státuszú – a díjat megfizették</div><div style="font-size:15px;color:oklch(0.34 0.03 262)"><span style="font-family:ui-monospace,monospace">{{ checkedCode }}</span> szerepel az Artisjus nyilvántartásában.</div></div>
+    </div>
+  </sc-if>
+  <sc-if value="{{ resNo }}" hint-placeholder-val="{{ false }}">
+    <div role="status" style="display:flex;gap:16px;padding:22px 24px;border-radius:14px;background:oklch(0.96 0.05 85);margin-top:16px;animation:mmdin 250ms">
+      <span style="width:40px;height:40px;border-radius:50%;background:oklch(0.72 0.14 75);color:#fff;display:grid;place-items:center;flex:none;font-weight:700;font-size:20px">?</span>
+      <div><div style="font-weight:700;font-size:18px">Nem található a nyilvántartásban</div><div style="font-size:15px;color:oklch(0.34 0.03 262);margin-bottom:8px"><span style="font-family:ui-monospace,monospace">{{ checkedCode }}</span> nem szerepel regisztrált státusszal. Ellenőrizd a számot, vagy keresd a hordozón a hologramos címkét.</div><a href="/kapcsolat" onClick="{{ go }}" style="font-weight:600">Kapcsolatfelvétel az ügyfélszolgálattal →</a></div>
+    </div>
+  </sc-if>
+  <sc-if value="{{ resErr }}" hint-placeholder-val="{{ false }}">
+    <div role="alert" style="display:flex;gap:16px;padding:22px 24px;border-radius:14px;background:oklch(0.95 0.035 27);margin-top:16px;animation:mmdin 250ms">
+      <span style="width:40px;height:40px;border-radius:50%;background:oklch(0.55 0.2 27);color:#fff;display:grid;place-items:center;flex:none;font-weight:700;font-size:20px">!</span>
+      <div><div style="font-weight:700;font-size:18px;color:oklch(0.42 0.16 27)">Az ellenőrzés most nem érhető el</div><div style="font-size:15px;color:oklch(0.34 0.03 262);margin-bottom:10px">Az Artisjus rendszere nem válaszolt. Próbáld újra néhány perc múlva.</div><button onClick="{{ runCheck }}" style="cursor:pointer;padding:9px 18px;border-radius:999px;border:1.5px solid oklch(0.55 0.2 27);background:#fff;color:oklch(0.45 0.18 27);font:inherit;font-weight:700">Újrapróbálás</button></div>
+    </div>
+  </sc-if>
+  <div style="display:flex;gap:12px;align-items:flex-start;margin-top:28px;padding:16px 18px;border-radius:12px;background:#fff;border:1px solid oklch(0.9 0.01 262);font-size:15px;color:oklch(0.38 0.03 262)">
+    <span style="width:24px;height:24px;border-radius:50%;background:oklch(0.95 0.02 262);color:oklch(0.28 0.08 262);display:grid;place-items:center;flex:none;font-family:'Source Serif 4',serif;font-weight:700;font-size:14px">i</span>
+    <span>Az ellenőrző független a visszatérítés igénylésétől – arra szolgál, hogy vásárlás előtt vagy után meggyőződj a díj megfizetéséről. Az ellenőrzés az Artisjus nyilvántartásában történik.</span>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;hash&quot;:{&quot;editor&quot;:&quot;string&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;nav&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;(path: string) =&gt; void&quot;}}">
+class Component extends DCLogic {
+  state = { tab: this.props.hash === 'pcsn' ? 'pcsn' : 'imei', code: '', codeErr: '', res: null, checking: false, checkedCode: '' };
+  componentDidUpdate(pp) { if (pp.hash !== this.props.hash && this.props.hash) this.setState({ tab: this.props.hash === 'pcsn' ? 'pcsn' : 'imei', res: null, codeErr: '', code: '' }); }
+  renderVals() {
+    const go = (ev) => { const u = ev.currentTarget.getAttribute('href'); if (u && u.startsWith('/')) { ev.preventDefault(); this.props.nav && this.props.nav(u); } };
+    const s = this.state, RED = 'oklch(0.55 0.2 27)', on = 'oklch(0.28 0.08 262)';
+    const imei = s.tab === 'imei';
+    const runCheck = (e) => {
+      e && e.preventDefault && e.preventDefault();
+      const code = s.code.replace(/\s/g, '');
+      let err = '';
+      if (!code) err = imei ? 'Add meg az IMEI-számot.' : 'Add meg a sorozatszámot.';
+      else if (imei && !/^\d{15}$/.test(code)) err = 'Az IMEI-szám pontosan 15 számjegyből áll.';
+      else if (!imei && !/^[A-Za-z0-9-]{6,24}$/.test(code)) err = 'A sorozatszám 6–24 karakter, csak betű, szám és kötőjel.';
+      if (err) { this.setState({ codeErr: err, res: null }); return; }
+      this.setState({ checking: true, res: null, codeErr: '' });
+      setTimeout(() => {
+        const last = code.slice(-1);
+        const res = code.startsWith('999') ? 'err' : (imei ? (Number(last) % 2 === 0 ? 'ok' : 'no') : (/^[Xx]/.test(code) ? 'no' : 'ok'));
+        this.setState({ checking: false, res, checkedCode: code });
+      }, 900);
+    };
+    return {
+      go,
+      imeiOn: imei, pcsnOn: !imei,
+      imeiBg: imei ? on : 'transparent', imeiFg: imei ? '#fff' : 'oklch(0.3 0.04 262)', pcsnBg: imei ? 'transparent' : on, pcsnFg: imei ? 'oklch(0.3 0.04 262)' : '#fff',
+      setImei: () => this.setState({ tab: 'imei', res: null, codeErr: '', code: '' }), setPcsn: () => this.setState({ tab: 'pcsn', res: null, codeErr: '', code: '' }),
+      chkTitle: imei ? 'IMEI-szám ellenőrzése' : 'PCSN-szám (SN azonosító) ellenőrzése',
+      chkDesc: imei ? 'Mobiltelefonok és egyes tabletek esetében a díj megfizetését az IMEI-szám ellenőrző rendszerben regisztrált státuszú IMEI-szám igazolja.' : 'Hologramos matrica nélküli személyi számítógépeknél a PCSN-szám Ellenőrző Rendszerben regisztrált státuszú SN azonosító igazolja a díj megfizetését.',
+      chkLabel: imei ? 'IMEI-szám' : 'Sorozatszám (SN)', chkPh: imei ? '15 számjegy' : 'pl. 5CD1234XYZ', chkMode: imei ? 'numeric' : 'text',
+      chkHint: imei ? 'Az IMEI-számot a *#06# tárcsázásával vagy a készülék beállításaiban találod.' : 'A sorozatszám a számítógép alján vagy a rendszerinformációk között található.',
+      chkBtn: s.checking ? 'Ellenőrzés…' : 'Ellenőrzés', checking: s.checking,
+      code: s.code, onCode: (e) => this.setState({ code: e.target.value, codeErr: '' }), runCheck,
+      codeInvalid: !!s.codeErr, codeError: s.codeErr, codeBorder: s.codeErr ? RED : 'oklch(0.86 0.015 262)',
+      resOk: s.res === 'ok', resNo: s.res === 'no', resErr: s.res === 'err', checkedCode: s.checkedCode
+    };
+  }
+}
+</script>
+</body>
+</html>
