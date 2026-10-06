@@ -158,21 +158,78 @@ class Component extends DCLogic {
     if (r.startsWith('/ugyfelportal/')) r = '/ugyfelportal';
     return Component.MOVED[r] || r;
   }
+  // Minden oldalnak saját címe van a böngészőben: Weboldal.dc.html#/visszaterites, #/gyik#visszaterites stb.
+  // (Statikus tárhelyen is működő hash-útvonal; WordPressben ezek valódi URL-ek lesznek: /visszaterites, /gyik#visszaterites.)
+  static TITLES = {
+    '/': 'Magánmásolási díj',
+    '/a-maganmasolasi-dijrol': 'A magánmásolási díjról',
+    '/befizetett-dijak-sorsa': 'A befizetett díjak sorsa',
+    '/befizetett-dijak-sorsa/jogosulti-csoportok': 'Jogosulti csoportok',
+    '/befizetett-dijak-sorsa/kulturalis-celok': 'Kulturális célok',
+    '/visszaterites': 'Visszatérítés',
+    '/visszaterites/igenyles': 'Visszatérítés igénylése',
+    '/gyik': 'Gyakori kérdések',
+    '/ellenorzo': 'Díjfizetés ellenőrzése',
+    '/kapcsolat': 'Kapcsolat',
+    '/adatvedelmi-tajekoztato': 'Adatvédelmi tájékoztató',
+    '/suti-tajekoztato': 'Süti-tájékoztató'
+  };
+  // '/gyik#visszaterites' → { route: '/gyik', hash: 'visszaterites' }, a megszűnt útvonalak átirányításával.
+  static resolve(p) {
+    let [path, hash] = (p || '/').split('#');
+    const [route, movedHash] = (Component.fixRoute(path || '/') || '/').split('#');
+    return { route, hash: hash || movedHash || '' };
+  }
+  static fromLocation() {
+    const h = typeof location !== 'undefined' ? location.hash : '';
+    return h.startsWith('#/') ? Component.resolve(h.slice(1)) : null;
+  }
   state = {
-    route: (Component.fixRoute(typeof localStorage !== 'undefined' && localStorage.getItem('mmd-route')) || '/').split('#')[0],
-    hash: '',
+    ...(Component.fromLocation() || { route: '/', hash: '' }),
     cookie: (typeof localStorage !== 'undefined' && localStorage.getItem('mmd-cookie')) || null,
     cookieOpen: false, cookieDetail: false, analytics: true, toast: null
   };
-  nav = (p) => {
-    let [path, hash] = p.split('#');
-    const [route, movedHash] = (Component.fixRoute(path || '/') || '/').split('#');
-    hash = hash || movedHash || '';
-    this.setState({ route, hash });
-    try { localStorage.setItem('mmd-route', route); } catch (e) {}
+  url(route, hash) { return '#' + route + (hash ? '#' + hash : ''); }
+  scrollToHash(hash) {
     window.scrollTo(0, 0);
-    if (hash) setTimeout(() => { const el = document.getElementById(hash); if (el) window.scrollTo(0, el.getBoundingClientRect().top + window.scrollY - 90); }, 150);
+    if (!hash) return;
+    // Az aloldal első betöltéskor később jelenik meg – addig próbálkozunk, amíg az elem meg nem lesz (max. ~3 s).
+    let tries = 0;
+    const tryScroll = () => {
+      const el = document.getElementById(hash);
+      if (el) window.scrollTo(0, el.getBoundingClientRect().top + window.scrollY - 90);
+      else if (++tries < 30) setTimeout(tryScroll, 100);
+    };
+    setTimeout(tryScroll, 150);
+  }
+  setTitle(route) { document.title = route === '/' ? Component.TITLES['/'] : (Component.TITLES[route] || 'Az oldal nem található') + ' – Magánmásolási díj'; }
+  nav = (p) => {
+    const { route, hash } = Component.resolve(p);
+    const target = this.url(route, hash);
+    if (location.hash !== target) history.pushState(null, '', target);
+    this.setState({ route, hash });
+    this.setTitle(route);
+    this.scrollToHash(hash);
   };
+  componentDidMount() {
+    // Vissza/Előre gomb és kézzel beírt cím: az URL-ből állítjuk vissza az oldalt.
+    this._onPop = () => {
+      const loc = Component.fromLocation();
+      if (!loc) return; // pl. #main (ugrás a tartalomra) – nem oldalváltás
+      const canonical = this.url(loc.route, loc.hash);
+      if (location.hash !== canonical) history.replaceState(null, '', canonical); // megszűnt cím → új cím
+      this.setState(loc);
+      this.setTitle(loc.route);
+      this.scrollToHash(loc.hash);
+    };
+    window.addEventListener('popstate', this._onPop);
+    window.addEventListener('hashchange', this._onPop);
+    const { route, hash } = this.state;
+    history.replaceState(null, '', this.url(route, hash));
+    this.setTitle(route);
+    if (hash) this.scrollToHash(hash);
+  }
+  componentWillUnmount() { window.removeEventListener('popstate', this._onPop); window.removeEventListener('hashchange', this._onPop); }
   showToast(msg) { this.setState({ toast: msg }); clearTimeout(this._t); this._t = setTimeout(() => this.setState({ toast: null }), 2800); }
   saveConsent(v, msg) { try { localStorage.setItem('mmd-cookie', v); } catch (e) {} this.setState({ cookie: v, cookieOpen: false, cookieDetail: false }); this.showToast(msg); }
   renderVals() {

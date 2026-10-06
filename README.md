@@ -78,6 +78,7 @@ A `.dc.html` fájlok helyi webszerverről nyithatók meg (a `support.js` futtatj
 
 ## Interakciók és viselkedés
 - **Navigáció:** belső linkek valódi `href`-fel, a prototípusban kliensoldali router (`nav(path)`); horgony esetén 90px offsettel görget (sticky fejléc). Oldalváltáskor lap tetejére ugrik.
+- **Oldalankénti cím a prototípusban:** minden oldalnak saját, megosztható címe van hash-útvonalként – pl. `Weboldal.dc.html#/visszaterites`, `#/gyik#visszaterites`, `#/kapcsolat#uzemeltetok`. A böngésző Vissza/Előre gombja működik, a fül címe oldalanként változik („Visszatérítés – Magánmásolási díj”), a megszűnt címek az újra cserélődnek. WordPressben ugyanezek valódi URL-ek lesznek (`/visszaterites`, `/gyik#visszaterites`), az oldalcím pedig a SEO-bővítményből jön.
 - **Tartalomjegyzék scrollspy** (`/a-maganmasolasi-dijrol`): a sticky bal oldali listában mindig az a szakasz aktív (navy), amelynek a címe már a fejléc alá ért; kattintásra 90px offsettel görget.
 - **GYIK** (`/gyik`): két fül (Díjfizetés / Visszatérítés), a horgony választja ki a fület (`#dijfizetes`, `#visszaterites`) vagy nyit ki egy kérdést (`#d1…d15`, `#v1…v11`). Harmonika: egyszerre egy nyitott elem (első alapból nyitva); `+`/`−` kör ikon (nyitva navy). A kereső **mindkét kategóriában** keres, találatnál a kérdés fölött a kategória neve; számláló, üres állapot „Nincs találat” + „Keresés törlése”.
 - **Hover:** csak kattintható felületen – csempe `translateY(-2px)` 200ms; linkek sötétebb kék + aláhúzás; pill gombok világosabb árnyalat.
