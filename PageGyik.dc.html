@@ -19,7 +19,7 @@ a:hover{color:oklch(0.32 0.12 255);text-decoration:underline}
 </helmet>
 <section data-screen-label="GYIK – fejléc" style="background:oklch(0.28 0.08 262);color:#fff;position:relative;overflow:hidden">
   <span style="position:absolute;right:-120px;top:-120px;width:340px;height:340px;border-radius:50%;background:repeating-radial-gradient(circle,rgba(255,255,255,.06) 0 2px,transparent 2px 6px)"></span>
-  <div style="max-width:1200px;margin:0 auto;padding:40px 28px 56px;position:relative">
+  <div class="mmd-wrap mmd-subhero" style="max-width:1200px;margin:0 auto;padding:40px 28px 56px;position:relative">
     <nav aria-label="Morzsamenü" style="display:flex;gap:8px;flex-wrap:wrap;font-size:14px;color:oklch(0.8 0.03 262);margin-bottom:28px">
       <a href="/" onClick="{{ go }}" style="color:oklch(0.8 0.03 262)">Főoldal</a><span>/</span><span style="color:#fff">Gyakori kérdések</span>
     </nav>
@@ -28,7 +28,7 @@ a:hover{color:oklch(0.32 0.12 255);text-decoration:underline}
   </div>
 </section>
 
-<div style="max-width:860px;margin:0 auto;padding:48px 28px 96px">
+<div class="mmd-wrap mmd-body" style="max-width:860px;margin:0 auto;padding:48px 28px 96px">
   <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:20px">
     <div role="tablist" aria-label="Kategória" style="display:inline-flex;gap:6px;padding:5px;background:#fff;border-radius:999px;box-shadow:0 1px 2px rgba(30,35,70,.08)">
       <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="2">

@@ -18,7 +18,7 @@ a:hover{color:oklch(0.32 0.12 255);text-decoration:underline}
 </helmet>
 <section data-screen-label="Díjról – fejléc" style="background:oklch(0.28 0.08 262);color:#fff;position:relative;overflow:hidden">
   <span style="position:absolute;right:-120px;top:-120px;width:340px;height:340px;border-radius:50%;background:repeating-radial-gradient(circle,rgba(255,255,255,.06) 0 2px,transparent 2px 6px)"></span>
-  <div style="max-width:1200px;margin:0 auto;padding:40px 28px 56px;position:relative">
+  <div class="mmd-wrap mmd-subhero" style="max-width:1200px;margin:0 auto;padding:40px 28px 56px;position:relative">
     <nav aria-label="Morzsamenü" style="display:flex;gap:8px;flex-wrap:wrap;font-size:14px;color:oklch(0.8 0.03 262);margin-bottom:28px">
       <a href="/" onClick="{{ go }}" style="color:oklch(0.8 0.03 262)">Főoldal</a><span>/</span><span style="color:#fff">A magánmásolási díjról</span>
     </nav>
@@ -27,9 +27,9 @@ a:hover{color:oklch(0.32 0.12 255);text-decoration:underline}
   </div>
 </section>
 
-<div style="max-width:1200px;margin:0 auto;padding:56px 28px 96px;display:flex;flex-wrap:wrap;gap:48px;align-items:flex-start">
-  <aside style="flex:1 1 220px;max-width:280px;position:sticky;top:96px">
-    <nav aria-label="Az oldal részei" style="display:grid;gap:4px">
+<div class="mmd-wrap mmd-body" style="max-width:1200px;margin:0 auto;padding:56px 28px 96px;display:flex;flex-wrap:wrap;gap:48px;align-items:flex-start">
+  <aside class="mmd-aside mmd-aside-sticky" style="flex:1 1 220px;max-width:280px;position:sticky;top:96px">
+    <nav aria-label="Az oldal részei" class="mmd-chips" style="display:grid;gap:4px">
       <sc-for list="{{ toc }}" as="t" hint-placeholder-count="4">
         <a href="{{ t.href }}" onClick="{{ jump }}" aria-current="{{ t.current }}" style="padding:10px 14px;border-radius:10px;font-weight:600;font-size:16px;background:{{ t.bg }};color:{{ t.fg }};transition:background 200ms,color 200ms" style-hover="background:oklch(0.95 0.02 262);color:oklch(0.24 0.04 262);text-decoration:none">{{ t.label }}</a>
       </sc-for>
@@ -38,7 +38,7 @@ a:hover{color:oklch(0.32 0.12 255);text-decoration:underline}
 
   <article style="flex:999 1 520px;min-width:0;max-width:780px">
     <sc-for list="{{ sections }}" as="sec" hint-placeholder-count="4">
-      <section id="{{ sec.id }}" style="margin-bottom:56px;scroll-margin-top:96px">
+      <section id="{{ sec.id }}" style="margin-bottom:56px;scroll-margin-top:150px">
         <h2 style="font-family:'Source Serif 4',serif;font-weight:700;font-size:30px;line-height:1.2;margin:0 0 16px">{{ sec.title }}</h2>
         <sc-for list="{{ sec.blocks }}" as="b" hint-placeholder-count="4">
           <sc-if value="{{ b.isH }}"><h3 style="font-family:'Source Serif 4',serif;font-weight:700;font-size:21px;line-height:1.3;margin:28px 0 12px">{{ b.x }}</h3></sc-if>
@@ -71,7 +71,7 @@ class Component extends DCLogic {
     this._onScroll = () => {
       const ids = ['lenyege', 'jogosultak', 'dijszabas', 'mit-masolhatok'];
       let active = ids[0];
-      ids.forEach(id => { const el = document.getElementById(id); if (el && el.getBoundingClientRect().top < 140) active = id; });
+      ids.forEach(id => { const el = document.getElementById(id); if (el && el.getBoundingClientRect().top < Component.offset() + 30) active = id; });
       if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4) active = ids[ids.length - 1];
       if (active !== this.state.active) this.setState({ active });
     };
@@ -79,9 +79,23 @@ class Component extends DCLogic {
     this._onScroll();
   }
   componentWillUnmount() { window.removeEventListener('scroll', this._onScroll); }
+  // Mobilon a vízszintes tartalomjegyzék-sávban az aktív elem mindig látható legyen.
+  componentDidUpdate() {
+    if (this._lastActive === this.state.active) return;
+    this._lastActive = this.state.active;
+    if (window.innerWidth > 900) return;
+    const bar = document.querySelector('.mmd-chips'), chip = bar && bar.querySelector('[aria-current="location"]');
+    if (chip) bar.scrollTo({ left: chip.offsetLeft - (bar.clientWidth - chip.offsetWidth) / 2, behavior: 'smooth' });
+  }
+  // Fejléc + (mobilon) a tapadó tartalomjegyzék-sáv magassága – ennyivel görgetünk a szakaszcím fölé.
+  static offset() {
+    const head = document.querySelector('header');
+    const bar = window.innerWidth <= 900 ? document.querySelector('.mmd-aside-sticky') : null;
+    return (head ? head.offsetHeight : 66) + (bar ? bar.offsetHeight : 0) + 24;
+  }
   renderVals() {
     const go = (ev) => { const u = ev.currentTarget.getAttribute('href'); if (u && u.startsWith('/')) { ev.preventDefault(); this.props.nav && this.props.nav(u); } };
-    const jump = (ev) => { ev.preventDefault(); const id = ev.currentTarget.getAttribute('href').slice(1); const el = document.getElementById(id); if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 90, behavior: 'smooth' }); };
+    const jump = (ev) => { ev.preventDefault(); const id = ev.currentTarget.getAttribute('href').slice(1); const el = document.getElementById(id); if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - Component.offset(), behavior: 'smooth' }); };
     const CHECK = 'M5 12l5 5L20 7', CROSS = 'M7 7l10 10M17 7L7 17';
     const B = (a) => a.map(([t, x, href, hl]) => ({ isH: t === 'h', isP: t === 'p', isNote: t === 'n', isInfo: t === 'yes' || t === 'no', icon: t === 'no' ? CROSS : CHECK, isPdf: t === 'pdf', x: x || '', href: href || '', hl: hl || '', hasLink: t === 'p' && !!href }));
     const sections = [

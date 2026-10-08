@@ -20,7 +20,7 @@ a:hover{color:oklch(0.32 0.12 255);text-decoration:underline}
 </helmet>
 <section data-screen-label="Ellenőrző – fejléc" style="background:oklch(0.28 0.08 262);color:#fff;position:relative;overflow:hidden">
   <span style="position:absolute;right:-120px;top:-120px;width:340px;height:340px;border-radius:50%;background:repeating-radial-gradient(circle,rgba(255,255,255,.06) 0 2px,transparent 2px 6px)"></span>
-  <div style="max-width:1200px;margin:0 auto;padding:40px 28px 56px;position:relative">
+  <div class="mmd-wrap mmd-subhero" style="max-width:1200px;margin:0 auto;padding:40px 28px 56px;position:relative">
     <nav aria-label="Morzsamenü" style="display:flex;gap:8px;flex-wrap:wrap;font-size:14px;color:oklch(0.8 0.03 262);margin-bottom:28px">
       <a href="/" onClick="{{ go }}" style="color:oklch(0.8 0.03 262)">Főoldal</a><span>/</span><span style="color:#fff">Díjfizetés ellenőrzése</span>
     </nav>
@@ -29,12 +29,12 @@ a:hover{color:oklch(0.32 0.12 255);text-decoration:underline}
   </div>
 </section>
 
-<div style="max-width:860px;margin:0 auto;padding:48px 28px 96px">
+<div class="mmd-wrap mmd-body" style="max-width:860px;margin:0 auto;padding:48px 28px 96px">
   <div role="tablist" aria-label="Ellenőrzés típusa" style="display:inline-flex;gap:6px;padding:5px;background:#fff;border-radius:999px;box-shadow:0 1px 2px rgba(30,35,70,.08);margin-bottom:20px">
     <button role="tab" aria-selected="{{ imeiOn }}" onClick="{{ setImei }}" style="border:0;cursor:pointer;padding:10px 18px;border-radius:999px;font:inherit;font-size:15px;font-weight:600;background:{{ imeiBg }};color:{{ imeiFg }}">IMEI-szám</button>
     <button role="tab" aria-selected="{{ pcsnOn }}" onClick="{{ setPcsn }}" style="border:0;cursor:pointer;padding:10px 18px;border-radius:999px;font:inherit;font-size:15px;font-weight:600;background:{{ pcsnBg }};color:{{ pcsnFg }}">PCSN-szám (SN)</button>
   </div>
-  <form onSubmit="{{ runCheck }}" novalidate style="background:#fff;border-radius:16px;padding:30px;box-shadow:0 1px 2px rgba(30,35,70,.06)">
+  <form onSubmit="{{ runCheck }}" novalidate class="mmd-card" style="background:#fff;border-radius:16px;padding:30px;box-shadow:0 1px 2px rgba(30,35,70,.06)">
     <h2 style="font-family:'Source Serif 4',serif;font-weight:700;font-size:26px;margin:0 0 6px">{{ chkTitle }}</h2>
     <p style="margin:0 0 20px;font-size:15px;color:oklch(0.42 0.03 262)">{{ chkDesc }}</p>
     <label style="display:grid;gap:6px">

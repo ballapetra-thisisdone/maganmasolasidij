@@ -16,27 +16,86 @@ a{color:oklch(0.42 0.12 255);text-decoration:none}
 a:hover{color:oklch(0.32 0.12 255);text-decoration:underline}
 @keyframes mmdspin{to{transform:rotate(360deg)}}
 @keyframes mmdin{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@keyframes mmddown{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+
+/* ===== Reszponzív szabályok – az aloldalak ugyanebbe a dokumentumba töltődnek, ezért itt minden oldalra hatnak.
+   Töréspontok: 1060px (fejléc → hamburgermenü; alatta a logó + 5 menüpont nem fér ki egy sorba),
+   900px (oldalsáv → a tartalom fölötti sáv), 640px (telefon: margók, térközök). */
+.mmd-burger{display:none}
+.mmd-chips::-webkit-scrollbar{display:none}
+
+@media (min-width:1061px){
+  .mmd-mobile-menu{display:none!important}
+}
+@media (max-width:1060px){
+  .mmd-nav-desktop{display:none!important}
+  .mmd-burger{display:inline-flex!important}
+}
+@media (max-width:900px){
+  .mmd-body{gap:24px!important}
+  /* Oldalsáv: a tartalom fölé kerül, teljes szélességben */
+  .mmd-aside{position:static!important;flex:1 1 100%!important;max-width:none!important;min-width:0!important}
+  .mmd-chips{display:flex!important;flex-wrap:nowrap!important;gap:8px!important;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  .mmd-chips a{flex:none;white-space:nowrap;border:1px solid oklch(0.88 0.015 262);padding:9px 14px!important;font-size:15px!important}
+  /* Tartalomjegyzék-sáv: a fejléc alá tapad, görgetés közben is látszik */
+  .mmd-aside-sticky{position:sticky!important;top:74px!important;z-index:30;margin:-12px -28px 0;padding:10px 28px;background:rgba(246,245,241,.96);backdrop-filter:blur(6px);box-shadow:0 1px 0 oklch(0.9 0.01 262)}
+}
+@media (max-width:640px){
+  .mmd-wrap{padding-left:20px!important;padding-right:20px!important}
+  .mmd-aside-sticky{margin:-12px -20px 0;padding:10px 20px}
+  .mmd-subhero{padding-top:28px!important;padding-bottom:40px!important}
+  .mmd-hero{padding-top:44px!important;padding-bottom:80px!important;gap:36px!important}
+  .mmd-sec{padding-top:56px!important;padding-bottom:56px!important}
+  .mmd-body{padding-top:28px!important;padding-bottom:64px!important}
+  .mmd-card{padding:22px 20px!important}
+  /* Igénylés lépésjelző: csak a körök, a lépés címe az űrlap fölött látszik */
+  .mmd-steps{display:flex!important;justify-content:space-between}
+  .mmd-step-label{display:none}
+  /* Sütitáblázat: soronként kártya */
+  .mmd-ctable-head{display:none!important}
+  .mmd-ctable-row{grid-template-columns:1fr!important;gap:2px!important}
+  .mmd-ctable-row [data-label]::before{content:attr(data-label) ": ";font-weight:600;color:oklch(0.45 0.03 262)}
+  .mmd-cookie-icon{display:none!important}
+}
+@media (max-width:420px){
+  .mmd-logo-text{font-size:19px!important}
+  .mmd-burger{padding:8px 12px!important}
+}
 </style>
 </helmet>
 
-<div style="font-family:'Source Sans 3',system-ui,sans-serif;color:oklch(0.24 0.04 262);background:#F6F5F1;min-height:100vh;font-size:17px;line-height:1.6;overflow-x:hidden">
+<div style="font-family:'Source Sans 3',system-ui,sans-serif;color:oklch(0.24 0.04 262);background:#F6F5F1;min-height:100vh;font-size:17px;line-height:1.6;overflow-x:clip">
 
 <a href="#main" style="position:absolute;left:-9999px;top:8px;background:oklch(0.85 0.14 85);color:oklch(0.24 0.06 262);padding:8px 14px;border-radius:6px;z-index:100" style-focus="left:8px">Ugrás a tartalomra</a>
 
 <header data-screen-label="Fejléc" style="background:oklch(0.28 0.08 262);color:#fff;position:sticky;top:0;z-index:40;box-shadow:0 1px 0 rgba(255,255,255,.06)">
-  <div style="max-width:1200px;margin:0 auto;padding:16px 28px;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap">
-    <a href="/" onClick="{{ go }}" style="display:flex;align-items:center;gap:12px;color:#fff;text-decoration:none">
-      <span style="width:34px;height:34px;border-radius:50%;background:repeating-radial-gradient(circle,#11141d 0 1.5px,#262c3d 1.5px 3px);display:grid;place-items:center;box-shadow:0 0 0 2px oklch(0.85 0.14 85)"><span style="width:12px;height:12px;border-radius:50%;background:oklch(0.85 0.14 85)"></span></span>
-      <span style="font-family:'Source Serif 4',serif;font-weight:700;font-size:22px">Magánmásolási díj</span>
+  <div class="mmd-wrap" style="max-width:1200px;margin:0 auto;padding:16px 28px;display:flex;align-items:center;justify-content:space-between;gap:24px">
+    <a href="/" onClick="{{ go }}" style="display:flex;align-items:center;gap:12px;color:#fff;text-decoration:none;min-width:0">
+      <span style="width:34px;height:34px;border-radius:50%;background:repeating-radial-gradient(circle,#11141d 0 1.5px,#262c3d 1.5px 3px);display:grid;place-items:center;box-shadow:0 0 0 2px oklch(0.85 0.14 85);flex:none"><span style="width:12px;height:12px;border-radius:50%;background:oklch(0.85 0.14 85)"></span></span>
+      <span class="mmd-logo-text" style="font-family:'Source Serif 4',serif;font-weight:700;font-size:22px;white-space:nowrap">Magánmásolási díj</span>
     </a>
-    <div style="display:flex;align-items:center;gap:24px;flex-wrap:wrap">
-      <nav aria-label="Fő navigáció" style="display:flex;gap:18px;flex-wrap:wrap;font-size:15px;font-weight:500;white-space:nowrap">
+    <div class="mmd-nav-desktop" style="display:flex;align-items:center;gap:24px">
+      <nav aria-label="Fő navigáció" style="display:flex;gap:18px;font-size:15px;font-weight:500;white-space:nowrap">
         <sc-for list="{{ navItems }}" as="n" hint-placeholder-count="4">
-          <a href="{{ n.href }}" onClick="{{ go }}" style="color:{{ n.color }};padding:6px 0;border-bottom:2px solid {{ n.line }}" style-hover="color:oklch(0.85 0.14 85);text-decoration:none">{{ n.label }}</a>
+          <a href="{{ n.href }}" onClick="{{ go }}" aria-current="{{ n.current }}" style="color:{{ n.color }};padding:6px 0;border-bottom:2px solid {{ n.line }}" style-hover="color:oklch(0.85 0.14 85);text-decoration:none">{{ n.label }}</a>
         </sc-for>
       </nav>
     </div>
+    <button type="button" class="mmd-burger" onClick="{{ toggleMenu }}" aria-expanded="{{ menuOpen }}" aria-controls="mmd-mobile-menu" style="display:none;align-items:center;gap:8px;flex:none;border:0;cursor:pointer;padding:9px 14px;border-radius:999px;background:{{ burgerBg }};color:#fff;font:inherit;font-size:15px;font-weight:600">
+      <sc-if value="{{ menuClosed }}" hint-placeholder-val="{{ true }}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"></path></svg></sc-if>
+      <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg></sc-if>
+      {{ burgerLabel }}</button>
   </div>
+  <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
+    <nav id="mmd-mobile-menu" class="mmd-mobile-menu" aria-label="Fő navigáció" style="border-top:1px solid rgba(255,255,255,.1);max-height:calc(100vh - 66px);overflow-y:auto;animation:mmddown 200ms cubic-bezier(.22,.61,.36,1)">
+      <div class="mmd-wrap" style="padding:6px 28px 22px">
+        <sc-for list="{{ navItems }}" as="n" hint-placeholder-count="5">
+          <a href="{{ n.href }}" onClick="{{ go }}" aria-current="{{ n.current }}" style="display:flex;justify-content:space-between;align-items:center;gap:12px;padding:15px 2px;border-bottom:1px solid rgba(255,255,255,.1);color:{{ n.color }};font-size:18px;font-weight:600;text-decoration:none" style-hover="text-decoration:none;color:oklch(0.85 0.14 85)">{{ n.label }}<span aria-hidden="true" style="color:oklch(0.7 0.05 262)">→</span></a>
+        </sc-for>
+        <div style="margin-top:18px;font-size:15px;color:oklch(0.82 0.03 262);line-height:1.7">Ügyfélszolgálat: <a href="tel:+3614882790" style="color:#fff;font-weight:600">+36 1 488 2790</a><br>Hétfő, kedd 14-16, csütörtök 9-11</div>
+      </div>
+    </nav>
+  </sc-if>
 </header>
 
 <main id="main">
@@ -68,7 +127,7 @@ a:hover{color:oklch(0.32 0.12 255);text-decoration:underline}
 
 <footer data-screen-label="Lábléc" style="background:oklch(0.22 0.07 262);color:oklch(0.84 0.03 262);font-size:15px;line-height:1.65;position:relative;overflow:hidden">
   <span style="position:absolute;right:-140px;top:-140px;width:380px;height:380px;border-radius:50%;background:repeating-radial-gradient(circle,rgba(255,255,255,.05) 0 2px,transparent 2px 6px)"></span>
-  <div style="max-width:1200px;margin:0 auto;padding:64px 28px 40px;position:relative">
+  <div class="mmd-wrap" style="max-width:1200px;margin:0 auto;padding:64px 28px 40px;position:relative">
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));gap:36px;padding-bottom:40px;border-bottom:1px solid oklch(0.34 0.05 262)">
       <div>
         <div style="font-weight:700;color:oklch(0.85 0.14 85);margin-bottom:10px">Ügyfélszolgálat</div>
@@ -106,7 +165,7 @@ a:hover{color:oklch(0.32 0.12 255);text-decoration:underline}
 <sc-if value="{{ showCookie }}" hint-placeholder-val="{{ false }}">
   <div role="dialog" aria-label="Süti-beállítások" style="position:fixed;left:20px;right:20px;bottom:20px;z-index:60;max-width:760px;margin:0 auto;background:#fff;border-radius:14px;box-shadow:0 20px 50px rgba(20,25,60,.25);padding:24px 26px;animation:mmdin 300ms cubic-bezier(.22,.61,.36,1)">
     <div style="display:flex;gap:16px;align-items:flex-start">
-      <span style="width:40px;height:40px;border-radius:50%;background:oklch(0.95 0.02 262);display:grid;place-items:center;flex:none;color:oklch(0.28 0.08 262)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"></circle><circle cx="9" cy="10" r="1"></circle><circle cx="15" cy="9" r="1"></circle><circle cx="14" cy="15" r="1"></circle></svg></span>
+      <span class="mmd-cookie-icon" style="width:40px;height:40px;border-radius:50%;background:oklch(0.95 0.02 262);display:grid;place-items:center;flex:none;color:oklch(0.28 0.08 262)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"></circle><circle cx="9" cy="10" r="1"></circle><circle cx="15" cy="9" r="1"></circle><circle cx="14" cy="15" r="1"></circle></svg></span>
       <div style="flex:1">
         <div style="font-family:'Source Serif 4',serif;font-weight:700;font-size:20px;margin-bottom:4px">Sütiket használunk</div>
         <p style="margin:0 0 14px;font-size:15px;color:oklch(0.4 0.03 262)">A működéshez szükséges munkamenet-sütik mellett a Google Analytics segítségével látogatottsági statisztikát készítünk. <a href="/suti-tajekoztato" onClick="{{ go }}">Süti-tájékoztató</a></p>
@@ -187,7 +246,7 @@ class Component extends DCLogic {
   state = {
     ...(Component.fromLocation() || { route: '/', hash: '' }),
     cookie: (typeof localStorage !== 'undefined' && localStorage.getItem('mmd-cookie')) || null,
-    cookieOpen: false, cookieDetail: false, analytics: true, toast: null
+    cookieOpen: false, cookieDetail: false, analytics: true, toast: null, menuOpen: false
   };
   url(route, hash) { return '#' + route + (hash ? '#' + hash : ''); }
   scrollToHash(hash) {
@@ -197,17 +256,23 @@ class Component extends DCLogic {
     let tries = 0;
     const tryScroll = () => {
       const el = document.getElementById(hash);
-      if (el) window.scrollTo(0, el.getBoundingClientRect().top + window.scrollY - 90);
+      if (el) window.scrollTo(0, el.getBoundingClientRect().top + window.scrollY - Component.offset());
       else if (++tries < 30) setTimeout(tryScroll, 100);
     };
     setTimeout(tryScroll, 150);
+  }
+  // Mennyivel kell a horgony fölé görgetni: fejléc + (mobilon) a tapadó tartalomjegyzék-sáv.
+  static offset() {
+    const head = document.querySelector('header');
+    const bar = window.innerWidth <= 900 ? document.querySelector('.mmd-aside-sticky') : null;
+    return (head ? head.offsetHeight : 66) + (bar ? bar.offsetHeight : 0) + 24;
   }
   setTitle(route) { document.title = route === '/' ? Component.TITLES['/'] : (Component.TITLES[route] || 'Az oldal nem található') + ' – Magánmásolási díj'; }
   nav = (p) => {
     const { route, hash } = Component.resolve(p);
     const target = this.url(route, hash);
     if (location.hash !== target) history.pushState(null, '', target);
-    this.setState({ route, hash });
+    this.setState({ route, hash, menuOpen: false });
     this.setTitle(route);
     this.scrollToHash(hash);
   };
@@ -218,18 +283,21 @@ class Component extends DCLogic {
       if (!loc) return; // pl. #main (ugrás a tartalomra) – nem oldalváltás
       const canonical = this.url(loc.route, loc.hash);
       if (location.hash !== canonical) history.replaceState(null, '', canonical); // megszűnt cím → új cím
-      this.setState(loc);
+      this.setState({ ...loc, menuOpen: false });
       this.setTitle(loc.route);
       this.scrollToHash(loc.hash);
     };
     window.addEventListener('popstate', this._onPop);
     window.addEventListener('hashchange', this._onPop);
+    // Mobilmenü: Esc-re bezárul, a fókusz visszakerül a Menü gombra.
+    this._onKey = (e) => { if (e.key === 'Escape' && this.state.menuOpen) { this.setState({ menuOpen: false }); const b = document.querySelector('.mmd-burger'); if (b) b.focus(); } };
+    window.addEventListener('keydown', this._onKey);
     const { route, hash } = this.state;
     history.replaceState(null, '', this.url(route, hash));
     this.setTitle(route);
     if (hash) this.scrollToHash(hash);
   }
-  componentWillUnmount() { window.removeEventListener('popstate', this._onPop); window.removeEventListener('hashchange', this._onPop); }
+  componentWillUnmount() { window.removeEventListener('popstate', this._onPop); window.removeEventListener('hashchange', this._onPop); window.removeEventListener('keydown', this._onKey); }
   showToast(msg) { this.setState({ toast: msg }); clearTimeout(this._t); this._t = setTimeout(() => this.setState({ toast: null }), 2800); }
   saveConsent(v, msg) { try { localStorage.setItem('mmd-cookie', v); } catch (e) {} this.setState({ cookie: v, cookieOpen: false, cookieDetail: false }); this.showToast(msg); }
   renderVals() {
@@ -240,9 +308,13 @@ class Component extends DCLogic {
     const isHome = r === '/';
     const isInfo = !isHome && !isDij && !isSorsa && !isVissza && !isReg && !isGyik && !isEll;
     const act = (on) => ({ color: on ? 'oklch(0.85 0.14 85)' : '#fff', line: on ? 'oklch(0.85 0.14 85)' : 'transparent' });
-    const mk = (label, href, on) => ({ label, href, ...act(on) });
+    const mk = (label, href, on) => ({ label, href, current: on ? 'page' : 'false', ...act(on) });
+    const open = this.state.menuOpen;
     const showCookie = !this.state.cookie || this.state.cookieOpen;
     return {
+      menuOpen: open, toggleMenu: () => this.setState(st => ({ menuOpen: !st.menuOpen })),
+      menuClosed: !open, burgerLabel: open ? 'Bezárás' : 'Menü',
+      burgerBg: open ? 'rgba(255,255,255,.16)' : 'rgba(255,255,255,.08)',
       route: r, hash: this.state.hash, nav: this.nav, isHome, isDij, isSorsa, isVissza, isReg, isGyik, isEll, isInfo,
       go: (ev) => { const u = ev.currentTarget.getAttribute('href'); if (u && u.startsWith('/')) { ev.preventDefault(); this.nav(u); } },
       navItems: [

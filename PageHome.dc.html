@@ -18,10 +18,10 @@ a:hover{color:oklch(0.32 0.12 255);text-decoration:underline}
 </style>
 </helmet>
 
-<div style="font-family:'Source Sans 3',system-ui,sans-serif;color:oklch(0.24 0.04 262);background:#F6F5F1;min-height:100vh;font-size:17px;line-height:1.6;overflow-x:hidden">
+<div style="font-family:'Source Sans 3',system-ui,sans-serif;color:oklch(0.24 0.04 262);background:#F6F5F1;min-height:100vh;font-size:17px;line-height:1.6;overflow-x:clip">
 
 <section data-screen-label="Hero" style="background:oklch(0.28 0.08 262);color:#fff;position:relative">
-  <div style="max-width:1200px;margin:0 auto;padding:72px 28px 96px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,440px),1fr));gap:56px;align-items:center">
+  <div class="mmd-wrap mmd-hero" style="max-width:1200px;margin:0 auto;padding:72px 28px 96px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,440px),1fr));gap:56px;align-items:center">
     <div>
       <div style="display:inline-flex;gap:8px;align-items:center;font-size:13px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:oklch(0.85 0.14 85);margin-bottom:22px"><span style="width:8px;height:8px;border-radius:50%;background:oklch(0.85 0.14 85)"></span>Az Artisjus, az EJI, a FILMJUS, a HUNGART és a MAHASZ tájékoztató portálja</div>
       <h1 style="font-family:'Source Serif 4',serif;font-weight:700;font-size:clamp(40px,5.2vw,64px);line-height:1.05;letter-spacing:-0.015em;margin:0 0 24px;text-wrap:balance">A szabad magáncélú másolás lehetőségéért fizetendő <span style="color:oklch(0.85 0.14 85)">díj</span></h1>
@@ -54,8 +54,8 @@ a:hover{color:oklch(0.32 0.12 255);text-decoration:underline}
   </div>
 </section>
 
-<section data-screen-label="Ellenőrzés" style="max-width:1200px;margin:-44px auto 0;padding:0 28px;position:relative;z-index:2">
-  <div style="background:#fff;border-radius:14px;box-shadow:0 18px 40px rgba(30,35,70,.12);padding:28px 32px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:20px;align-items:center">
+<section data-screen-label="Ellenőrzés" class="mmd-wrap" style="max-width:1200px;margin:-44px auto 0;padding:0 28px;position:relative;z-index:2">
+  <div class="mmd-card" style="background:#fff;border-radius:14px;box-shadow:0 18px 40px rgba(30,35,70,.12);padding:28px 32px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:20px;align-items:center">
     <div>
       <h2 style="font-family:'Source Serif 4',serif;font-size:26px;font-weight:700;margin:0 0 6px">Megfizették a díjat?</h2>
       <p style="font-size:15px;color:oklch(0.42 0.03 262);margin:0">A díj megfizetését hologramos matrica, mobiltelefonoknál a regisztrált IMEI-szám, egyes PC-knél a regisztrált SN-azonosító igazolja.</p>
@@ -69,11 +69,11 @@ a:hover{color:oklch(0.32 0.12 255);text-decoration:underline}
   </div>
 </section>
 
-<section data-screen-label="Belépési pontok" style="max-width:1200px;margin:0 auto;padding:88px 28px 80px">
+<section data-screen-label="Belépési pontok" class="mmd-wrap mmd-sec" style="max-width:1200px;margin:0 auto;padding:88px 28px 80px">
   <h2 style="font-family:'Source Serif 4',serif;font-size:clamp(28px,3.2vw,40px);font-weight:700;margin:0 0 28px">Kinek szól?</h2>
   <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:20px">
     <sc-for list="{{ entries }}" as="e" hint-placeholder-count="3">
-      <div style="background:oklch(0.95 0.02 262);border-radius:14px;padding:30px;display:flex;flex-direction:column;gap:14px">
+      <div class="mmd-card" style="background:oklch(0.95 0.02 262);border-radius:14px;padding:30px;display:flex;flex-direction:column;gap:14px">
         <h3 style="font-family:'Source Serif 4',serif;font-size:26px;font-weight:700;margin:0">{{ e.title }}</h3>
         <p style="font-size:16px;color:oklch(0.36 0.03 262);margin:0 0 6px;text-wrap:pretty">{{ e.text }}</p>
         <ul style="list-style:none;margin:auto 0 0;padding:0">
@@ -87,7 +87,7 @@ a:hover{color:oklch(0.32 0.12 255);text-decoration:underline}
 </section>
 
 <section id="dij" data-screen-label="A díjról" style="background:#fff">
-  <div style="max-width:1200px;margin:0 auto;padding:88px 28px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:56px">
+  <div class="mmd-wrap mmd-sec" style="max-width:1200px;margin:0 auto;padding:88px 28px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:56px">
     <div>
       <div style="font-size:13px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:oklch(0.28 0.08 262);margin-bottom:12px">A magánmásolási díjról</div>
       <h2 style="font-family:'Source Serif 4',serif;font-size:clamp(28px,3.2vw,40px);font-weight:700;line-height:1.15;margin:0 0 20px">Mi a magánmásolási díj?</h2>
@@ -113,7 +113,7 @@ a:hover{color:oklch(0.32 0.12 255);text-decoration:underline}
   </div>
 </section>
 
-<section id="sorsa" data-screen-label="Díjak sorsa" style="max-width:1200px;margin:0 auto;padding:88px 28px">
+<section id="sorsa" data-screen-label="Díjak sorsa" class="mmd-wrap mmd-sec" style="max-width:1200px;margin:0 auto;padding:88px 28px">
   <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:56px;align-items:start">
     <div>
       <div style="font-size:13px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:oklch(0.42 0.12 255);margin-bottom:12px">A befizetett díjak sorsa</div>

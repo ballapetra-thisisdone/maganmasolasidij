@@ -20,7 +20,7 @@ a:hover{color:oklch(0.32 0.12 255);text-decoration:underline}
 </helmet>
 <section data-screen-label="Díjak sorsa – fejléc" style="background:oklch(0.28 0.08 262);color:#fff;position:relative;overflow:hidden">
   <span style="position:absolute;right:-120px;top:-120px;width:340px;height:340px;border-radius:50%;background:repeating-radial-gradient(circle,rgba(255,255,255,.06) 0 2px,transparent 2px 6px)"></span>
-  <div style="max-width:1200px;margin:0 auto;padding:40px 28px 56px;position:relative">
+  <div class="mmd-wrap mmd-subhero" style="max-width:1200px;margin:0 auto;padding:40px 28px 56px;position:relative">
     <nav aria-label="Morzsamenü" style="display:flex;gap:8px;flex-wrap:wrap;font-size:14px;color:oklch(0.8 0.03 262);margin-bottom:28px">
       <a href="/" onClick="{{ go }}" style="color:oklch(0.8 0.03 262)">Főoldal</a><span>/</span>
       <sc-for list="{{ crumbs }}" as="c" hint-placeholder-count="1"><a href="{{ c.href }}" onClick="{{ go }}" style="color:oklch(0.8 0.03 262)">{{ c.label }}</a><span>/</span></sc-for>
@@ -32,9 +32,9 @@ a:hover{color:oklch(0.32 0.12 255);text-decoration:underline}
   </div>
 </section>
 
-<div style="max-width:1200px;margin:0 auto;padding:56px 28px 96px;display:flex;flex-wrap:wrap;gap:48px;align-items:flex-start">
-  <aside style="flex:1 1 220px;max-width:280px;position:sticky;top:96px">
-    <nav style="display:grid;gap:4px">
+<div class="mmd-wrap mmd-body" style="max-width:1200px;margin:0 auto;padding:56px 28px 96px;display:flex;flex-wrap:wrap;gap:48px;align-items:flex-start">
+  <aside class="mmd-aside" style="flex:1 1 220px;max-width:280px;position:sticky;top:96px">
+    <nav class="mmd-chips" style="display:grid;gap:4px">
       <sc-for list="{{ side }}" as="s" hint-placeholder-count="3">
         <a href="{{ s.href }}" onClick="{{ go }}" style="padding:10px 14px;border-radius:10px;font-weight:600;font-size:16px;background:{{ s.bg }};color:{{ s.fg }}" style-hover="background:oklch(0.95 0.02 262);text-decoration:none">{{ s.label }}</a>
       </sc-for>

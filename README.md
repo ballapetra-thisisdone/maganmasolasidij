@@ -66,6 +66,21 @@ A `.dc.html` fájlok helyi webszerverről nyithatók meg (a `support.js` futtatj
 - **Oldalsávos törzs:** flex-wrap, gap 48px. Bal oldalsáv (`flex:1 1 220px; max-width:280px; position:sticky; top:96px`), aktív elem navy háttér + fehér szöveg, radius 10px. Tartalom: `flex:999 1 520px; max-width:780px`.
 - **Lábléc:** sötét navy; 4 oszlop – Ügyfélszolgálat · Telefonos ügyfélfogadás · Tájékoztatás (A díjról, Mit másolhatok szabadon?, Jogosulti csoportok, Kulturális célok, Gyakori kérdések) · Ügyintézés (Visszatérítés feltételei, Igénylés indítása, Díjfizetés ellenőrzése, Kapcsolat); GVH-szöveg + PDF (új lapon), impresszum, Adatvédelmi / Süti-tájékoztató / Süti-beállítások.
 
+## Reszponzív viselkedés (mobil, tablet)
+
+A szabályok a keret (`Weboldal.dc.html`) `<style>` blokkjában vannak, osztályokra (`mmd-*`) írva – az aloldalak ugyanabba a dokumentumba töltődnek, így mindenhol érvényesek. Töréspontok:
+
+| Szélesség | Változás |
+|---|---|
+| **≤ 1060px** | A fejléc menüpontjai helyett **„Menü” gomb** (hamburger ikon, kerek, áttetsző fehér háttér). Nyitva: „Bezárás” + X ikon, alatta teljes szélességű, lenyíló menü (18px/600 menüpontok, 15px függőleges padding → ≥ 48px érintési felület, hairline elválasztók, jobb oldalon →), alatta az ügyfélszolgálat telefonszáma. Bezárul: oldalváltáskor, a gombbal, Esc-re (a fókusz visszakerül a gombra). `aria-expanded`, `aria-controls`, aktív menüpont `aria-current="page"`. Ennél szélesebben a logó + 5 menüpont kifér egy sorba. |
+| **≤ 900px** | **Oldalsáv → a tartalom fölé kerül.** A Díjak sorsa almenüje vízszintes, görgethető gombsor (keretes pill-ek, az aktív navy). **A díj oldal és az adatvédelmi tájékoztató tartalomjegyzéke a fejléc alá tapadó sáv** (`top: 74px`, halvány háttér + blur, alsó hairline): görgetéskor az aktív szakasz kiemelve, és a sáv automatikusan odagörget az aktív elemhez. Horgonyra ugráskor a görgetés a fejléc + a sáv magasságával számol. Törzs-oszlopköz 48 → 24px. |
+| **≤ 640px** | Oldalmargó 28 → **20px**; szekciók függőleges paddingje 88 → 56px; aloldal-hero 40/56 → 28/40px; nagy kártyák belső paddingje → 22/20px. **Igénylés lépésjelző:** csak a számozott körök egy sorban (a lépés címe az űrlap fölött látszik). **Sütitáblázat:** soronként kártya, a cellák előtt mezőcímke („Szolgáltató:”, „Cél:”, „Időtartam:”), fejléc-sor rejtve. Süti-sáv: az ikon rejtve. Visszatérítés lépéssor: 2 oszlop. |
+| **≤ 420px** | Logó felirat 22 → 19px, a Menü gomb paddingje kisebb (hogy a „Bezárás” felirat ne érjen a logóhoz). |
+
+A rácsok (`repeat(auto-fit, minmax(min(100%, …), 1fr))`) magukban is egy oszlopra törnek; vízszintes görgetés sehol nincs (ellenőrizve 375 / 768 / 1070 / 1280px szélességen).
+
+**Sticky elemek:** a gyökérelemen `overflow-x: clip` van (nem `hidden`) – a `hidden` görgetőkonténert hoz létre, ami minden `position: sticky` elemet (fejléc, oldalsáv) hatástalanít. WordPressben is erre kell figyelni.
+
 ## Nyitóoldal (`/`)
 1. **Hero** (navy): bal – eyebrow, H1 „A szabad magáncélú másolás lehetőségéért fizetendő díj” (utolsó szó mustár), lead, 1 gomb („Mi a magánmásolási díj?”). Jobb – **hanglemez-kompozíció**: mustár lemezborító (72% szélesség, aspect 1:1, radius 6px, árnyék `0 30px 60px rgba(0,0,0,.35)`) a hanghordozós felosztással (45/30/25%, navy sávok), mögötte jobbra kilógó bakelit (barázdák: `repeating-radial-gradient(circle,#12151e 0 2px,#252b3b 2px 3.2px)`), mustár címke körbefutó felirattal („ARTISJUS · EJI · FILMJUS · HUNGART · MAHASZ ·”, SVG textPath), statikus fényes conic-gradient réteg. **A lemez 7 s alatt fordul körbe, lineárisan, végtelenítve**; `prefers-reduced-motion` esetén álljon meg (production-ben add hozzá).
 2. **„Megfizették a díjat?”** kártya a hero aljára csúsztatva (`margin-top:-44px`), fehér, radius 14px, árnyék `0 18px 40px rgba(30,35,70,.12)`; IMEI és PCSN link-csempe (halványkék) → `/ellenorzo#imei`, `/ellenorzo#pcsn`.
@@ -157,7 +172,7 @@ Radius: 6px (lemezborító), 8–12px (input, kis kártya), 14–16px (nagy kár
 - **Fő menü**, **lábléc „Tájékoztatás”** és **lábléc „Ügyintézés”** oszlop: WP-menük (Megjelenés → Menük / navigációs blokk). Aktív állapot a menü `current-menu-item` / `current-menu-ancestor` osztályaiból.
 - **Oldalsáv:** a Díjak sorsa szekcióban a szülőoldal gyermekoldalaiból; a díj oldalon és az adatvédelmi tájékoztatón a tartalom H2 címsoraiból (tartalomjegyzék + scrollspy). Felirat nélkül, sticky.
 - **Morzsamenü**: Yoast SEO vagy Rank Math breadcrumbs, a design szerinti markuppal.
-- **Mobil**: ~900px alatt hamburgermenü (a prototípusban még nincs megtervezve – a fejlesztés előtt pótolni kell); az oldalsáv mobilon a tartalom fölé kerül, összecsukható menüként.
+- **Mobil**: a [Reszponzív viselkedés](#reszponzív-viselkedés-mobil-tablet) fejezet szerint – 1060px alatt hamburgermenü (a WP fő menüjéből, ugyanazokkal a menüpontokkal), 900px alatt az oldalsáv a tartalom fölé kerül (tartalomjegyzék: tapadó, vízszintesen görgethető sáv). A töréspontok a `theme.json`-ban / CSS custom property-ként legyenek rögzítve.
 
 ### Blokk-leltár (ACF- vagy Gutenberg-blokkok)
 Minden ismétlődő elem legyen szerkeszthető blokk, **tetszőleges elemszámmal** (a 3 kártya, 4 lépés stb. csak a mostani tartalom):
@@ -212,7 +227,6 @@ Minden ismétlődő elem legyen szerkeszthető blokk, **tetszőleges elemszámma
 
 ## Nyitott pontok
 - **Az igénylés teljes kérdéslistája** – az ügyféltől kell bekérni; ennek alapján véglegesíthető a lépések száma és tartalma.
-- **Mobil hamburgermenü** megtervezése.
 - **Személyes ügyintézés:** ha az ügyfél online időpontfoglalást szeretne, a Kapcsolat oldal infósora helyére foglalási modul kerül (pl. Amelia / Bookly) – most csak infó.
 - Adatvédelmi tájékoztató: a prototípus csak a szerkezetet és rövid összefoglalót mutatja; a teljes jogi szöveget a jelenlegi oldalról kell átemelni.
 - Sütitáblázat nevei/időtartamai – a WordPress + süti-bővítmény + GA beállítás alapján újra kell gyűjteni.
