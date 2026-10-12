@@ -31,7 +31,7 @@ a:hover{color:oklch(0.32 0.12 255);text-decoration:underline}
   <aside class="mmd-aside mmd-aside-sticky" style="flex:1 1 220px;max-width:280px;position:sticky;top:96px">
     <nav aria-label="Az oldal részei" class="mmd-chips" style="display:grid;gap:4px">
       <sc-for list="{{ toc }}" as="t" hint-placeholder-count="4">
-        <a href="{{ t.href }}" onClick="{{ jump }}" aria-current="{{ t.current }}" style="padding:10px 14px;border-radius:10px;font-weight:600;font-size:16px;background:{{ t.bg }};color:{{ t.fg }};transition:background 200ms,color 200ms" style-hover="background:oklch(0.95 0.02 262);color:oklch(0.24 0.04 262);text-decoration:none">{{ t.label }}</a>
+        <a href="{{ t.href }}" onClick="{{ jump }}" aria-current="{{ t.current }}" style="padding:10px 14px;border-radius:10px;font-weight:{{ t.weight }};font-size:16px;background:{{ t.bg }};color:oklch(0.24 0.04 262);transition:background 200ms" style-hover="background:oklch(0.95 0.02 262);color:oklch(0.24 0.04 262);text-decoration:none">{{ t.label }}</a>
       </sc-for>
     </nav>
   </aside>
@@ -109,7 +109,7 @@ class Component extends DCLogic {
       ]) },
       { id: 'jogosultak', toc: 'Kik a jogosultak?', title: 'Kik a jogosultak?', blocks: B([
         ['p', 'A magánmásolási díjra jogosult személyek a következő kategóriákba tartoznak: zeneszerzők, zeneszövegírók, irodalmi szerzők, előadóművészek, hangfelvétel-kiadók, vizuális alkotók, filmes alkotók és filmelőállítók.'],
-        ['p', 'Ezt a díjat azonban ők nem közvetlenül, egyenként gyűjtik be, hanem minden országban saját közös jogkezelő szervezeteik érvényesítik. Magyarországon ezt öt egyesület végzi: a díjakat egyablakos ügyintézés keretében az Artisjus szedi be, a felosztást és a kifizetést pedig mind az öt szervezet önállóan végzi.', '/befizetett-dijak-sorsa/jogosulti-csoportok', 'Az öt közös jogkezelő és a felosztás']
+        ['p', 'Ezt a díjat azonban ők nem közvetlenül, egyenként gyűjtik be, hanem minden országban saját közös jogkezelő szervezeteik érvényesítik. Magyarországon ezt öt egyesület végzi: a díjakat egyablakos ügyintézés keretében az Artisjus szedi be, a felosztást és a kifizetést pedig mind az öt szervezet önállóan végzi.', '/befizetett-dijak-sorsa#jogosulti-csoportok', 'Az öt közös jogkezelő és a felosztás']
       ]) },
       { id: 'dijszabas', toc: 'Díjszabás és igazolás', title: 'Díjszabás és igazolás', blocks: B([
         ['p', 'Azt, hogy a díjakat pontosan milyen típusú üres hordozókra (pl. üres CD és DVD lemezekre, memóriakártyákra stb.) és milyen összegben kell megfizetni, az Artisjus díjszabása tartalmazza. Ez a díjszabás a többi közös jogkezelő szervezettel egyetértésben kerül kialakításra, majd a Szellemi Tulajdon Nemzeti Hivatala előtt zajló egyeztetések végén az igazságügyi miniszter hagyja jóvá – és végül megjelenik a Hivatalos Értesítőben.'],
@@ -126,10 +126,9 @@ class Component extends DCLogic {
         ['no', 'nem készíthető szabad másolat szoftverről, adatbázisról, kottáról'], ['no', 'nem vehető fel a mű előadása'], ['no', 'nem készíthető másolat olyan műről sem, amelyet engedély nélkül, azaz jogellenesen töltöttek fel az internetre']
       ]) }
     ];
-    const NAVY = 'oklch(0.28 0.08 262)';
     return {
       go, jump, sections,
-      toc: sections.map(s => { const on = s.id === this.state.active; return { href: '#' + s.id, label: s.toc, current: on ? 'location' : 'false', bg: on ? NAVY : 'transparent', fg: on ? '#fff' : 'oklch(0.24 0.04 262)' }; })
+      toc: sections.map(s => { const on = s.id === this.state.active; return { href: '#' + s.id, label: s.toc, current: on ? 'location' : 'false', bg: on ? 'oklch(0.9 0.045 262)' : 'transparent', weight: on ? 700 : 600 }; })
     };
   }
 }

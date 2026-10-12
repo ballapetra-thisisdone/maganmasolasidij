@@ -57,6 +57,9 @@ a:hover{color:oklch(0.32 0.12 255);text-decoration:underline}
   .mmd-ctable-row [data-label]::before{content:attr(data-label) ": ";font-weight:600;color:oklch(0.45 0.03 262)}
   .mmd-cookie-icon{display:none!important}
 }
+@media (max-width:480px){
+  .mmd-form-grid{grid-template-columns:1fr!important}
+}
 @media (max-width:420px){
   .mmd-logo-text{font-size:19px!important}
 }
@@ -111,7 +114,7 @@ a:hover{color:oklch(0.32 0.12 255);text-decoration:underline}
     <dc-import name="PageEllenorzo" hash="{{ hash }}" nav="{{ nav }}" hint-size="100%,1000px"></dc-import>
   </sc-if>
   <sc-if value="{{ isSorsa }}" hint-placeholder-val="{{ false }}">
-    <dc-import name="PageSorsa" page="{{ route }}" nav="{{ nav }}" hint-size="100%,1600px"></dc-import>
+    <dc-import name="PageSorsa" nav="{{ nav }}" hint-size="100%,2400px"></dc-import>
   </sc-if>
   <sc-if value="{{ isVissza }}" hint-placeholder-val="{{ false }}">
     <dc-import name="PageVissza" nav="{{ nav }}" hint-size="100%,1600px"></dc-import>
@@ -175,10 +178,10 @@ a:hover{color:oklch(0.32 0.12 255);text-decoration:underline}
           </div>
         </sc-if>
         <div style="display:flex;gap:10px;flex-wrap:wrap">
-          <button onClick="{{ acceptAll }}" style="border:0;cursor:pointer;padding:11px 20px;border-radius:999px;background:oklch(0.28 0.08 262);color:#fff;font:inherit;font-weight:700;font-size:15px">Összes elfogadása</button>
+          <button onClick="{{ acceptAll }}" style="border:0;cursor:pointer;padding:11px 20px;border-radius:999px;background:oklch(0.85 0.14 85);color:oklch(0.24 0.06 262);font:inherit;font-weight:700;font-size:15px" style-hover="background:oklch(0.9 0.12 85)">Összes elfogadása</button>
           <button onClick="{{ acceptNeeded }}" style="cursor:pointer;padding:10px 20px;border-radius:999px;border:1.5px solid oklch(0.28 0.08 262);background:#fff;color:oklch(0.28 0.08 262);font:inherit;font-weight:700;font-size:15px">Csak a szükségesek</button>
           <sc-if value="{{ cookieDetail }}" hint-placeholder-val="{{ false }}">
-            <button onClick="{{ saveCookie }}" style="cursor:pointer;padding:10px 20px;border-radius:999px;border:0;background:oklch(0.85 0.14 85);color:oklch(0.24 0.06 262);font:inherit;font-weight:700;font-size:15px">Kiválasztottak mentése</button>
+            <button onClick="{{ saveCookie }}" style="cursor:pointer;padding:10px 20px;border-radius:999px;border:1.5px solid oklch(0.28 0.08 262);background:#fff;color:oklch(0.28 0.08 262);font:inherit;font-weight:700;font-size:15px">Kiválasztottak mentése</button>
           </sc-if>
           <sc-if value="{{ cookieNoDetail }}" hint-placeholder-val="{{ true }}">
             <button onClick="{{ showDetail }}" style="cursor:pointer;padding:10px 6px;border:0;background:none;color:oklch(0.42 0.12 255);font:inherit;font-weight:600;font-size:15px">Beállítások</button>
@@ -209,7 +212,9 @@ class Component extends DCLogic {
     '/visszaterites/ellenorzok': '/ellenorzo',
     '/visszaterites/gyik': '/gyik#visszaterites',
     '/a-maganmasolasi-dijrol/gyik-kereskedoknek': '/gyik#dijfizetes',
-    '/a-maganmasolasi-dijrol/mit-masolhatok-szabadon': '/a-maganmasolasi-dijrol#mit-masolhatok'
+    '/a-maganmasolasi-dijrol/mit-masolhatok-szabadon': '/a-maganmasolasi-dijrol#mit-masolhatok',
+    '/befizetett-dijak-sorsa/jogosulti-csoportok': '/befizetett-dijak-sorsa#jogosulti-csoportok',
+    '/befizetett-dijak-sorsa/kulturalis-celok': '/befizetett-dijak-sorsa#kulturalis-celok'
   };
   static fixRoute(r) {
     if (!r) return r;
@@ -222,8 +227,6 @@ class Component extends DCLogic {
     '/': 'Magánmásolási díj',
     '/a-maganmasolasi-dijrol': 'A magánmásolási díjról',
     '/befizetett-dijak-sorsa': 'A befizetett díjak sorsa',
-    '/befizetett-dijak-sorsa/jogosulti-csoportok': 'Jogosulti csoportok',
-    '/befizetett-dijak-sorsa/kulturalis-celok': 'Kulturális célok',
     '/visszaterites': 'Visszatérítés',
     '/visszaterites/igenyles': 'Visszatérítés igénylése',
     '/gyik': 'Gyakori kérdések',
@@ -303,7 +306,7 @@ class Component extends DCLogic {
     const r = this.state.route;
     const sec = (p) => r === p || r.startsWith(p + '/');
     const isReg = r === '/visszaterites/igenyles', isVissza = r === '/visszaterites';
-    const isDij = r === '/a-maganmasolasi-dijrol', isSorsa = sec('/befizetett-dijak-sorsa'), isGyik = r === '/gyik', isEll = r === '/ellenorzo';
+    const isDij = r === '/a-maganmasolasi-dijrol', isSorsa = r === '/befizetett-dijak-sorsa', isGyik = r === '/gyik', isEll = r === '/ellenorzo';
     const isHome = r === '/';
     const isInfo = !isHome && !isDij && !isSorsa && !isVissza && !isReg && !isGyik && !isEll;
     const act = (on) => ({ color: on ? 'oklch(0.85 0.14 85)' : '#fff', line: on ? 'oklch(0.85 0.14 85)' : 'transparent' });
@@ -327,8 +330,8 @@ class Component extends DCLogic {
         { title: 'Tájékoztatás', links: [
           { label: 'A magánmásolási díjról', href: '/a-maganmasolasi-dijrol' },
           { label: 'Mit másolhatok szabadon?', href: '/a-maganmasolasi-dijrol#mit-masolhatok' },
-          { label: 'Jogosulti csoportok', href: '/befizetett-dijak-sorsa/jogosulti-csoportok' },
-          { label: 'Kulturális célok', href: '/befizetett-dijak-sorsa/kulturalis-celok' },
+          { label: 'Jogosulti csoportok', href: '/befizetett-dijak-sorsa#jogosulti-csoportok' },
+          { label: 'Kulturális célok', href: '/befizetett-dijak-sorsa#kulturalis-celok' },
           { label: 'Gyakori kérdések', href: '/gyik' } ] },
         { title: 'Ügyintézés', links: [
           { label: 'Visszatérítés feltételei', href: '/visszaterites' },

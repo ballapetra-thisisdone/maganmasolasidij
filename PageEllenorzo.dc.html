@@ -31,8 +31,8 @@ a:hover{color:oklch(0.32 0.12 255);text-decoration:underline}
 
 <div class="mmd-wrap mmd-body" style="max-width:860px;margin:0 auto;padding:48px 28px 96px">
   <div role="tablist" aria-label="Ellenőrzés típusa" style="display:inline-flex;gap:6px;padding:5px;background:#fff;border-radius:999px;box-shadow:0 1px 2px rgba(30,35,70,.08);margin-bottom:20px">
-    <button role="tab" aria-selected="{{ imeiOn }}" onClick="{{ setImei }}" style="border:0;cursor:pointer;padding:10px 18px;border-radius:999px;font:inherit;font-size:15px;font-weight:600;background:{{ imeiBg }};color:{{ imeiFg }}">IMEI-szám</button>
-    <button role="tab" aria-selected="{{ pcsnOn }}" onClick="{{ setPcsn }}" style="border:0;cursor:pointer;padding:10px 18px;border-radius:999px;font:inherit;font-size:15px;font-weight:600;background:{{ pcsnBg }};color:{{ pcsnFg }}">PCSN-szám (SN)</button>
+    <button role="tab" aria-selected="{{ imeiOn }}" onClick="{{ setImei }}" style="border:0;cursor:pointer;padding:10px 18px;border-radius:999px;font:inherit;font-size:15px;font-weight:{{ imeiW }};background:{{ imeiBg }};color:{{ imeiFg }}">IMEI-szám</button>
+    <button role="tab" aria-selected="{{ pcsnOn }}" onClick="{{ setPcsn }}" style="border:0;cursor:pointer;padding:10px 18px;border-radius:999px;font:inherit;font-size:15px;font-weight:{{ pcsnW }};background:{{ pcsnBg }};color:{{ pcsnFg }}">PCSN-szám (SN)</button>
   </div>
   <form onSubmit="{{ runCheck }}" novalidate class="mmd-card" style="background:#fff;border-radius:16px;padding:30px;box-shadow:0 1px 2px rgba(30,35,70,.06)">
     <h2 style="font-family:'Source Serif 4',serif;font-weight:700;font-size:26px;margin:0 0 6px">{{ chkTitle }}</h2>
@@ -41,8 +41,8 @@ a:hover{color:oklch(0.32 0.12 255);text-decoration:underline}
       <span style="font-weight:600;font-size:15px">{{ chkLabel }}</span>
       <div style="display:flex;gap:10px;flex-wrap:wrap">
         <input value="{{ code }}" onChange="{{ onCode }}" placeholder="{{ chkPh }}" inputmode="{{ chkMode }}" aria-invalid="{{ codeInvalid }}" style="flex:1 1 240px;padding:14px 16px;border-radius:10px;border:1.5px solid {{ codeBorder }};font-family:ui-monospace,monospace;font-size:17px;outline:none;min-width:0" style-focus="border-color:oklch(0.28 0.08 262);box-shadow:0 0 0 3px oklch(0.9 0.04 262)">
-        <button type="submit" style="cursor:pointer;padding:14px 24px;border-radius:999px;border:0;background:oklch(0.28 0.08 262);color:#fff;font:inherit;font-weight:700;display:inline-flex;gap:10px;align-items:center">
-          <sc-if value="{{ checking }}" hint-placeholder-val="{{ false }}"><span style="width:16px;height:16px;border-radius:50%;border:2.5px solid rgba(255,255,255,.35);border-top-color:#fff;animation:mmdspin 700ms linear infinite"></span></sc-if>
+        <button type="submit" style="cursor:pointer;padding:14px 24px;border-radius:999px;border:0;background:oklch(0.85 0.14 85);color:oklch(0.24 0.06 262);font:inherit;font-weight:700;display:inline-flex;gap:10px;align-items:center" style-hover="background:oklch(0.9 0.12 85)">
+          <sc-if value="{{ checking }}" hint-placeholder-val="{{ false }}"><span style="width:16px;height:16px;border-radius:50%;border:2.5px solid rgba(30,40,80,.22);border-top-color:oklch(0.24 0.06 262);animation:mmdspin 700ms linear infinite"></span></sc-if>
           {{ chkBtn }}</button>
       </div>
       <sc-if value="{{ codeInvalid }}"><span style="font-size:14px;font-weight:600;color:oklch(0.5 0.19 27)">{{ codeError }}</span></sc-if>
@@ -99,7 +99,7 @@ class Component extends DCLogic {
     return {
       go,
       imeiOn: imei, pcsnOn: !imei,
-      imeiBg: imei ? on : 'transparent', imeiFg: imei ? '#fff' : 'oklch(0.3 0.04 262)', pcsnBg: imei ? 'transparent' : on, pcsnFg: imei ? 'oklch(0.3 0.04 262)' : '#fff',
+      imeiBg: imei ? 'oklch(0.9 0.045 262)' : 'transparent', imeiFg: imei ? 'oklch(0.24 0.06 262)' : 'oklch(0.36 0.04 262)', pcsnBg: imei ? 'transparent' : 'oklch(0.9 0.045 262)', pcsnFg: imei ? 'oklch(0.36 0.04 262)' : 'oklch(0.24 0.06 262)', imeiW: imei ? 700 : 600, pcsnW: imei ? 600 : 700,
       setImei: () => this.setState({ tab: 'imei', res: null, codeErr: '', code: '' }), setPcsn: () => this.setState({ tab: 'pcsn', res: null, codeErr: '', code: '' }),
       chkTitle: imei ? 'IMEI-szám ellenőrzése' : 'PCSN-szám (SN azonosító) ellenőrzése',
       chkDesc: imei ? 'Mobiltelefonok és egyes tabletek esetében a díj megfizetését az IMEI-szám ellenőrző rendszerben regisztrált státuszú IMEI-szám igazolja.' : 'Hologramos matrica nélküli személyi számítógépeknél a PCSN-szám Ellenőrző Rendszerben regisztrált státuszú SN azonosító igazolja a díj megfizetését.',

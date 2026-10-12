@@ -19,9 +19,7 @@ A `.dc.html` fájlok helyi webszerverről nyithatók meg (a `support.js` futtatj
 |---|---|---|
 | `/` | `PageHome.dc.html` | nyitóoldal |
 | `/a-maganmasolasi-dijrol` | `PageDij.dc.html` | egy oldal, sticky tartalomjegyzékkel: A díj lényege · Kik a jogosultak? · Díjszabás és igazolás (2 PDF) · Mit másolhatok szabadon? (`#mit-masolhatok`) |
-| `/befizetett-dijak-sorsa` | `PageSorsa.dc.html` | áttekintés + NKA 25% |
-| `/befizetett-dijak-sorsa/jogosulti-csoportok` | `PageSorsa.dc.html` | felosztási arányok + 5 jogkezelő + szabályzat-linkek |
-| `/befizetett-dijak-sorsa/kulturalis-celok` | `PageSorsa.dc.html` | NKA, Hangfoglaló, alprogramok, Kollégium |
+| `/befizetett-dijak-sorsa` | `PageSorsa.dc.html` | egy oldal, sticky tartalomjegyzékkel (mint a díj oldal): Áttekintés + NKA 25% · Jogosulti csoportok (`#jogosulti-csoportok`: felosztási arányok, 5 jogkezelő, szabályzatok) · Kulturális célok (`#kulturalis-celok`: NKA, Hangfoglaló, alprogramok, Kollégium) |
 | `/visszaterites` | `PageVissza.dc.html` | egy oldal, oldalsáv nélkül: feltételek + PDF + az ügyintézés 4 lépése + „Igénylés indítása” |
 | `/visszaterites/igenyles` | `PageIgenyles.dc.html` | lépésenkénti igénylés (belépés nélkül), oldalsáv nélkül |
 | `/gyik` | `PageGyik.dc.html` | közös GYIK: Díjfizetés (15) / Visszatérítés (11) fül + kereső mindkettőben |
@@ -43,6 +41,8 @@ A `.dc.html` fájlok helyi webszerverről nyithatók meg (a `support.js` futtatj
 | `/visszaterites/gyik` | `/gyik#visszaterites` |
 | `/a-maganmasolasi-dijrol/gyik-kereskedoknek` | `/gyik#dijfizetes` |
 | `/a-maganmasolasi-dijrol/mit-masolhatok-szabadon` | `/a-maganmasolasi-dijrol#mit-masolhatok` |
+| `/befizetett-dijak-sorsa/jogosulti-csoportok` | `/befizetett-dijak-sorsa#jogosulti-csoportok` |
+| `/befizetett-dijak-sorsa/kulturalis-celok` | `/befizetett-dijak-sorsa#kulturalis-celok` |
 
 **Szerkezeti elvek:**
 - **Nincs ismétlődés, nincs körbe mutató link.** Egy szöveg csak egy oldalon szerepel teljes terjedelmében; az oldalak alján nincsenek testvéroldalakra visszamutató „Tovább” kártyák. A nyitóoldalon minden célra egy belépési pont mutat (a fejléc- és lábléc-menü kivételével).
@@ -51,9 +51,12 @@ A `.dc.html` fájlok helyi webszerverről nyithatók meg (a `support.js` futtatj
   - **Nem kattintható információ: fehér** doboz 1px hairline kerettel (`oklch(0.9 0.01 262)`), hover nélkül.
   - Kivétel a navy kiemelő blokk (pl. 25% NKA) – ez sem kattintható, statisztikai kiemelés.
 - **Egységes info-ikon** (minden nem kattintható listaelemen, pipa / X / i): 24px kör, halványkék háttér, 12px navy monoline ikon (2.6px). Szándékosan visszafogott, hogy ne versenyezzen a kattintható elemekkel.
+- **Gombok – egy szín:** minden elsődleges gomb **mustársárga** (`oklch(0.85 0.14 85)`, sötétkék szöveg, hover `oklch(0.9 0.12 85)`, a töltésjelző sötét). Másodlagos gomb: fehér, 1.5px sötétkék körvonal. **Sötétkék kitöltésű gomb nincs** – a sötétkék a fejlécnek, a hero-nak és a kiemelő blokkoknak marad. Egy nézetben egy elsődleges gomb legyen (pl. a süti-sávban csak az „Összes elfogadása”). A gomb szélessége a tartalmához igazodik (padding 14px 28px), nem nyúlik ki az űrlap szélességére.
+- **Fülek, tartalomjegyzék, almenü – kijelölt elem:** világoskék alap (`oklch(0.9 0.045 262)`) + sötét szöveg, 700-as vastagság; a nem kijelölt átlátszó, 600-as. A GYIK harmonika nyitott ikonja is ilyen.
+- **Űrlapok – egy oszlop:** minden mező teljes szélességű, egymás alatt (mint a Kapcsolat oldalon). Egy sorba csak összetartozó mezők kerülhetnek (pl. Vezetéknév + Keresztnév); 480px alatt ezek is egymás alá kerülnek.
 - **Link-ikonok:** belső oldalra `→`, külső oldalra vagy PDF-re `↗`. **Minden PDF és külső oldal új lapon nyílik** (`target="_blank" rel="noopener"`).
 - **Linklisták** (pl. „Kinek szól?” kártyák): elválasztó vonal csak az elemek között – az első elem felett és az utolsó alatt nincs.
-- **Oldalsáv csak ott, ahol több testvéroldal vagy hosszú, tagolt tartalom van** (Díjak sorsa, A magánmásolási díjról, adatvédelmi tájékoztató); „Ebben a részben” felirat nélkül. A Visszatérítés, az Igénylés, a GYIK és az Ellenőrző egyoszlopos (max. 860px).
+- **Oldalsáv csak hosszú, tagolt tartalomnál** (A magánmásolási díjról, A befizetett díjak sorsa, adatvédelmi tájékoztató): ilyenkor a bal oldali sticky lista az oldal saját tartalomjegyzéke, „Ebben a részben” felirat nélkül – aloldalak helyett egy oldal, szakaszokkal. A Visszatérítés, az Igénylés, a GYIK és az Ellenőrző egyoszlopos (max. 860px).
 
 - `Weboldal.dc.html` – **belépési pont / shell**: fejléc, kliensoldali router, lábléc, süti-hozzájárulás sáv, toast. Ezt nyisd meg a teljes prototípushoz.
 - `Allapotok.dc.html` – az összes visszajelzés-állapot egy lapon + tesztadatok az előidézésükhöz.
@@ -63,7 +66,7 @@ A `.dc.html` fájlok helyi webszerverről nyithatók meg (a `support.js` futtatj
 - **Konténer:** `max-width: 1200px; margin: 0 auto; padding: 0 28px`; egyoszlopos oldalakon `max-width: 860px`.
 - **Fejléc (sticky, z 40):** háttér navy, padding 16px 28px. Bal: logó (34px bakelit-kör + „Magánmásolási díj” Source Serif 4 700 22px). Jobb: fő navigáció – A magánmásolási díjról · A befizetett díjak sorsa · Visszatérítés · Gyakori kérdések · Kapcsolat (15px/500, gap 18px, aktív: mustár szín + 2px mustár alsó vonal; az Igénylés oldalon a „Visszatérítés” aktív). **Nincs külön „Igénylés indítása” gomb a fejlécben** – az a Visszatérítés oldal végén van, hogy a két belépési pont ne ismételje egymást. Skip link: „Ugrás a tartalomra”.
 - **Aloldal-hero:** navy sáv, jobb felső sarokban barázdás kör dekor (`repeating-radial-gradient`, 6% fehér). Morzsamenü (14px), H1 (Source Serif 4 700, `clamp(34px,4.4vw,52px)`, lh 1.08), lead (19px, `oklch(0.88 0.03 262)`). Padding 40px 28px 56px.
-- **Oldalsávos törzs:** flex-wrap, gap 48px. Bal oldalsáv (`flex:1 1 220px; max-width:280px; position:sticky; top:96px`), aktív elem navy háttér + fehér szöveg, radius 10px. Tartalom: `flex:999 1 520px; max-width:780px`.
+- **Oldalsávos törzs** (A magánmásolási díjról, A befizetett díjak sorsa, adatvédelmi tájékoztató): flex-wrap, gap 48px. Bal oldalsáv = az oldal tartalomjegyzéke (`flex:1 1 220px; max-width:280px; position:sticky; top:96px`), scrollspy-jal; aktív elem világoskék háttér + sötét szöveg, radius 10px. Tartalom: `flex:999 1 520px; max-width:780px`.
 - **Lábléc:** sötét navy; 4 oszlop – Ügyfélszolgálat · Telefonos ügyfélfogadás · Tájékoztatás (A díjról, Mit másolhatok szabadon?, Jogosulti csoportok, Kulturális célok, Gyakori kérdések) · Ügyintézés (Visszatérítés feltételei, Igénylés indítása, Díjfizetés ellenőrzése, Kapcsolat); GVH-szöveg + PDF (új lapon), impresszum, Adatvédelmi / Süti-tájékoztató / Süti-beállítások.
 
 ## Reszponzív viselkedés (mobil, tablet)
@@ -73,7 +76,7 @@ A szabályok a keret (`Weboldal.dc.html`) `<style>` blokkjában vannak, osztály
 | Szélesség | Változás |
 |---|---|
 | **≤ 1060px** | A fejléc menüpontjai helyett **hamburger gomb**: csak ikon (3 vonal, 24px), 44×44px-es érintési felület, 10px lekerekítés, áttetsző fehér háttér; a felirat `aria-label`-ben („Menü megnyitása” / „Menü bezárása”). Nyitva: X ikon, alatta teljes szélességű, lenyíló menü (18px/600 menüpontok, 15px függőleges padding → ≥ 48px érintési felület, hairline elválasztók, jobb oldalon →), alatta az ügyfélszolgálat telefonszáma. Bezárul: oldalváltáskor, a gombbal, Esc-re (a fókusz visszakerül a gombra). `aria-expanded`, `aria-controls`, aktív menüpont `aria-current="page"`. Ennél szélesebben a logó + 5 menüpont kifér egy sorba. |
-| **≤ 900px** | **Oldalsáv → a tartalom fölé kerül.** A Díjak sorsa almenüje vízszintes, görgethető gombsor (keretes pill-ek, az aktív navy). **A díj oldal és az adatvédelmi tájékoztató tartalomjegyzéke a fejléc alá tapadó sáv** (`top: 74px`, halvány háttér + blur, alsó hairline): görgetéskor az aktív szakasz kiemelve, és a sáv automatikusan odagörget az aktív elemhez. Horgonyra ugráskor a görgetés a fejléc + a sáv magasságával számol. Törzs-oszlopköz 48 → 24px. |
+| **≤ 900px** | **Oldalsáv → a tartalom fölé kerül.** **A tartalomjegyzék (díj oldal, díjak sorsa, adatvédelmi tájékoztató) a fejléc alá tapadó, vízszintesen görgethető sáv** (keretes pill-ek, az aktív világoskék) (`top: 74px`, halvány háttér + blur, alsó hairline): görgetéskor az aktív szakasz kiemelve, és a sáv automatikusan odagörget az aktív elemhez. Horgonyra ugráskor a görgetés a fejléc + a sáv magasságával számol. Törzs-oszlopköz 48 → 24px. |
 | **≤ 640px** | Oldalmargó 28 → **20px**; szekciók függőleges paddingje 88 → 56px; aloldal-hero 40/56 → 28/40px; nagy kártyák belső paddingje → 22/20px. **Igénylés lépésjelző:** csak a számozott körök egy sorban (a lépés címe az űrlap fölött látszik). **Sütitáblázat:** soronként kártya, a cellák előtt mezőcímke („Szolgáltató:”, „Cél:”, „Időtartam:”), fejléc-sor rejtve. Süti-sáv: az ikon rejtve. Visszatérítés lépéssor: 2 oszlop. |
 | **≤ 420px** | Logó felirat 22 → 19px. |
 
@@ -89,7 +92,7 @@ A rácsok (`repeat(auto-fit, minmax(min(100%, …), 1fr))`) magukban is egy oszl
    - Visszatérítés: Feltételek és menete, Igénylés indítása, Gyakori kérdések a visszatérítésről (`/gyik#visszaterites`)
    - Kapcsolat: Írj nekünk, A portál üzemeltetői
 4. **A díjról** (fehér szekció): rövid magyarázat; „szabadon másolható” lista és a kivétel-doboz **fehér info-dobozként** (egységes info-ikon); alatta egy link: „A kivételek részletesen →”.
-5. **Díjak sorsa:** bal – magyarázat + 25% NKA navy blokk; jobb – „Hová kerül a díj? Nézd meg részletesen:” + két halványkék, leírással ellátott csempe (Jogosulti csoportok, Kulturális célok). A jogkezelők külső linkjei nem a nyitóoldalon, hanem a Jogosulti csoportok oldalon vannak.
+5. **Díjak sorsa:** bal – magyarázat + 25% NKA navy blokk; jobb – „Hová kerül a díj? Nézd meg részletesen:” + két halványkék, leírással ellátott csempe (Jogosulti csoportok, Kulturális célok). A csempék a Díjak sorsa oldal megfelelő szakaszára visznek (`#jogosulti-csoportok`, `#kulturalis-celok`). A jogkezelők külső linkjei nem a nyitóoldalon, hanem ott vannak.
 
 ## Interakciók és viselkedés
 - **Navigáció:** belső linkek valódi `href`-fel, a prototípusban kliensoldali router (`nav(path)`); horgony esetén 90px offsettel görget (sticky fejléc). Oldalváltáskor lap tetejére ugrik.
@@ -108,7 +111,7 @@ Beküldéskor (illetve lépésváltáskor) validál, nem gépelés közben; gép
 - Az 1. lépés felett **„Mire lesz szükséged a kitöltéshez?”** fehér info-doboz (4 tétel, egységes info-ikon).
 - **Lépésjelző** (fehér kártya az űrlap felett): „N. lépés / 5” eyebrow + „X% kész”, 6px-es navy folyamatsáv, alatta a lépések listája. Kész lépés: navy kör fehér pipával; aktuális: mustár kör navy számmal, halvány mustár gyűrű, félkövér címke; hátralévő: halványkék kör, szürke címke. `aria-current="step"` az aktuálison.
 - **Lépések:**
-  1. Igénylő adatai: Teljes név*, E-mail*, Telefonszám, Lakcím*
+  1. Igénylő adatai: Vezetéknév* + Keresztnév* (egy sorban), E-mail*, Telefonszám, Lakcím*
   2. Alkotói tevékenység: Alkotói tevékenység* (select)
   3. A hordozó adatai: Hordozó típusa* (select), Darabszám* (≥1), Vásárlás dátuma* (**csak aktuális év**), Eladó neve*, Hologramos címke sorszáma / IMEI* (6–20 karakter, `[A-Za-z0-9-]`)
   4. Tárolt tartalom: leírás* (textarea)
@@ -120,7 +123,7 @@ Beküldéskor (illetve lépésváltáskor) validál, nem gépelés közben; gép
 
 **Ellenőrző** (`/ellenorzo`): **független az igényléstől** – arra szolgál, hogy bárki (vásárló, kereskedő) meggyőződjön a díj megfizetéséről; ezért nem a Visszatérítés alatt van, hanem saját oldalon, a nyitóoldali „Megfizették a díjat?” kártyáról, a lábléc „Ügyintézés” oszlopából és a díj oldal „Díjszabás és igazolás” szakaszából érhető el. Fül IMEI / PCSN. IMEI = pontosan 15 számjegy; SN = 6–24 karakter. Eredmény: **Regisztrált státuszú** (zöld) / **Nem található** (mustár, link az ügyfélszolgálathoz) / **Rendszer nem érhető el** (piros, Újrapróbálás). Élesben az Artisjus IMEI (imei.artisjus.com) és PCSN (artisjus.hu) rendszerének API-ját kell bekötni – egyeztetendő; ha nincs API, maradjon külső link.
 
-**Kapcsolat** (`/kapcsolat`): az **üzenetküldő űrlap az elsődleges elem** (bal, szélesebb oszlop) – név, e-mail, téma (select), üzenet (≥20 karakter) → „Köszönjük, üzenetedet megkaptuk” | hálózati hiba riasztás. Jobb oldalon fehér info-dobozok, egységes 17px/700 címsorral: Ügyfélszolgálat (cím, telefon, e-mail) · Telefonos ügyfélfogadás (alatta kis infósor: személyes ügyintézés időpontfoglalás után, telefonon vagy e-mailben egyeztetve) · A portál üzemeltetői (az öt szervezet neve **link nélkül**, a GVH-döntés PDF új lapon).
+**Kapcsolat** (`/kapcsolat`): az **üzenetküldő űrlap az elsődleges elem** (bal, szélesebb oszlop) – név, e-mail, téma (select), üzenet (≥20 karakter), alatta tartalom-szélességű sárga „Üzenet küldése” gomb → „Köszönjük, üzenetedet megkaptuk” | hálózati hiba riasztás. Jobb oldalon fehér info-dobozok, egységes 17px/700 címsorral: Ügyfélszolgálat (cím, telefon, e-mail) · Telefonos ügyfélfogadás (alatta kis infósor: személyes ügyintézés időpontfoglalás után, telefonon vagy e-mailben egyeztetve) · A portál üzemeltetői (az öt szervezet neve **link nélkül**, a GVH-döntés PDF új lapon).
 
 A prototípusbeli tesztbemeneteket (pl. „0000” címke, „999” ellenőrző-kód) az `Allapotok.dc.html` 6. szakasza sorolja fel – ezek csak a demo miatt vannak, élesben a backend válaszai vezérlik.
 
@@ -136,7 +139,7 @@ A prototípusbeli tesztbemeneteket (pl. „0000” címke, „999” ellenőrző
 Színek (oklch, zárójelben közelítő hex – a WordPress színpalettájába a hex értékek kerüljenek):
 - Navy (elsődleges, fejléc, gombok): `oklch(0.28 0.08 262)` (~#1B2A55)
 - Sötét navy (lábléc): `oklch(0.22 0.07 262)` (~#111D40)
-- Mustár (kiemelés, CTA): `oklch(0.85 0.14 85)` (~#EBC04A); hover `oklch(0.9 0.12 85)`; halvány `oklch(0.96 0.045 85)`
+- Mustár (kiemelés, **minden elsődleges gomb**): `oklch(0.85 0.14 85)` (~#EBC04A); hover `oklch(0.9 0.12 85)`; halvány `oklch(0.96 0.045 85)`
 - Link kék: `oklch(0.42 0.12 255)` (~#2856A0); hover `oklch(0.32 0.12 255)`
 - Halványkék felület – **kattintható elemek**: `oklch(0.95 0.02 262)` (~#E9EDF6); még halványabb `oklch(0.97 0.012 262)`
 - Oldalháttér: `#F6F5F1`; kártya / **info-doboz**: `#FFFFFF` + hairline keret
@@ -156,7 +159,7 @@ Radius: 6px (lemezborító), 8–12px (input, kis kártya), 14–16px (nagy kár
 
 ## Assets
 - Nincs raszterkép. A bakelit, barázda-dekor és logó CSS-gradiensekből készül; ikonok inline SVG (monoline, 2px, round cap).
-- A jogkezelők logói (a jelenlegi oldalon: `/sites/default/files/media/images/*-logo.*`) a Jogosulti csoportok oldalra beemelhetők.
+- A jogkezelők logói (a jelenlegi oldalon: `/sites/default/files/media/images/*-logo.*`) a Díjak sorsa oldal „A közös jogkezelők” részébe beemelhetők.
 - PDF-ek: `/media/6/download` (visszatérítési tájékoztató), `/media/7/download` (GVH végzés) – WordPressben a Médiatárba kerülnek, a régi URL-ekről átirányítás kell.
 - Díjszabás (Artisjus, külső): `https://www.artisjus.hu/wp-content/uploads/2025/12/U26.pdf` (Ü) és `https://www.artisjus.hu/wp-content/uploads/2025/12/U_PC_26.pdf` (Ü-PC), 2026. január 1-től. **Évente frissíteni kell** – a link szerkeszthető mező legyen.
 
@@ -170,7 +173,7 @@ Radius: 6px (lemezborító), 8–12px (input, kis kártya), 14–16px (nagy kár
 ### Oldalszerkezet és menük
 - Minden útvonal valódi WP-oldal, a hierarchia a szülő–gyermek oldalakból jön (pl. Visszatérítés → Igénylés). A kliensoldali router megszűnik.
 - **Fő menü**, **lábléc „Tájékoztatás”** és **lábléc „Ügyintézés”** oszlop: WP-menük (Megjelenés → Menük / navigációs blokk). Aktív állapot a menü `current-menu-item` / `current-menu-ancestor` osztályaiból.
-- **Oldalsáv:** a Díjak sorsa szekcióban a szülőoldal gyermekoldalaiból; a díj oldalon és az adatvédelmi tájékoztatón a tartalom H2 címsoraiból (tartalomjegyzék + scrollspy). Felirat nélkül, sticky.
+- **Oldalsáv:** a díj oldalon, a díjak sorsa oldalon és az adatvédelmi tájékoztatón a tartalom H2 címsoraiból generált tartalomjegyzék (+ scrollspy). Felirat nélkül, sticky.
 - **Morzsamenü**: Yoast SEO vagy Rank Math breadcrumbs, a design szerinti markuppal.
 - **Mobil**: a [Reszponzív viselkedés](#reszponzív-viselkedés-mobil-tablet) fejezet szerint – 1060px alatt hamburgermenü (a WP fő menüjéből, ugyanazokkal a menüpontokkal), 900px alatt az oldalsáv a tartalom fölé kerül (tartalomjegyzék: tapadó, vízszintesen görgethető sáv). A töréspontok a `theme.json`-ban / CSS custom property-ként legyenek rögzítve.
 
