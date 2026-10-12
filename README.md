@@ -47,7 +47,7 @@ A `.dc.html` fájlok helyi webszerverről nyithatók meg (a `support.js` futtatj
 **Szerkezeti elvek:**
 - **Nincs ismétlődés, nincs körbe mutató link.** Egy szöveg csak egy oldalon szerepel teljes terjedelmében; az oldalak alján nincsenek testvéroldalakra visszamutató „Tovább” kártyák. A nyitóoldalon minden célra egy belépési pont mutat (a fejléc- és lábléc-menü kivételével).
 - **Kattintható vs. információ – vizuálisan elkülönítve:**
-  - **Kattintható felület: halványkék** (`oklch(0.95 0.02 262)`) kártya/csempe, hover-re `translateY(-2px)`; a jobb szélen nyíl.
+  - **Kattintható felület: halvány mustár** (`oklch(0.96 0.045 85)`) kártya/csempe, hover-re erősebb árnyalat (`oklch(0.93 0.07 85)`) + `translateY(-2px)`; a jobb szélen sötétkék nyíl, az ikon/PDF-jelölő mustár alapon. Így a linkek, gombok és csempék egy színcsaládba tartoznak (sárga), a kék a navigáció kijelölésének (fülek, tartalomjegyzék) és az info-ikonoknak marad.
   - **Nem kattintható információ: fehér** doboz 1px hairline kerettel (`oklch(0.9 0.01 262)`), hover nélkül.
   - Kivétel a navy kiemelő blokk (pl. 25% NKA) – ez sem kattintható, statisztikai kiemelés.
 - **Egységes info-ikon** (minden nem kattintható listaelemen, pipa / X / i): 24px kör, halványkék háttér, 12px navy monoline ikon (2.6px). Szándékosan visszafogott, hogy ne versenyezzen a kattintható elemekkel.
@@ -86,13 +86,13 @@ A rácsok (`repeat(auto-fit, minmax(min(100%, …), 1fr))`) magukban is egy oszl
 
 ## Nyitóoldal (`/`)
 1. **Hero** (navy): bal – eyebrow, H1 „A szabad magáncélú másolás lehetőségéért fizetendő díj” (utolsó szó mustár), lead, 1 gomb („Mi a magánmásolási díj?”). Jobb – **hanglemez-kompozíció**: mustár lemezborító (72% szélesség, aspect 1:1, radius 6px, árnyék `0 30px 60px rgba(0,0,0,.35)`) a hanghordozós felosztással (45/30/25%, navy sávok), mögötte jobbra kilógó bakelit (barázdák: `repeating-radial-gradient(circle,#12151e 0 2px,#252b3b 2px 3.2px)`), mustár címke körbefutó felirattal („ARTISJUS · EJI · FILMJUS · HUNGART · MAHASZ ·”, SVG textPath), statikus fényes conic-gradient réteg. **A lemez 7 s alatt fordul körbe, lineárisan, végtelenítve**; `prefers-reduced-motion` esetén álljon meg (production-ben add hozzá).
-2. **„Megfizették a díjat?”** kártya a hero aljára csúsztatva (`margin-top:-44px`), fehér, radius 14px, árnyék `0 18px 40px rgba(30,35,70,.12)`; IMEI és PCSN link-csempe (halványkék) → `/ellenorzo#imei`, `/ellenorzo#pcsn`.
-3. **Kinek szól?** 3 halványkék kártya (a kártya maga nem kattintható, nincs hover-emelés; a benne lévő linklista az): cím, leírás, linklista.
+2. **„Megfizették a díjat?”** kártya a hero aljára csúsztatva (`margin-top:-44px`), fehér, radius 14px, árnyék `0 18px 40px rgba(30,35,70,.12)`; IMEI és PCSN link-csempe (halvány mustár, mustár ikonkör) → `/ellenorzo#imei`, `/ellenorzo#pcsn`.
+3. **Kinek szól?** 3 halvány mustár kártya (a kártya maga nem kattintható, nincs hover-emelés; a benne lévő linklista az): cím, leírás, linklista.
    - Fizetőknek: Díjszabás (`/a-maganmasolasi-dijrol#dijszabas`), Gyakori kérdések a díjfizetésről (`/gyik#dijfizetes`)
    - Visszatérítés: Feltételek és menete, Igénylés indítása, Gyakori kérdések a visszatérítésről (`/gyik#visszaterites`)
    - Kapcsolat: Írj nekünk, A portál üzemeltetői
 4. **A díjról** (fehér szekció): rövid magyarázat; „szabadon másolható” lista és a kivétel-doboz **fehér info-dobozként** (egységes info-ikon); alatta egy link: „A kivételek részletesen →”.
-5. **Díjak sorsa:** bal – magyarázat + 25% NKA navy blokk; jobb – „Hová kerül a díj? Nézd meg részletesen:” + két halványkék, leírással ellátott csempe (Jogosulti csoportok, Kulturális célok). A csempék a Díjak sorsa oldal megfelelő szakaszára visznek (`#jogosulti-csoportok`, `#kulturalis-celok`). A jogkezelők külső linkjei nem a nyitóoldalon, hanem ott vannak.
+5. **Díjak sorsa:** bal – magyarázat + 25% NKA navy blokk; jobb – „Hová kerül a díj? Nézd meg részletesen:” + két halvány mustár, leírással ellátott csempe (Jogosulti csoportok, Kulturális célok). A csempék a Díjak sorsa oldal megfelelő szakaszára visznek (`#jogosulti-csoportok`, `#kulturalis-celok`). A jogkezelők külső linkjei nem a nyitóoldalon, hanem ott vannak.
 
 ## Interakciók és viselkedés
 - **Navigáció:** belső linkek valódi `href`-fel, a prototípusban kliensoldali router (`nav(path)`); horgony esetén 90px offsettel görget (sticky fejléc). Oldalváltáskor lap tetejére ugrik.
@@ -141,7 +141,7 @@ Színek (oklch, zárójelben közelítő hex – a WordPress színpalettájába 
 - Sötét navy (lábléc): `oklch(0.22 0.07 262)` (~#111D40)
 - Mustár (kiemelés, **minden elsődleges gomb**): `oklch(0.85 0.14 85)` (~#EBC04A); hover `oklch(0.9 0.12 85)`; halvány `oklch(0.96 0.045 85)`
 - Link kék: `oklch(0.42 0.12 255)` (~#2856A0); hover `oklch(0.32 0.12 255)`
-- Halványkék felület – **kattintható elemek**: `oklch(0.95 0.02 262)` (~#E9EDF6); még halványabb `oklch(0.97 0.012 262)`
+- Halvány mustár – **kattintható csempék, kártyák**: `oklch(0.96 0.045 85)` (~#FBF1D6); hover `oklch(0.93 0.07 85)`
 - Oldalháttér: `#F6F5F1`; kártya / **info-doboz**: `#FFFFFF` + hairline keret
 - Szöveg: `oklch(0.24 0.04 262)`; másodlagos `oklch(0.36–0.45 0.03 262)`; hairline `oklch(0.9 0.01 262)`, input keret `oklch(0.86 0.015 262)`
 - Siker: háttér `oklch(0.95 0.04 150)`, ikon `oklch(0.5 0.12 150)`, szöveg `oklch(0.35 0.1 150)`
@@ -168,7 +168,7 @@ Radius: 6px (lemezborító), 8–12px (input, kis kártya), 14–16px (nagy kár
 ### Téma és design tokenek
 - Egyedi téma (blokktéma vagy klasszikus téma + ACF-blokkok – a fejlesztő döntése). A színek, betűk, betűméretek és térközök a `theme.json`-ba kerüljenek (`settings.color.palette`, `typography.fontFamilies` / `fontSizes`, `spacing.spacingSizes`), hex értékekkel; a szerkesztőben csak ez a paletta legyen elérhető (`custom: false`).
 - **Betűtípusok helyben**: a Source Serif 4 és a Source Sans 3 a témából töltődjön be (`theme.json` `fontFace`, woff2), **ne a Google Fonts CDN-ről** – az EU-ban a távoli betöltés GDPR-kockázat.
-- A prototípus inline style-jai helyett komponens-szintű CSS (blokkonként), BEM vagy blokk-osztályokkal. A „kattintható = halványkék, információ = fehér” szabály két CSS-osztály legyen (pl. `.is-link-surface`, `.is-info-surface`), hogy a szerkesztők ne keverhessék.
+- A prototípus inline style-jai helyett komponens-szintű CSS (blokkonként), BEM vagy blokk-osztályokkal. A „kattintható = halvány mustár, információ = fehér” szabály két CSS-osztály legyen (pl. `.is-link-surface`, `.is-info-surface`), hogy a szerkesztők ne keverhessék.
 
 ### Oldalszerkezet és menük
 - Minden útvonal valódi WP-oldal, a hierarchia a szülő–gyermek oldalakból jön (pl. Visszatérítés → Igénylés). A kliensoldali router megszűnik.

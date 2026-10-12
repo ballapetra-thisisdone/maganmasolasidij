@@ -51,10 +51,10 @@ a:hover{color:oklch(0.32 0.12 255);text-decoration:underline}
             </div>
           </sc-if>
           <sc-if value="{{ b.isPdf }}">
-            <a href="{{ b.href }}" target="_blank" rel="noopener" style="display:flex;gap:16px;align-items:center;margin:0 0 10px;padding:16px 20px;border-radius:12px;background:oklch(0.95 0.02 262);color:oklch(0.24 0.04 262);transition:transform 200ms" style-hover="transform:translateY(-2px);text-decoration:none;color:oklch(0.24 0.04 262)">
-              <span style="width:40px;height:48px;border-radius:6px;background:#fff;display:grid;place-items:center;font-weight:700;font-size:12px;color:oklch(0.28 0.08 262);flex:none">PDF</span>
+            <a href="{{ b.href }}" target="_blank" rel="noopener" style="display:flex;gap:16px;align-items:center;margin:0 0 10px;padding:16px 20px;border-radius:12px;background:oklch(0.96 0.045 85);color:oklch(0.24 0.04 262);transition:transform 200ms" style-hover="transform:translateY(-2px);background:oklch(0.93 0.07 85);text-decoration:none;color:oklch(0.24 0.04 262)">
+              <span style="width:40px;height:48px;border-radius:6px;background:oklch(0.85 0.14 85);display:grid;place-items:center;font-weight:700;font-size:12px;color:oklch(0.28 0.08 262);flex:none">PDF</span>
               <span style="flex:1"><span style="display:block;font-weight:700">{{ b.x }}</span><span style="font-size:14px;color:oklch(0.45 0.03 262)">{{ b.hl }}</span></span>
-              <span style="font-weight:700;color:oklch(0.42 0.12 255)">↗</span>
+              <span style="font-weight:700;color:oklch(0.24 0.06 262)">↗</span>
             </a>
           </sc-if>
         </sc-for>
